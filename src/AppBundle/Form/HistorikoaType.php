@@ -7,6 +7,7 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 class HistorikoaType extends AbstractType
 {
@@ -59,6 +60,7 @@ class HistorikoaType extends AbstractType
 
                 // add a class that can eb selected in JavaScript
                 'attr' => ['class' => 'js-datepicker'],
+		'constraints' => [new NotBlank(),]
             ))
             ->add('aldaketakeu',CKEditorType::class, array(
                 'config_name' => 'my_config_1',

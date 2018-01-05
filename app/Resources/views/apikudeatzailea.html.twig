@@ -190,13 +190,13 @@ ul#ulzzoo {
 $(document).ready(function() {
         $('[data-toggle="tooltip"]').tooltip()
         var items = [];
-        var url = "http://www.pasaia.eus/zzoo/api/ordenantzakbykodea/{{ udala.kodea }}.json";
+        var url = "/zzoo/api/ordenantzakbykodea/{{ udala.kodea }}.json";
 
         var bootstrap_enabled = (typeof $().modal == 'function');
         $('body').on('click', 'a.btntaula', function () {
 
             var miid = $(this).data('id');
-            var url = "http://www.pasaia.eus/zzoo/api/zerga/" + miid + ".json";
+            var url = "/zzoo/api/zerga/" + miid + ".json";
             var nModal = $('#nireModal');
             $('#modalContent').empty();
             $.getJSON(url, function(data) {
@@ -253,13 +253,13 @@ $(document).ready(function() {
         $.getJSON(url, function(data) {
             $.each( data, function( i, ordenantza ) {
 
-                items.push('&lt;li class="kaixoiker"&gt;&lt;a data-toggle="tooltip" data-container="body" data-placement="top" title="Egin klik hemen ordenantzaren textua ikusteko" target="_blank"  href="http://www.pasaia.eus/zzoo/ordenantza/' + ordenantza.id + '"&gt;' + ordenantza.kodea_prod + ' - ' + ordenantza.izenburuaeu_prod      +'&lt;/a&gt;&lt;/li&gt;');
+                items.push('&lt;li class="kaixoiker"&gt;&lt;a data-toggle="tooltip" data-container="body" data-placement="top" title="Egin klik hemen ordenantzaren textua ikusteko" target="_blank"  href="/zzoo/ordenantza/' + ordenantza.id + '"&gt;' + ordenantza.kodea_prod + ' - ' + ordenantza.izenburuaeu_prod      +'&lt;/a&gt;&lt;/li&gt;');
                 var atalak = ordenantza.atalak;
                 $.each( atalak, function( i1, atala ) {
                     if (atala.izenburuaeu_prod !== ""){
                         if ( ( 'kodea_prod' in atala ) &amp;&amp; ( 'izenburuaeu_prod' in atala ) ) {
                             items.push(
-                                '&lt;li&gt;&lt;ul class="nirul"&gt;&lt;li class="nireli"&gt;&lt;a target="_blank"  href="http://www.pasaia.eus/zzoo/ordenantza/' + ordenantza.id   + '#' + ordenantza.id + '-' + atala.id +'"&gt;' + atala.kodea_prod + ' - ' +  atala.izenburuaeu_prod +'&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;'
+                                '&lt;li&gt;&lt;ul class="nirul"&gt;&lt;li class="nireli"&gt;&lt;a target="_blank"  href="/zzoo/ordenantza/' + ordenantza.id   + '#' + ordenantza.id + '-' + atala.id +'"&gt;' + atala.kodea_prod + ' - ' +  atala.izenburuaeu_prod +'&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;'
                             );
                         }
                     }
@@ -328,13 +328,13 @@ ul#ulzzoo {
 $(document).ready(function() {
         $('[data-toggle="tooltip"]').tooltip()
         var items = [];
-        var url = "http://www.pasaia.eus/zzoo/api/ordenantzakbykodea/{{ udala.kodea }}.json";
+        var url = "/zzoo/api/ordenantzakbykodea/{{ udala.kodea }}.json";
 
         var bootstrap_enabled = (typeof $().modal == 'function');
         $('body').on('click', 'a.btntaula', function () {
 
             var miid = $(this).data('id');
-            var url = "http://www.pasaia.eus/zzoo/api/zerga/" + miid + ".json";
+            var url = "/zzoo/api/zerga/" + miid + ".json";
             var nModal = $('#nireModal');
             $('#modalContent').empty();
             $.getJSON(url, function(data) {
@@ -389,13 +389,13 @@ $(document).ready(function() {
         $.getJSON(url, function(data) {
             $.each( data, function( i, ordenantza ) {
 
-                items.push('&lt;li class="kaixoiker"&gt;&lt;a data-toggle="tooltip" data-container="body" data-placement="top" title="Haz click aquí para ver el texto de la ordenanza" target="_blank"  href="http://www.pasaia.eus/zzoo/ordenantza/' + ordenantza.id + '"&gt;' + ordenantza.kodea_prod + ' - ' + ordenantza.izenburuaes_prod      +'&lt;/a&gt;&lt;/li&gt;');
+                items.push('&lt;li class="kaixoiker"&gt;&lt;a data-toggle="tooltip" data-container="body" data-placement="top" title="Haz click aquí para ver el texto de la ordenanza" target="_blank"  href="/zzoo/ordenantza/' + ordenantza.id + '"&gt;' + ordenantza.kodea_prod + ' - ' + ordenantza.izenburuaes_prod      +'&lt;/a&gt;&lt;/li&gt;');
                 var atalak = ordenantza.atalak;
                 $.each( atalak, function( i1, atala ) {
                     if (atala.izenburuaes_prod !== ""){
                         if ( ( 'kodea_prod' in atala ) &amp;&amp; ( 'izenburuaes_prod' in atala ) ) {
                             items.push(
-                                '&lt;li&gt;&lt;ul class="nirul"&gt;&lt;li class="nireli"&gt;&lt;a target="_blank"  href="http://www.pasaia.eus/zzoo/ordenantza/' + ordenantza.id   + '#' + ordenantza.id + '-' + atala.id +'"&gt;' + atala.kodea_prod + ' - ' +  atala.izenburuaes_prod +'&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;'
+                                '&lt;li&gt;&lt;ul class="nirul"&gt;&lt;li class="nireli"&gt;&lt;a target="_blank"  href="/zzoo/ordenantza/' + ordenantza.id   + '#' + ordenantza.id + '-' + atala.id +'"&gt;' + atala.kodea_prod + ' - ' +  atala.izenburuaes_prod +'&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;&lt;/li&gt;'
                             );
                         }
                     }
@@ -626,7 +626,7 @@ $(document).ready(function() {
 
         function eginAdibidea($locale, $id, $mitext) {
             $('#emaitza').empty();
-            var url = "http://www.pasaia.eus/zzoo/api/zerga/" + $id + ".json";
+            var url = "/zzoo/api/zerga/" + $id + ".json";
             // **************************************************
             // **************************************************
             // DEBUG ONLY!!!
@@ -794,7 +794,7 @@ nireDiv + '\n' +
 '&#x3C;script language=&#x22;javascript&#x22;&#x3E;'+'\n' +
 '&#x9;$(document).ready(function() {'+'\n' +
 '&#x9;&#x9;$(&#x27;.cp_oculta' + $apId + '&#x27;).css(&#x27;display&#x27;,&#x27;none&#x27;);'+'\n' +
-'&#x9;&#x9;var url = &#x22;http://www.pasaia.eus/zzoo/api/zerga/' + $apId + '.json&#x22;;'+'\n' +
+'&#x9;&#x9;var url = &#x22;/zzoo/api/zerga/' + $apId + '.json&#x22;;'+'\n' +
 '&#x9;&#x9;$.getJSON(url, function(data) {'+'\n' +
 '&#x9;&#x9;$(&#x27;#nireH3' + $apId + '&#x27;).text ((data.' + nireIzen + ').replace(&#x22;&#x3C;br&#x3E;&#x22;,&#x22;&#x22;).replace(&#x22;&#x26;nbsp;&#x22;,&#x22; &#x22;));'+'\n' +
 '&#x9;&#x9;&#x9;var kontzeptuak = data.kontzeptuak;'+'\n' +

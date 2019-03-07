@@ -17,4 +17,4 @@
 /web/doc/[^.]*
 /.idea/
 /doc/*
-/nbproject/private/
+/nbproject/*

@@ -116,8 +116,6 @@ assetic:
         - WhiteOctoberPagerfantaBundle
         - OpenTBSBundle
         - NelmioCorsBundle
-        - DebugBundle
-        - WebProfilerBundle
         - SensioDistributionBundle
         - SensioGeneratorBundle
 

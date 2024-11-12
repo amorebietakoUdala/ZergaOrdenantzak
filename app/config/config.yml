@@ -116,7 +116,6 @@ assetic:
         - WhiteOctoberPagerfantaBundle
         - OpenTBSBundle
         - NelmioCorsBundle
-        - SensioDistributionBundle
         - SensioGeneratorBundle
 
 stof_doctrine_extensions:

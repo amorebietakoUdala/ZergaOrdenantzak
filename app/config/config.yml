@@ -92,6 +92,34 @@ assetic:
             jar: '%kernel.root_dir%/bin/yuicompressor.jar'
         yui_js:
             jar: '%kernel.root_dir%/bin/yuicompressor.jar'
+    bundles:
+        - FrameworkBundle
+        - TwigBundle
+        - MonologBundle
+        - SwiftmailerBundle
+        - SensioFrameworkExtraBundle
+        - AppBundle
+        - EasyAdminBundle
+        - BraincraftedBootstrapBundle
+        - AsseticBundle
+        - JMSSerializerBundle
+        - FOSRestBundle
+        - NelmioApiDocBundle
+        - FrontendBundle
+        - ApiBundle
+        - FOSUserBundle
+        - UserBundle
+        - IvoryCKEditorBundle
+        - FOSJsRoutingBundle
+        - WhiteOctoberTCPDFBundle
+        - StofDoctrineExtensionsBundle
+        - WhiteOctoberPagerfantaBundle
+        - OpenTBSBundle
+        - NelmioCorsBundle
+        - DebugBundle
+        - WebProfilerBundle
+        - SensioDistributionBundle
+        - SensioGeneratorBundle
 
 stof_doctrine_extensions:
     orm:

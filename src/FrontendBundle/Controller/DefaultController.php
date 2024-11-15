@@ -5,11 +5,12 @@ namespace FrontendBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use AppBundle\Entity\Ordenantza;
+use App\Entity\Ordenantza;
 use Symfony\Component\Filesystem\Filesystem;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Symfony\Component\HttpFoundation\Response;
+use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
 
 class DefaultController extends Controller
 {
@@ -54,9 +55,9 @@ class DefaultController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-        $ordenantza = $em->getRepository('AppBundle:Ordenantza')->findOneById($id);
+        $ordenantza = $em->getRepository(Ordenantza::class)->findOneById($id);
         $ordenantza = $this->getDoctrine()
-            ->getRepository( 'AppBundle:Ordenantza' )->getOrdenantzabat( $id );
+            ->getRepository( Ordenantza::class )->getOrdenantzabat( $id );
 //        $parrafoak = $ordenantza->getParrafoak();
 
 //        $izenburuaeu = $ordenantza->getIzenburuaeu();
@@ -107,7 +108,7 @@ class DefaultController extends Controller
     {
 
         $em = $this->getDoctrine()->getManager();
-        $ordenantza = $em->getRepository('AppBundle:Ordenantza')->findOneById($id);
+        $ordenantza = $em->getRepository(Ordenantza::class)->findOneById($id);
 
         $fitxero=  $this->render('frontend/mihtml.html.twig', array(
             'ordenantza' => $ordenantza
@@ -150,7 +151,7 @@ class DefaultController extends Controller
      * )
      * @Method("GET")
      */
-    public function pdfAction($udala)
+    public function pdfAction($udala, TCPDFController $tcpdfController)
     {
         $em = $this->getDoctrine()->getManager();
         $query = $em->createQuery('
@@ -161,7 +162,7 @@ class DefaultController extends Controller
         $query->setParameter('udala', $udala);
         $ordenantzas = $query->getResult();
 
-        $pdf = $this->get("white_october.tcpdf")->create('vertical', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        $pdf = $tcpdfController->create('vertical', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
         $pdf->SetAuthor($udala);
         $pdf->SetTitle(date("Y")."-Zerga Ordenantzak");
 

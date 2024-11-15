@@ -1,0 +1,87 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    mailer_transport: smtp
+    mailer_host: 192.168.18.16
+    mailer_user: test@test.com
+    mailer_password: 'test app'
+    secret: ThisTokenIsNotSoSecretChangeIt
+    izfe_login_path: ''
+    zzoo_aplikazioaren_API_url: 'http://garapenak2:8888/zzoo/api'
+    locale: 'eu'
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+            - '../src/AppBundle/'
+            - '../src/UserBundle/'
+            - '../src/ApiBundle/'
+            - '../src/FrontendBundle/'
+
+    # controllers are imported separately to make sure services can be injected
+    # as action arguments even if you don't extend any base controller class
+    App\Controller\:
+        resource: '../src/Controller/'
+        tags: ['controller.service_arguments']
+
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+
+    FrontendBundle\:
+        resource: '../src/FrontendBundle/'
+
+    FrontendBundle\Controller\:
+        resource: '../src/FrontendBundle/Controller/'
+        tags: ['controller.service_arguments']
+
+    ApiBundle\:
+        resource: '../src/ApiBundle'
+        #tags: ['controller.service_arguments']
+
+    ApiBundle\Controller\:
+        resource: '../src/ApiBundle/Controller/'
+        tags: ['controller.service_arguments']
+
+    UserBundle\:
+        resource: '../src/UserBundle/'
+        #tags: ['controller.service_arguments']
+
+    UserBundle\Controller\:
+        resource: '../src/UserBundle/Controller'
+        #tags: ['controller.service_arguments']
+
+    App\Filter\Configurator:
+        arguments:
+            - "@doctrine.orm.default_entity_manager"
+            - "@security.token_storage"
+            - "@annotation_reader"
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }
+    
+    # twig.extension.text:
+    #     class: Twig_Extensions_Extension_Text
+    #     tags:
+    #         - { name: twig.extension }
+
+    Swift_Mailer: '@swiftmailer.mailer.default'
+    WhiteOctober\TCPDFBundle\Controller\TCPDFController: '@white_october.tcpdf'
+
+    # easycorp.easylog.handler:
+    #         class: EasyCorp\EasyLog\EasyLogHandler
+    #         arguments:
+    #             - '%kernel.logs_dir%/%kernel.environment%.log'

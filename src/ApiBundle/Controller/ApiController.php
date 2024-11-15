@@ -7,8 +7,8 @@
 
 namespace ApiBundle\Controller;
 
-use AppBundle\Form\AtalaType;
-use AppBundle\Entity\Atala;
+use App\Form\AtalaType;
+use App\Entity\Atala;
 
 
 use FOS\RestBundle\Controller\Annotations;
@@ -45,7 +45,7 @@ class ApiController extends FOSRestController
     public function getOrdenantzakAction()
     {
         $em         = $this->getDoctrine()->getManager();
-        $ordenantzak = $em->getRepository('AppBundle:Ordenantza')->findAll();
+        $ordenantzak = $em->getRepository(Ordenantza::class)->findAll();
         $view = View::create();
         $view->setData($ordenantzak);
         header('content-type: application/json; charset=utf-8');
@@ -64,7 +64,7 @@ class ApiController extends FOSRestController
      */
     public function getOrdenantzaAction($id){
         $em         = $this->getDoctrine()->getManager();
-        $ordenantza = $em->getRepository('AppBundle:Ordenantza')->findById($id);
+        $ordenantza = $em->getRepository(Ordenantza::class)->findById($id);
         header('content-type: application/json; charset=utf-8');
         header("access-control-allow-origin: *");
         return $ordenantza;

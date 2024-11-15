@@ -1,7 +1,7 @@
 <?php
     namespace UserBundle\Controller;
 
-    use AppBundle\Entity\User;
+    use App\Entity\User;
 
     use Pagerfanta\Exception\NotValidCurrentPageException;
     use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -18,7 +18,7 @@
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
     use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 
-    use AppBundle\Form\UserType;
+    use App\Form\UserType;
 
 
     class SecurityController extends Controller

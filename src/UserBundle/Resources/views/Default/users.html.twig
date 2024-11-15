@@ -2,11 +2,11 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/app/css/datatables.min.css') }}"
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/datatables.min.css') }}"
           rel="stylesheet"/>
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/app/css/jquery.dataTables.min.css') }}"
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/jquery.dataTables.min.css') }}"
           rel="stylesheet"/>
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/app/css/buttons.dataTables.min.css') }}"
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/buttons.dataTables.min.css') }}"
           rel="stylesheet"/>
 {% endblock %}
 
@@ -76,9 +76,9 @@
 
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript" src="{{ asset('bundles/app/js/datatables.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/app/js/dataTables.buttons.min.js') }}"></script>
-    <script type="text/javascript" src="{{ asset('bundles/app/js/buttons.html5.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/datatables.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/dataTables.buttons.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('js/buttons.html5.min.js') }}"></script>
     <script type="text/javascript">
         function ezabatu (id)
         {

@@ -1,0 +1,23 @@
+@media screen and (min-width: 768px) {
+    .modal-lg {
+        width: 90%;
+    }
+
+    .modal-sm {
+        width: 300px;
+    }
+}
+
+.popover {
+    z-index: 9999 !important;
+}
+
+.popover .editable-buttons {
+    margin-left: 15px !important;
+}
+
+.divAkzioak {
+    display: block;
+    height: 18px;
+    text-align: right;
+}

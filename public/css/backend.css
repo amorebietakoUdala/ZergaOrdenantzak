@@ -200,3 +200,7 @@ h4  {
     max-height: 200px;
     overflow-x: hidden;
 }
+
+.cke_screen_reader_only, .cke_copyformatting_notification, .cke_notification, .cke_notification_warning, .cke_notifications_area {
+    display: none;
+}

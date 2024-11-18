@@ -11,6 +11,28 @@
     <link href="{{ asset('css/3/bootstrap-wysihtml5-0.0.3.css') }}" rel="stylesheet">
     <link href="{{ asset('css/calendar/bootstrap-datepicker3.min.css') }}" rel="stylesheet">
     <style>
+        /* Make inline editables take the full width of their parents */
+        .editable-container.editable-inline,
+        .editable-container.editable-inline .control-group.form-group,
+        .editable-container.editable-inline .control-group.form-group .editable-input,
+        .editable-container.editable-inline .control-group.form-group .editable-input textarea,
+        .editable-container.editable-inline .control-group.form-group .editable-input select,
+        .editable-container.editable-inline .control-group.form-group .editable-input input:not([type=radio]):not([type=checkbox]):not([type=submit]) {
+            width: 100%;
+        }
+
+        .editable-click, a.editable-click, a.editable-click:hover {
+            border-bottom: none !important;
+        }
+
+        .marginBottom-0 {
+            margin-bottom: 0;
+        }
+
+        .dropdown-menu {
+            font-size: 13px;
+        }
+
         @media screen and (min-width: 768px) {
             .modal-lg{
                 width:90%;

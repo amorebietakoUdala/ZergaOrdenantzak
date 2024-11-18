@@ -2,7 +2,7 @@
 
 {% block stylesheets %}
     {{ parent() }}
-    <link href="{{ asset('/app/css/prism.css') }}" rel="stylesheet" media="screen">
+    <link href="{{ asset('css/prism.css') }}" rel="stylesheet" media="screen">
     <style>
         .loading {
             position: fixed;
@@ -444,8 +444,9 @@ $(document).ready(function() {
 
 {% block javascripts %}
     {{ parent() }}
-    <script src="{{ asset('/app/js/clipboard.min.js') }}"></script>
-    <script src="{{ asset('/app/js/prism.js') }}"></script>
+    <script src="{{ asset('js/jquery.js') }}"></script>
+    <script src="{{ asset('js/clipboard.min.js') }}"></script>
+    <script src="{{ asset('js/prism.js') }}"></script>
     <script type="text/javascript">
 
         document.write('<style type="text/css">div.cp_oculta{display: none;}</style>');

@@ -23,6 +23,8 @@ Encore
     .addEntry('app', './assets/app.js')
     .addEntry('login', './assets/login.js')
     .addEntry('ordenantza-show', './assets/js/ordenantza/show.js')
+    .addEntry('historikoa-new', './assets/js/historikoa/new.js')
+    .addEntry('baldintza-index', './assets/js/baldintza/index.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')

@@ -22,9 +22,11 @@ Encore
      */
     .addEntry('app', './assets/app.js')
     .addEntry('login', './assets/login.js')
-    .addEntry('ordenantza-show', './assets/js/ordenantza/show.js')
+    .addEntry('ordenantza-index', './assets/js/ordenantza/index.js')
+    //.addEntry('ordenantza-show', './assets/js/ordenantza/show.js')
     .addEntry('historikoa-new', './assets/js/historikoa/new.js')
     .addEntry('baldintza-index', './assets/js/baldintza/index.js')
+    .addEntry('apikudeatzailea', './assets/js/apikudeatzailea/main.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')
@@ -76,6 +78,8 @@ Encore
     .autoProvidejQuery()
     .copyFiles([
         {from: './assets/images', to: 'images/[path][name].[hash:8].[ext]'},
+        // Esto es para hacer una copia de assets tal cual en build y así no tener que copiar los jss fuera de build        
+        {from: './assets/js', to: 'js/[path][name].[ext]'},
     ])
 ;
 

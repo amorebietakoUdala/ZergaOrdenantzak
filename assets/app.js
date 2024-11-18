@@ -15,19 +15,20 @@ import 'bootstrap';
 
 import $ from 'jquery';
 
-import './js/bootstrap-editable.js';
+// import './js/bootstrap-editable.js';
 // No funciona igual con bootstrap de momento lo metemos directamente en la página
 // import './js/3/wysiwig.js';
 //import './js/3/bootstrap-wysihtml5-0.0.3.min.js';
 //import './js/3/bootstrap3-wysihtml5.js';
-import './js/calendar/bootstrap-datepicker.min.js';
-import './js/calendar/bootstrap-datepicker.es.min.js';
-import './js/calendar/bootstrap-datepicker.eu.min.js';
-import './js/bootbox.min.js';
+// import './js/calendar/bootstrap-datepicker.min.js';
+// import './js/calendar/bootstrap-datepicker.es.min.js';
+// import './js/calendar/bootstrap-datepicker.eu.min.js';
+// import './js/bootbox.min.js';
 
 // Declare $ globally
 // global.$ = $;
 // global.jQuery = $;
+global.base = '/zergaordenantzak'
 
 // const routes = require('../public/bundles/fosjsrouting/js/fos_js_routes.json');
 // import Routing from '../vendor/friendsofsymfony/jsrouting-bundle/Resources/public/js/router.min.js';
@@ -43,16 +44,15 @@ $(window).on("hashchange", function () {
     window.scrollTo(window.scrollX, window.scrollY - 100);
 });
 
-$(document).ready(function () {
-//    Routing.setRoutingData(routes);
-    $('.js-datepicker').datepicker({
-        format: 'yyyy-mm-dd',
-        todayBtn: "linked",
-        language: "eu",
-        autoclose: true,
-        todayHighlight: true
-    });
-});
+// $(document).ready(function () {
+//     $('.js-datepicker').datepicker({
+//         format: 'yyyy-mm-dd',
+//         todayBtn: "linked",
+//         language: "eu",
+//         autoclose: true,
+//         todayHighlight: true
+//     });
+// });
 
 /* <script src="{{ asset('bundles/app/js/bootstrap-editable.js') }}"></script>
 

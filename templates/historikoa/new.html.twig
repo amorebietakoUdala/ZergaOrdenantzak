@@ -79,30 +79,13 @@
 
 {% endblock %}
 
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('historikoa-new') }}
+{% endblock %}
+
 {% block javascripts %}
     {{ parent() }}
-
-    <script>
-
-        $(document).ajaxStart(function () {
-            $('#loading').show();
-        }).ajaxStop(function () {
-            $('#loading').hide();
-        });
-
-        $(document).ready(function () {
-
-            $('.kargatzen').on('click', function () {
-
-                var dialog = bootbox.dialog({
-                    message: '<p class="text-center">Itxaron apur bat PDF fitxategia sortzen den bitartean... </p>',
-                    closeButton: false
-                });
-
-
-            });
-
-        });
-    </script>
+    {{ encore_entry_script_tags('historikoa-new') }}
 {% endblock %}
 

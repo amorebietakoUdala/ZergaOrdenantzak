@@ -5,7 +5,11 @@
 {% endblock %} #}
 
 {% block stylesheets %}
-    {{ parent() }}
+    <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" media="screen">
+    <link href="{{ asset('css/backend.css') }}" rel="stylesheet" media="screen">
+    <link href="{{ asset('css/bootstrap-editable.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/3/bootstrap-wysihtml5-0.0.3.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/calendar/bootstrap-datepicker3.min.css') }}" rel="stylesheet">
     <style>
         @media screen and (min-width: 768px) {
             .modal-lg{
@@ -566,10 +570,24 @@
 {% endblock %}
 
 {% block javascripts %}
-    {{ parent() }}
-    <!-- jQuery (necessary for Bootstraps JavaScript plugins) -->
-    {# <script src="{{ asset('js/jquery.js') }}"></script> #}
-    {# <script src="{{ asset('js/bootstrap-editable.js') }}"></script> #}
+    {# {{ parent() }} #}
+        <!-- jQuery (necessary for Bootstraps JavaScript plugins) -->
+        <script src="{{ asset('js/jquery.js') }}"></script>
+        <!-- Include all JavaScripts, compiled by Assetic -->
+        <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+        <script src="{{ asset('js/bootstrap-extensions/popover.js') }}"></script>
+        <!-- Needed for editable field when double clicking -->
+        <script src="{{ asset('js/bootstrap-editable.js') }}"></script>
+        <script src="{{ asset('js/3/wysihtml5-0.3.0.min.js') }}"></script>
+        <script src="{{ asset('js/3/bootstrap-wysihtml5-0.0.3.min.js') }}"></script>
+        <script src="{{ asset('js/3/wysihtml5-0.0.3.js') }}"></script>
+        <script src="{{ asset('js/calendar/bootstrap-datepicker.min.js') }}"></script>
+        <script src="{{ asset('js/calendar/bootstrap-datepicker.es.min.js') }}"></script>
+        <script src="{{ asset('js/calendar/bootstrap-datepicker.eu.min.js') }}"></script>
+        <script src="{{ asset('js/bootbox.min.js') }}"></script>
+
+        <script src="{{ asset('js/router.min.js') }}"></script>
+        <script src="{{ path('fos_js_routing_js', { callback: 'fos.Router.setData' }) }}"></script>
     <script>
 
         $(function(){

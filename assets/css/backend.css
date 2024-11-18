@@ -4,7 +4,8 @@
 }
 
 body {
-    min-height: 2000px !important;
+    /* Para que no hay scroll */
+    /* min-height: 2000px !important; */
     padding-top: 70px !important;
 }
 

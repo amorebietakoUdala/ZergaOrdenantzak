@@ -8,15 +8,15 @@
     <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon"/>
 
     {% block stylesheets %}
-        {# {{ encore_entry_link_tags('app') }} #}
-        <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" media="screen">
+        {{ encore_entry_link_tags('app') }}
+        {# <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" media="screen">
         <link href="{{ asset('css/backend.css') }}" rel="stylesheet" media="screen">
         <link href="{{ asset('css/bootstrap-editable.css') }}" rel="stylesheet">
         <link href="{{ asset('css/3/bootstrap-wysihtml5-0.0.3.css') }}" rel="stylesheet">
-        <link href="{{ asset('css/calendar/bootstrap-datepicker3.min.css') }}" rel="stylesheet">
+        <link href="{{ asset('css/calendar/bootstrap-datepicker3.min.css') }}" rel="stylesheet"> #}
         <!-- HTML5 Shim and Respond.js add IE8 support of HTML5 elements and media queries -->
         {# {% include 'BraincraftedBootstrapBundle::ie8-support.html.twig' %} #}
-        <style>
+        {# <style>
             /* Make inline editables take the full width of their parents */
             .editable-container.editable-inline,
             .editable-container.editable-inline .control-group.form-group,
@@ -39,7 +39,7 @@
                 font-size: 13px;
             }
 
-        </style>
+        </style> #}
     {% endblock %}
 
 
@@ -100,8 +100,9 @@
 </div> <!-- /container -->
 
     {% block javascripts %}
-        {# {{ encore_entry_script_tags('app') }} #}
-        <!-- jQuery (necessary for Bootstraps JavaScript plugins) -->
+        {{ encore_entry_script_tags('app') }}
+        {#
+         <!-- jQuery (necessary for Bootstraps JavaScript plugins) -->
         <script src="{{ asset('js/jquery.js') }}"></script>
         <!-- Include all JavaScripts, compiled by Assetic -->
         <script src="{{ asset('js/bootstrap.min.js') }}"></script>
@@ -140,7 +141,8 @@
                 });
             });
 
-        </script>
+        </script> 
+        #}
         {% endblock %}
 </body>
 </html>

@@ -71,3 +71,13 @@
 
     {{ form_end(edit_form) }}
 {% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('historikoa-new') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('historikoa-new') }}
+{% endblock %}

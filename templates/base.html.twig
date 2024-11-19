@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html base="{{ app.request.baseUrl }}">
 <head>
 
     <title>Zerga Ordenantzak</title>
@@ -46,7 +46,6 @@
 </head>
 
 <body data-spy="scroll" data-target="#navbar-example">
-
 <div id="navbar-example">
     <nav class="navbar navbar-inverse navbar-fixed-top marginBottom-0 {% if is_granted('ROLE_PREVIOUS_ADMIN') %} inpersonalizatua {% endif %}" role="navigation">
         <div class="navbar-header">

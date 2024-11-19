@@ -18,7 +18,9 @@ import $ from 'jquery';
 // Declare $ globally
 global.$ = $;
 global.jQuery = $;
-global.base = '/zergaordenantzak'
+const htmlElement = document.documentElement;
+const baseValue = htmlElement.getAttribute('base') || '';
+global.base = baseValue;
 
 var body = $('body');
 body.scrollspy({

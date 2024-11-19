@@ -1,6 +1,6 @@
 import '../../css/ordenantza/show.css';
 
-//import $ from 'jquery';
+import $ from 'jquery';
 
 $(function(){
    $(document).click(function (event) {

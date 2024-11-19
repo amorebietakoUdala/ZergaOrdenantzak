@@ -7,7 +7,7 @@ return [
     FOS\UserBundle\FOSUserBundle::class => ['all' => true],
     UserBundle\UserBundle::class => ['all' => true],
     ApiBundle\ApiBundle::class => ['all' => true],
-    FrontendBundle\FrontendBundle::class => ['all' => true],
+//    FrontendBundle\FrontendBundle::class => ['all' => true],
     JMS\SerializerBundle\JMSSerializerBundle::class => ['all' => true],
     Knp\Bundle\MenuBundle\KnpMenuBundle::class => ['all' => true],
     MBence\OpenTBSBundle\OpenTBSBundle::class => ['all' => true],

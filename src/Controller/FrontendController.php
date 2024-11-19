@@ -1,19 +1,29 @@
 <?php
 
-namespace FrontendBundle\Controller;
+namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use App\Entity\Ordenantza;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\ArrayAdapter;
+use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\HttpFoundation\Response;
 use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
 
-class DefaultController extends Controller
+class FrontendController extends AbstractController
 {
+
+    private $em;
+
+    public function __construct(EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
     /**
      * @Route("/{udala}/{_locale}/", name="frontend_ordenantza_index",
      *         requirements={
@@ -24,10 +34,8 @@ class DefaultController extends Controller
      */
     public function indexAction($udala)
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $query = $em->createQuery('
-          SELECT o FROM AppBundle:Ordenantza o LEFT JOIN AppBundle:Udala u  WITH o.udala=u.id
+        $query = $this->em->createQuery('
+          SELECT o FROM App:Ordenantza o LEFT JOIN App:Udala u  WITH o.udala=u.id
             WHERE u.kodea = :udala
             ORDER BY o.kodea ASC
         ');
@@ -53,11 +61,9 @@ class DefaultController extends Controller
  */
     public function odtAction($id)
     {
-
-        $em = $this->getDoctrine()->getManager();
-        $ordenantza = $em->getRepository(Ordenantza::class)->findOneById($id);
-        $ordenantza = $this->getDoctrine()
-            ->getRepository( Ordenantza::class )->getOrdenantzabat( $id );
+         $ordenantza = $this->em->getRepository(Ordenantza::class)->find($id);
+        // $ordenantza = $this->getDoctrine()
+        //     ->getRepository( Ordenantza::class )->getOrdenantzabat( $id );
 //        $parrafoak = $ordenantza->getParrafoak();
 
 //        $izenburuaeu = $ordenantza->getIzenburuaeu();
@@ -106,9 +112,7 @@ class DefaultController extends Controller
      */
     public function htmlAction($id)
     {
-
-        $em = $this->getDoctrine()->getManager();
-        $ordenantza = $em->getRepository(Ordenantza::class)->findOneById($id);
+       $ordenantza = $this->em->getRepository(Ordenantza::class)->find($id);
 
         $fitxero=  $this->render('frontend/mihtml.html.twig', array(
             'ordenantza' => $ordenantza
@@ -153,9 +157,8 @@ class DefaultController extends Controller
      */
     public function pdfAction($udala, TCPDFController $tcpdfController)
     {
-        $em = $this->getDoctrine()->getManager();
-        $query = $em->createQuery('
-          SELECT o FROM AppBundle:Ordenantza o LEFT JOIN AppBundle:Udala u  WITH o.udala=u.id
+        $query = $this->em->createQuery('
+          SELECT o FROM App:Ordenantza o LEFT JOIN App:Udala u  WITH o.udala=u.id
             WHERE u.kodea = :udala
             ORDER BY o.kodea ASC
         ');
@@ -188,23 +191,23 @@ class DefaultController extends Controller
         $pdf->Output($filename.".pdf",'I'); // This will output the PDF as a response directly
     }
 
-    private function getFilename($udala, $ordenantzaKodea)
-    {
-        $fs = new Filesystem();
+    // private function getFilename($udala, $ordenantzaKodea)
+    // {
+    //     $fs = new Filesystem();
 
-        $base = $this->get('kernel')->getRootDir() . '/../web/doc/';
+    //     $base = $this->get('kernel')->getRootDir() . '/../web/doc/';
 
-        try {
-            if ( $fs->exists($base . $udala) == false ) {
-                $fs->mkdir($base .$udala);
-            }
-        } catch (IOExceptionInterface $e) {
-            echo "Arazoa bat egon da karpeta sortzerakoan ".$e->getPath();
-        }
+    //     try {
+    //         if ( $fs->exists($base . $udala) == false ) {
+    //             $fs->mkdir($base .$udala);
+    //         }
+    //     } catch (IOExceptionInterface $e) {
+    //         echo "Arazoa bat egon da karpeta sortzerakoan ".$e->getPath();
+    //     }
 
-        return $base.$udala."/".$ordenantzaKodea;
+    //     return $base.$udala."/".$ordenantzaKodea;
 
-    }
+    // }
 
 
 
@@ -222,8 +225,7 @@ class DefaultController extends Controller
      */
     public function historikoaAction($page,$udala)
     {
-        $em = $this->getDoctrine()->getManager();
-        $historikoas =  $em->createQuery("SELECT h FROM AppBundle:Historikoa h order by h.id DESC")->getResult();
+                $historikoas =  $this->em->createQuery("SELECT h FROM App:Historikoa h order by h.id DESC")->getResult();
 
         $adapter = new ArrayAdapter($historikoas);
         $pagerfanta = new Pagerfanta($adapter);

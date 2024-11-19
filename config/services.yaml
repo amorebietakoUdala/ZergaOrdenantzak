@@ -42,12 +42,12 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-    FrontendBundle\:
-        resource: '../src/FrontendBundle/'
+    # FrontendBundle\:
+    #     resource: '../src/FrontendBundle/'
 
-    FrontendBundle\Controller\:
-        resource: '../src/FrontendBundle/Controller/'
-        tags: ['controller.service_arguments']
+    # FrontendBundle\Controller\:
+    #     resource: '../src/FrontendBundle/Controller/'
+    #     tags: ['controller.service_arguments']
 
     ApiBundle\:
         resource: '../src/ApiBundle'

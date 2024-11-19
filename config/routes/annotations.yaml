@@ -39,10 +39,10 @@ api:
     type:     annotation
     prefix:   /
 
-frontend:
-    resource: "@FrontendBundle/Controller/"
-    type:     annotation
-    prefix:   /
+# frontend:
+#     resource: "@FrontendBundle/Controller/"
+#     type:     annotation
+#     prefix:   /
 
 
 # app_ordenantza:

@@ -204,3 +204,7 @@ h4  {
 .cke_screen_reader_only, .cke_copyformatting_notification, .cke_notification, .cke_notification_warning, .cke_notifications_area {
     display: none;
 }
+
+blockquote {
+    font-size: 1em !important;
+}

@@ -128,3 +128,12 @@
 {% endblock %}
 
 
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('frontend-show') }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ parent() }}
+	{{ encore_entry_script_tags('frontend-show') }}
+{% endblock %}

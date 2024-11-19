@@ -8,9 +8,9 @@ parameters:
     mailer_host: 192.168.18.16
     mailer_user: test@test.com
     mailer_password: 'test app'
-    secret: ThisTokenIsNotSoSecretChangeIt
+    secret: '%env(APP_SECRET)%'
     izfe_login_path: ''
-    zzoo_aplikazioaren_API_url: 'http://garapenak2:8888/zzoo/api'
+    zzoo_aplikazioaren_API_url: '%env(ZZOO_APLIKAZIOAREN_API_URL)%'
     locale: 'eu'
 
 services:

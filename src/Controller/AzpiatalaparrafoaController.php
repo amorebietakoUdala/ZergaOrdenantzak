@@ -1,14 +1,14 @@
 <?php
 
-    namespace App\Controller;
+namespace App\Controller;
 
-    use App\Entity\Azpiatala;
-    use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-    use App\Entity\Azpiatalaparrafoa;
-    use App\Form\AzpiatalaparrafoaType;
+use App\Entity\Azpiatala;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use App\Entity\Azpiatalaparrafoa;
+use App\Form\AzpiatalaparrafoaType;
 use App\Repository\AzpiatalaRepository;
 use Doctrine\ORM\EntityManagerInterface;
 

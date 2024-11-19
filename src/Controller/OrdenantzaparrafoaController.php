@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Ordenantza;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use App\Entity\Ordenantzaparrafoa;
@@ -17,7 +17,7 @@ use Doctrine\ORM\EntityManagerInterface;
  *
  * @Route("/admin/ordenantzaparrafoa")
  */
-class OrdenantzaparrafoaController extends Controller
+class OrdenantzaparrafoaController extends AbstractController
 {
 
     public $em;

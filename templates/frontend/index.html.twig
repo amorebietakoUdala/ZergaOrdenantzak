@@ -124,8 +124,8 @@
 
 {% block javascripts %}
     {{ parent() }}
-
-    <script>
+    {{ encore_entry_script_tags('frontend-index') }}
+    {# <script>
 
         $(document).ajaxStart(function(){
             $('#loading').show();
@@ -150,5 +150,5 @@
 
             });
         });
-    </script>
+    </script> #}
 {% endblock %}

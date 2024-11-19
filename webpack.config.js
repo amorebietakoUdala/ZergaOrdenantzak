@@ -27,6 +27,8 @@ Encore
     .addEntry('historikoa-new', './assets/js/historikoa/new.js')
     .addEntry('baldintza-index', './assets/js/baldintza/index.js')
     .addEntry('apikudeatzailea', './assets/js/apikudeatzailea/main.js')
+    .addEntry('frontend-index', './assets/js/frontend/index.js')
+    .addEntry('udala-index', './assets/js/udala/index.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')
@@ -58,7 +60,7 @@ Encore
     // enables @babel/preset-env polyfills
     .configureBabelPresetEnv((config) => {
         config.useBuiltIns = 'usage';
-        config.corejs = 3;
+        config.corejs = 3.23;
     })
 
     // enables Sass/SCSS support
@@ -80,6 +82,8 @@ Encore
         {from: './assets/images', to: 'images/[path][name].[hash:8].[ext]'},
         // Esto es para hacer una copia de assets tal cual en build y así no tener que copiar los jss fuera de build        
         {from: './assets/js', to: 'js/[path][name].[ext]'},
+        {from: './assets/css', to: 'css/[path][name].[ext]'},
+        {from: './assets/fonts', to: 'fonts/[path][name].[ext]'},
     ])
 ;
 

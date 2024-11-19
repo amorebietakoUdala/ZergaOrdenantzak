@@ -55,16 +55,5 @@
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
-    <script type="text/javascript">
-        function ezabatu (id)
-        {
-            var r = confirm("Udala EZABATU. Ziur zaude? Ekintza honek udalaren erregistro guztiak ezabatuko ditu!!");
-            if (r == true)
-            {
-                document.getElementById(id).submit()
-            }else
-            {
-            }
-        };
-    </script>
+    {{ encore_entry_script_tags('udala-index') }}
 {% endblock %}

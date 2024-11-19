@@ -2187,6 +2187,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"bootbox@npm:^4.4.0":
+  version: 4.4.0
+  resolution: "bootbox@npm:4.4.0"
+  checksum: ad450dcbba29015a5f3c5401c44d989cdf29f20fff73ad5ddd5fd5a4ba2cbba652acc4c6062946c5a945fe0fa32d680a605cf330299ddbc69cb334df09221296
+  languageName: node
+  linkType: hard
+
 "bootstrap@npm:^3.0":
   version: 3.4.1
   resolution: "bootstrap@npm:3.4.1"
@@ -2583,7 +2590,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"core-js@npm:^3.0.0":
+"core-js@npm:^3.23":
   version: 3.39.0
   resolution: "core-js@npm:3.39.0"
   checksum: 7a3670e9a2a89e0a049daa288d742d09f6e16d27a8945c5e2ef6fc45dc57e5c4bc5db589da05947486f54ae978d14cf27bd3fb1db0b9907000a611e8af37355b
@@ -3425,6 +3432,13 @@ __metadata:
     debug:
       optional: true
   checksum: 859e2bacc7a54506f2bf9aacb10d165df78c8c1b0ceb8023f966621b233717dab56e8d08baadc3ad3b9db58af290413d585c999694b7c146aaf2616340c3d2a6
+  languageName: node
+  linkType: hard
+
+"font-awesome@npm:4.6.3":
+  version: 4.6.3
+  resolution: "font-awesome@npm:4.6.3"
+  checksum: c63f849ce322bdadf3e52d5251b8d2779d7ad7e7e12056b0080b9f655e2507af12551407cac011c07bac41cd0a9a5af32ed1c20246b5851d115f383bcb207fa4
   languageName: node
   linkType: hard
 
@@ -5735,12 +5749,15 @@ __metadata:
     "@hotwired/stimulus": ^3.0.0
     "@symfony/stimulus-bridge": ^3.0.0
     "@symfony/webpack-encore": ^1.7.0
+    bootbox: ^4.4.0
     bootstrap: ^3.0
-    core-js: ^3.0.0
+    core-js: ^3.23
     file-loader: ^6.0.0
+    font-awesome: 4.6.3
     jquery: 1.11
     regenerator-runtime: ^0.13.2
     webpack-notifier: ^1.6.0
+    webpack-stats-plugin: ^1.1.3
   languageName: unknown
   linkType: soft
 
@@ -6716,6 +6733,13 @@ __metadata:
   version: 3.2.3
   resolution: "webpack-sources@npm:3.2.3"
   checksum: 989e401b9fe3536529e2a99dac8c1bdc50e3a0a2c8669cbafad31271eadd994bc9405f88a3039cd2e29db5e6d9d0926ceb7a1a4e7409ece021fe79c37d9c4607
+  languageName: node
+  linkType: hard
+
+"webpack-stats-plugin@npm:^1.1.3":
+  version: 1.1.3
+  resolution: "webpack-stats-plugin@npm:1.1.3"
+  checksum: 9a71d329c5d55e33105abfe4c72d715a0a6ce4ab8da6faa2bc5a65953915d656cdf3c420b3fc0628b0d9859cc59c09e49f731645746739e417da531130a7a9a8
   languageName: node
   linkType: hard
 

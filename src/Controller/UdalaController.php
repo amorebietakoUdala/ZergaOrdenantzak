@@ -3,21 +3,29 @@
 namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use App\Entity\Udala;
 use App\Form\UdalaType;
+use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\ArrayAdapter;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 /**
  * Udala controller.
  *
  * @Route("/{_locale}/admin/udala")
  */
-class UdalaController extends Controller
+class UdalaController extends AbstractController
 {
+    private $em;
+
+    public function __construct( EntityManagerInterface $em)
+    {
+        $this->em = $em;
+    }
+
     /**
      * Lists all Udala entities.
      *
@@ -27,13 +35,10 @@ class UdalaController extends Controller
      */
     public function indexAction($page)
     {
-        $auth_checker = $this->get('security.authorization_checker');
-        if ($auth_checker->isGranted('ROLE_SUPER_ADMIN'))
-//        if ($auth_checker->isGranted('ROLE_ADMIN'))
+        if ($this->isGranted('ROLE_SUPER_ADMIN'))
         {
-            $em = $this->getDoctrine()->getManager();
-
-            $udalas = $em->getRepository('AppBundle:Udala')->findAll();
+            
+            $udalas = $this->em->getRepository(Udala::class)->findAll();
 
             $adapter = new ArrayAdapter($udalas);
             $pagerfanta = new Pagerfanta($adapter);
@@ -58,14 +63,13 @@ class UdalaController extends Controller
                 throw $this->createNotFoundException("Orria ez da existitzen");
             }
 
-
             return $this->render('udala/index.html.twig', array(
     //            'udalas' => $udalas,
                 'udalas' => $entities,
                 'deleteforms' => $deleteForms,
                 'pager' => $pagerfanta,
             ));
-        }else if ($auth_checker->isGranted('ROLE_ADMIN'))
+        }else if ($this->isGranted('ROLE_ADMIN'))
         {
             return $this->redirectToRoute('udala_show', array('id' => $this->getUser()->getUdala()->getId()));
         }else
@@ -84,16 +88,14 @@ class UdalaController extends Controller
      */
     public function newAction(Request $request)
     {
-        $auth_checker = $this->get('security.authorization_checker');
-        if ($auth_checker->isGranted('ROLE_SUPER_ADMIN')) {
+        if ($this->isGranted('ROLE_SUPER_ADMIN')) {
             $udala = new Udala();
-            $form = $this->createForm('App\Form\UdalaType', $udala);
+            $form = $this->createForm(UdalaType::class, $udala);
             $form->handleRequest($request);
 
             if ($form->isSubmitted() && $form->isValid()) {
-                $em = $this->getDoctrine()->getManager();
-                $em->persist($udala);
-                $em->flush();
+                $this->em->persist($udala);
+                $this->em->flush();
 
                 return $this->redirectToRoute('udala_show', array('id' => $udala->getId()));
             }
@@ -133,13 +135,12 @@ class UdalaController extends Controller
     public function editAction(Request $request, Udala $udala)
     {
         $deleteForm = $this->createDeleteForm($udala);
-        $editForm = $this->createForm('App\Form\UdalaType', $udala);
+        $editForm = $this->createForm(UdalaType::class, $udala);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($udala);
-            $em->flush();
+                        $this->em->persist($udala);
+            $this->em->flush();
 
             return $this->redirectToRoute('udala_edit', array('id' => $udala->getId()));
         }
@@ -163,9 +164,8 @@ class UdalaController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $em = $this->getDoctrine()->getManager();
-            $em->remove($udala);
-            $em->flush();
+                        $this->em->remove($udala);
+            $this->em->flush();
         }
 
         return $this->redirectToRoute('udala_index');

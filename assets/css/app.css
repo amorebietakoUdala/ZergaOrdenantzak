@@ -2,9 +2,9 @@
 
 /* @import 'ie10-viewport-bug-workaround.css'; */
 @import 'backend.css';
-@import 'bootstrap-editable.css';
+/* @import 'bootstrap-editable.css'; */
 /* @import '3/bootstrap-wysihtml5-0.0.3.css'; */
-@import 'calendar/bootstrap-datepicker3.min.css';
+/* @import 'calendar/bootstrap-datepicker3.min.css'; */
 @import '~font-awesome/css/font-awesome.css';
 
 .editable-container.editable-inline,

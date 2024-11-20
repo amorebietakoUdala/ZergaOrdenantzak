@@ -80,4 +80,14 @@
             return $this->findBy(array(), array('kodea' => 'ASC'));
         }
 
+        public function getOrdenantzakByUdalKodea(string $kodea) {
+            $qb = $this->createQueryBuilder('o')
+                ->innerJoin('App:Udala','u')
+                ->andWhere('u.kodea = :udalkodea')
+                ->setParameter('udalkodea',$kodea)
+                ->andWhere('((o.ezabatu IS NULL) or (o.ezabatu <> 1))');
+            $ordenantzak = $qb->getQuery()->getResult();
+            return $ordenantzak;
+        }
+
     }

@@ -46,4 +46,13 @@ class AtalaRepository extends ServiceEntityRepository
             $this->_em->flush();
         }
     }
+
+    public function getAtalakByOrdenantzaId($ordenantzaid) {
+        $qb = $this->createQueryBuilder('a')
+           ->innerJoin('a.ordenantza', 'o', 'WITH', 'o.id = :ordenantzaid')
+           ->setParameter('ordenantzaid', $ordenantzaid)
+           ->andWhere('((a.ezabatu IS NULL) or (a.ezabatu <> 1))');
+        $atalak = $qb->getQuery()->getResult();
+        return $atalak;
+    }    
 }

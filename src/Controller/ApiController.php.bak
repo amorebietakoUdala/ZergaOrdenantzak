@@ -5,26 +5,37 @@
  * Time: 10:09
  */
 
-namespace ApiBundle\Controller;
+namespace App\Controller;
 
-use App\Form\AtalaType;
-use App\Entity\Atala;
-
-
+use App\Repository\AtalaRepository;
+use App\Repository\AzpiatalaRepository;
+use App\Repository\OrdenantzaRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations;
-use FOS\RestBundle\Controller\FOSRestController;
-use FOS\RestBundle\Request\ParamFetcherInterface;
 use FOS\RestBundle\View\View;
-
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Form\FormTypeInterface;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
-
-class ApiController extends FOSRestController
+class ApiController extends AbstractFOSRestController
 {
+
+    private $em;
+    private $ordenantzaRepo;
+    private $atalaRepo;
+    private $azpiatalaRepo;
+
+    public function __construct(
+        EntityManagerInterface $em, 
+        OrdenantzaRepository $ordenantzaRepo, 
+        AtalaRepository $atalaRepo,
+        AzpiatalaRepository $azpiatalaRepo
+    )
+    {
+        $this->em = $em;
+        $this->ordenantzaRepo = $ordenantzaRepo;
+        $this->atalaRepo = $atalaRepo;
+        $this->azpiatalaRepo = $azpiatalaRepo;
+    }
 
     /**
      * Ordenantza guztien zerrenda.
@@ -44,8 +55,7 @@ class ApiController extends FOSRestController
      */
     public function getOrdenantzakAction()
     {
-        $em         = $this->getDoctrine()->getManager();
-        $ordenantzak = $em->getRepository(Ordenantza::class)->findAll();
+        $ordenantzak = $this->ordenantzaRepo->findAll();
         $view = View::create();
         $view->setData($ordenantzak);
         header('content-type: application/json; charset=utf-8');
@@ -63,8 +73,7 @@ class ApiController extends FOSRestController
      * @Annotations\View()
      */
     public function getOrdenantzaAction($id){
-        $em         = $this->getDoctrine()->getManager();
-        $ordenantza = $em->getRepository(Ordenantza::class)->findById($id);
+        $ordenantza = $this->ordenantzaRepo->find($id);
         header('content-type: application/json; charset=utf-8');
         header("access-control-allow-origin: *");
         return $ordenantza;
@@ -88,8 +97,7 @@ class ApiController extends FOSRestController
      */
     public function getAtalakAction()
     {
-        $em         = $this->getDoctrine()->getManager();
-        $atalak = $em->getRepository('AppBundle:Atala')->findAll();
+        $atalak = $this->atalaRepo->findAll();
         $view = View::create();
         $view->setData($atalak);
         header('content-type: application/json; charset=utf-8');
@@ -107,8 +115,7 @@ class ApiController extends FOSRestController
      * @Annotations\View()
      */
     public function getAtalaAction($id){
-        $em         = $this->getDoctrine()->getManager();
-        $atala = $em->getRepository('AppBundle:Atala')->findById($id);
+        $atala = $this->atalaRepo->find($id);
         header('content-type: application/json; charset=utf-8');
         header("access-control-allow-origin: *");
         return $atala;
@@ -132,11 +139,11 @@ class ApiController extends FOSRestController
      */
     public function getAzpiatalakAction($udalaid)
     {
-        $em = $this->getDoctrine()->getManager();
         /** @var  $query \Doctrine\DBAL\Query\QueryBuilder */
-        $query = $em->createQuery('SELECT p.id, p.kodea, p.izenburuaeu FROM AppBundle:Azpiatala p WHERE p.udala=:udalaid');
-        $query->setParameter( 'udalaid', $udalaid );
-        $azpiatalak = $query->getResult();
+        // $query = $em->createQuery('SELECT p.id, p.kodea, p.izenburuaeu FROM App:Azpiatala p WHERE p.udala=:udalaid');
+        // $query->setParameter( 'udalaid', $udalaid );
+        // $azpiatalak = $query->getResult();
+        $azpiatalak = $this->azpiatalaRepo->findAzpiatalakByUdala($udalaid);
 
         $view = View::create();
         $view->setData($azpiatalak);
@@ -163,9 +170,7 @@ class ApiController extends FOSRestController
      */
     public function getAzpiatalaAction($id)
     {
-        $em         = $this->getDoctrine()->getManager();
-        $azpiatalak = $em->getRepository( 'AppBundle:Azpiatala' )->findOneById( $id );
-
+        $azpiatalak = $this->azpiatalaRepo->find( $id );
         $view = View::create();
         $view->setData($azpiatalak);
         header('content-type: application/json; charset=utf-8');

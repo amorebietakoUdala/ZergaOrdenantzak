@@ -6,6 +6,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use App\Entity\Ordenantza;
+use App\Repository\HistorikoaRepository;
+use App\Repository\OrdenantzaRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 use Pagerfanta\Pagerfanta;
@@ -18,10 +20,14 @@ class FrontendController extends AbstractController
 {
 
     private $em;
+    private $ordenantzaRepo;
+    private $historikoaRepo;
 
-    public function __construct(EntityManagerInterface $em)
+    public function __construct(EntityManagerInterface $em, OrdenantzaRepository $ordenantzaRepo, HistorikoaRepository $historikoaRepo)
     {
         $this->em = $em;
+        $this->ordenantzaRepo = $ordenantzaRepo;
+        $this->historikoaRepo = $historikoaRepo;
     }
 
     /**
@@ -61,7 +67,7 @@ class FrontendController extends AbstractController
  */
     public function odtAction($id)
     {
-         $ordenantza = $this->em->getRepository(Ordenantza::class)->find($id);
+         $ordenantza = $this->ordenantzaRepo->getOrdenantzabat($id);
         // $ordenantza = $this->getDoctrine()
         //     ->getRepository( Ordenantza::class )->getOrdenantzabat( $id );
 //        $parrafoak = $ordenantza->getParrafoak();
@@ -112,7 +118,7 @@ class FrontendController extends AbstractController
      */
     public function htmlAction($id)
     {
-       $ordenantza = $this->em->getRepository(Ordenantza::class)->find($id);
+       $ordenantza = $this->ordenantzaRepo->find($id);
 
         $fitxero=  $this->render('frontend/mihtml.html.twig', array(
             'ordenantza' => $ordenantza
@@ -157,13 +163,7 @@ class FrontendController extends AbstractController
      */
     public function pdfAction($udala, TCPDFController $tcpdfController)
     {
-        $query = $this->em->createQuery('
-          SELECT o FROM App:Ordenantza o LEFT JOIN App:Udala u  WITH o.udala=u.id
-            WHERE u.kodea = :udala
-            ORDER BY o.kodea ASC
-        ');
-        $query->setParameter('udala', $udala);
-        $ordenantzas = $query->getResult();
+        $ordenantzas = $this->ordenantzaRepo->findBy([ 'udala' => $udala ]);
 
         $pdf = $tcpdfController->create('vertical', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
         $pdf->SetAuthor($udala);
@@ -225,11 +225,10 @@ class FrontendController extends AbstractController
      */
     public function historikoaAction($page,$udala)
     {
-                $historikoas =  $this->em->createQuery("SELECT h FROM App:Historikoa h order by h.id DESC")->getResult();
-
+        //$historikoas =  $this->em->createQuery("SELECT h FROM App:Historikoa h order by h.id DESC")->getResult();
+        $historikoas = $this->historikoaRepo->findBy([],['id' => 'DESC']);
         $adapter = new ArrayAdapter($historikoas);
         $pagerfanta = new Pagerfanta($adapter);
-
         try {
             $entities = $pagerfanta
                 ->setMaxPerPage(25)
@@ -240,16 +239,12 @@ class FrontendController extends AbstractController
             throw $this->createNotFoundException("Orria ez da existitzen");
         }
 
-
-
         return $this->render('frontend/historikoa.html.twig', array(
             'historikoas' => $entities,
             'pager' => $pagerfanta,
             'udala' => $udala
         ));
     }
-
-
 
     /**
      * Finds and displays a Ordenantza entity.
@@ -269,9 +264,4 @@ class FrontendController extends AbstractController
             'udala'=>$udala
         ));
     }
-
-
-
-
-
 }

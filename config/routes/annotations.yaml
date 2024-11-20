@@ -6,26 +6,6 @@ kernel:
     resource: ../../src/Kernel.php
     type: annotation
 
-# app_azpiatalaparrafoaondoren:
-#     resource: "@AppBundle/Controller/AzpiatalaparrafoaondorenController.php"
-#     type:     annotation
-
-# app_baldintza:
-#     resource: "@AppBundle/Controller/BaldintzaController.php"
-#     type:     annotation
-
-# app_udala:
-#     resource: "@AppBundle/Controller/UdalaController.php"
-#     type:     annotation
-
-# app_azpiatalaparrafoa:
-#     resource: "@AppBundle/Controller/AzpiatalaparrafoaController.php"
-#     type:     annotation
-
-# app_ordenantzaparrafoa:
-#     resource: "@AppBundle/Controller/OrdenantzaparrafoaController.php"
-#     type:     annotation
-
 user:
     resource: "@UserBundle/Controller/"
     type:     annotation
@@ -34,63 +14,6 @@ user:
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
-api:
-    resource: "@ApiBundle/Controller/"
-    type:     annotation
-    prefix:   /
-
-# frontend:
-#     resource: "@FrontendBundle/Controller/"
-#     type:     annotation
-#     prefix:   /
-
-
-# app_ordenantza:
-#     resource: "@AppBundle/Controller/OrdenantzaController.php"
-#     type:     annotation
-
-# app_kontzeptua:
-#     resource: "@AppBundle/Controller/KontzeptuaController.php"
-#     type:     annotation
-
-# app_historikoa:
-#     resource: "@AppBundle/Controller/HistorikoaController.php"
-#     type:     annotation
-
-# app_kontzeptumota:
-#     resource: "@AppBundle/Controller/KontzeptumotaController.php"
-#     type:     annotation
-
-# app_azpiatala:
-#     resource: "@AppBundle/Controller/AzpiatalaController.php"
-#     type:     annotation
-
-# app_atalaparrafoa:
-#     resource: "@AppBundle/Controller/AtalaparrafoaController.php"
-#     type:     annotation
-
-# app_atala:
-#     resource: "@AppBundle/Controller/AtalaController.php"
-#     type:     annotation
-
-
-# app:
-#     resource: "@AppBundle/Controller/"
-#     type:     annotation
-
-api_atala:
-   type:     rest
-   resource: "@ApiBundle/Controller/ApiController.php"
-   prefix:   /api
-
-
-NelmioApiDocBundle:
-   resource: "@NelmioApiDocBundle/Resources/config/routing.yml"
-   prefix:   /api/doc
-
-fos_js_routing:
-    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
-
 backend_errorea:
     path:     admin/errorea
-    defaults: { _controller: App:Default:errorea  }
+    defaults: { _controller: App::Default::errorea  }

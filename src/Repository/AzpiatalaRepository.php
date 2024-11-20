@@ -46,4 +46,34 @@ class AzpiatalaRepository extends ServiceEntityRepository
             $this->_em->flush();
         }
     }
+
+    public function findAzpiatalakByUdala($udala) {
+        return $this->createQueryBuilder('a')
+            ->select('a.id, a.kodea, a.izenburuaeu')
+            ->andWhere('a.udala = :udala')
+            ->setParameter('udala', $udala)
+            ->orderBy('a.id', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function getAzpiatalakByUdala($udalaId) {
+        $qb = $this->createQueryBuilder('a')
+            ->select('a.id,a.kodea_prod,a.izenburuaeu_prod,a.izenburuaes_prod')
+            ->innerJoin('a.udala', 'u', 'WITH', 'u.id = :udalaId')
+            ->setParameter('udalaId', $udalaId)
+            ->andWhere('((a.ezabatu IS NULL) or (a.ezabatu <> 1))');
+        $azpiAtalak = $qb->getQuery()->getResult();
+        return $azpiAtalak;
+    }
+     
+    public function getAzpiatalaByAtala($atalaId){
+        $qb = $this->createQueryBuilder('a')
+        ->select('a.id,a.kodea_prod,a.izenburuaeu_prod,a.izenburuaes_prod')
+        ->innerJoin('a.atala', 'at', 'WITH', 'at.id = :atalaId')
+        ->setParameter('atalaId', $atalaId)
+        ->andWhere('((a.ezabatu IS NULL) or (a.ezabatu <> 1))');
+        $azpiAtalak = $qb->getQuery()->getResult();
+        return $azpiAtalak;
+    }    
 }

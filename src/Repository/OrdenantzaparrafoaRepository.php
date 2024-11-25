@@ -4,10 +4,8 @@
 
     use App\Entity\Ordenantzaparrafoa;
     use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-    use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface;
     use Doctrine\ORM\OptimisticLockException;
     use Doctrine\ORM\ORMException;
-    use Doctrine\ORM\Query;
     use Doctrine\Persistence\ManagerRegistry;
     use Gedmo\Sortable\Entity\Repository\SortableRepository;
 

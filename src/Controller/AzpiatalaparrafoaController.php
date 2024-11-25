@@ -2,7 +2,6 @@
 
 namespace App\Controller;
 
-use App\Entity\Azpiatala;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;

@@ -7,7 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use App\Entity\Atalaparrafoa;
-use App\Entity\Atala;
 use App\Form\AtalaparrafoaType;
 use App\Repository\AtalaRepository;
 use Doctrine\ORM\EntityManagerInterface;

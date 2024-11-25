@@ -208,3 +208,7 @@ h4  {
 blockquote {
     font-size: 1em !important;
 }
+
+.help-block {
+    color: red;
+}

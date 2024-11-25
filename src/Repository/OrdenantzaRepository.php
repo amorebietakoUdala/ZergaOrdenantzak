@@ -52,7 +52,6 @@
         {
             $em = $this->getEntityManager();
 
-
             $dql = "
             SELECT o,p,a,ap,az,azp,k,m,b
                 FROM App:Ordenantza o
@@ -65,8 +64,7 @@
                     LEFT JOIN k.kontzeptumota m
                     LEFT JOIN k.baldintza b
                 WHERE o.id = :id
-        ";
-
+            ";
 
             $consulta = $em->createQuery( $dql );
             $consulta->setParameter( 'id', $id );

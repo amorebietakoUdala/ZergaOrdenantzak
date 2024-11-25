@@ -20,13 +20,6 @@ class AtalaType extends AbstractType
             ->add('kodea')
             ->add('izenburuaeu')
             ->add('izenburuaes')
-
-//            ->add('izenburuaeu',CKEditorType::class, array(
-//                'config_name' => 'my_config_1',
-//            ))
-//            ->add('izenburuaes', CKEditorType::class, array(
-//                'config_name' => 'my_config_1',
-//            ))
             ->add('ordenantza')
             ->add('udala')
         ;

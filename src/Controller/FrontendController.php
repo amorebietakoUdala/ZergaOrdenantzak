@@ -68,8 +68,6 @@ class FrontendController extends AbstractController
     public function odtAction($id)
     {
          $ordenantza = $this->ordenantzaRepo->getOrdenantzabat($id);
-        // $ordenantza = $this->getDoctrine()
-        //     ->getRepository( Ordenantza::class )->getOrdenantzabat( $id );
 //        $parrafoak = $ordenantza->getParrafoak();
 
 //        $izenburuaeu = $ordenantza->getIzenburuaeu();

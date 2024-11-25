@@ -1,0 +1,32 @@
+{% extends "base.html.twig" %}
+
+{% trans_default_domain 'user_bundle' %}
+
+{% block title %}List Users{% endblock %}
+
+{% block authenticated %}{% endblock %}
+
+{% block navright %}
+    <ul class="nav navbar-nav navbar-right">
+        <li><a href="#" onclick="document.forms['{{ form.vars.name }}'].submit()" class="fa fa-floppy-o"> Gorde</a></li>
+        <li><a href="{{ path('admin_user_list') }}" class="fa fa-undo"> Utzi</a></li>
+        <li>&nbspp;</li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+    <main class="container-fluid" >
+        <div id="messages">
+            {{ include('@User/_messages.html.twig') }}
+        </div>        
+		{{ include ('@User/user/_form.html.twig', {'readonly': readonly, 'new': new , 'password_change': password_change}) }}
+    </main>
+{% endblock body %}
+
+{% block stylesheets %}
+	{{ encore_entry_link_tags('app') }}
+{% endblock %}
+
+{% block javascripts %}
+	{{ encore_entry_script_tags('app') }}
+{% endblock %}

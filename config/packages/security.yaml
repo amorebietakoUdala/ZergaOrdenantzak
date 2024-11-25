@@ -1,26 +1,45 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     encoders:
-        FOS\UserBundle\Model\UserInterface: bcrypt
+        AMREU\UserBundle\Model\UserInterface: bcrypt
+        legacy:
+            algorithm: sodium
+
+        App\Entity\User:
+            algorithm: bcrypt
+            migrate_from: 
+                - legacy
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'auto'
 
     role_hierarchy:
         ROLE_ADMIN:       ROLE_USER
         ROLE_SUPER_ADMIN: ROLE_ADMIN
 
     providers:
-        fos_userbundle:
-            id: fos_user.user_provider.username
-            
+        # fos_userbundle:
+        #     id: fos_user.user_provider.username
+
+        amreu_user_provider:
+            entity:
+                class: App\Entity\User
+                property: username
+
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
+            anonymous: lazy
             logout_on_user_change: true
             pattern: ^/
+            guard:
+                authenticators:
+                    - amreu.login.form.authenticator
+                entry_point: amreu.login.form.authenticator
             form_login:
 #                use_referer: true
-                provider: fos_userbundle
+                provider: amreu_user_provider
+                # provider: fos_userbundle
                 csrf_token_generator: security.csrf.token_manager
                 # if you are using Symfony < 2.8, use the following config instead:
                 # csrf_provider: form.csrf_provider
@@ -30,9 +49,8 @@ security:
             logout:
                 path:   /logout
                 target: /login
-            anonymous:    true
             switch_user:
-                provider:   fos_userbundle
+                provider: amreu_user_provider
                 role: ROLE_SUPER_ADMIN
 
             # activate different ways to authenticate
@@ -47,4 +65,5 @@ security:
         - { path: ^/login$, role: IS_AUTHENTICATED_ANONYMOUSLY }
 #        - { path: ^/[0-9][0-9][0-9][0-9]?[0-9]?/, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/(eu|es)/, role: [ROLE_ADMIN, ROLE_USER] }
+        - { path: ^/admin/user, role: [ROLE_ADMIN] }
         - { path: ^/admin/, role: [ROLE_ADMIN, ROLE_USER] }

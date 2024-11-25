@@ -5,13 +5,13 @@
     <title>Zerga Ordenantzak</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" type="image/x-icon"/>
-
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Expires" content="0" />
+    <link rel="shortcut icon" href="{{ asset('build/images/favicon.ico') }}" type="image/x-icon"/>
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
     {% endblock %}
-
-
 </head>
 
 <body data-spy="scroll" data-target="#navbar-example">
@@ -50,7 +50,7 @@
                     <li>&nbsp;</li>
                     <li>
                         {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
-                            <li class="list-inline"><a href="{{ path('users_index', {'_switch_user': '_exit'}) }}">Modu arruntera itzuli</a></li>
+                            <li class="list-inline"><a href="{{ path('admin_user_list', {'_switch_user': '_exit'}) }}">Modu arruntera itzuli</a></li>
                         {% endif %}
                     </li>
                 </ul>

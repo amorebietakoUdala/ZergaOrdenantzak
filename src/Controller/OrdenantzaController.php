@@ -85,12 +85,6 @@ use Symfony\Component\HttpFoundation\Response;
                     $testua = str_replace($ezabatu, "", $value);
                     $ordenantza->setIzenburuaes( $testua );
                     break;
-                // case "testuaeu":
-                //     $ordenantza->setTestuaeu( $value );
-                //     break;
-                // case "testuaes":
-                //     $ordenantza->setTestuaes( $value );
-                //     break;
                 case "kodea":
                     $ordenantza->setKodea( str_replace($ezabatu, "", $value) );
                     break;

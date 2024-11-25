@@ -2,13 +2,13 @@
 
     namespace App\Entity;
 
-    use FOS\UserBundle\Model\User as BaseUser;
+    use AMREU\UserBundle\Model\User as BaseUser;
     use Doctrine\ORM\Mapping as ORM;
     use App\Annotation\UdalaEgiaztatu;
 
     /**
-     * @ORM\Entity
-     * @ORM\Table(name="fos_user")
+     * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+     * @ORM\Table(name="user")
      * @UdalaEgiaztatu(userFieldName="udala_id")
      */
     class User extends BaseUser
@@ -22,6 +22,43 @@
         protected $id;
 
         /**
+         * @ORM\Column(type="string", length=180, unique=true)
+         */
+        protected $username;
+
+        /**
+         * @ORM\Column(type="json")
+         */
+        protected $roles = [];
+
+        /**
+         * @var string The hashed password
+         * @ORM\Column(type="string")
+         */
+        protected $password;
+
+        /**
+         * @ORM\Column(type="string", length=255)
+         */
+        protected $firstName;
+
+        /**
+         * @ORM\Column(type="string", length=255)
+         */
+        protected $email;
+
+        /**
+         * @ORM\Column(type="boolean", options={"default":"1"}, nullable=false)
+         */
+        protected $activated = true;
+
+        /**
+         * @ORM\Column(type="datetime", nullable=true)
+         */
+        protected $lastLogin;
+
+
+        /**
          * @var string
          * @ORM\Column(name="hizkuntza", type="string", length=10, nullable=true)
          */
@@ -33,13 +70,6 @@
          */
         private $udala;
 
-        
-        public function __construct()
-        {
-            parent::__construct();
-            // your own logic
-        }
-    
     /**
      * Set udala
      *

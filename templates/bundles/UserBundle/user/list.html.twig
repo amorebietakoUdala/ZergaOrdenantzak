@@ -1,0 +1,35 @@
+{% extends "base.html.twig" %}
+
+{% trans_default_domain 'user_bundle' %}
+
+{% block title %}List Users{% endblock %}
+
+{% block navright %}
+    <ul class="nav navbar-nav navbar-right">
+        <li>
+            <a href="{{ path('admin_user_new') }}" class="fa fa-plus">&nbsp;{{ 'Erabiltzaile berria' | trans }} </a>
+        </li>
+        <li>&nbspp;</li>
+    </ul>
+{% endblock %}
+
+{% block body %}
+    <main>
+		<div class="container-fluid">
+			{{ include('@User/user/_list.html.twig', {
+				'users': users,
+			})}}
+		</div>
+		{# {{ include('common/_alert.html.twig') }} #}
+    </main>
+{% endblock body %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('user-list') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('user-list') }}
+{% endblock %}

@@ -19,12 +19,21 @@
         "build": "encore production --progress"
     },
     "dependencies": {
+        "bazinga-translator": "^4.0.1",
         "bootbox": "^4.4.0",
         "bootstrap": "^3.0",
+        "bootstrap-table": "^1.21.1",
         "font-awesome": "4.6.3",
-        "jquery": "1.11"
+        "intl-messageformat": "^9.6.16",
+        "jquery": "1.11",
+        "sweetalert2": "^11.7.27",
+        "tableexport.jquery.plugin": "^1.26.0"
     },
     "resolutions": {
-        "jquery": "1.11.3"
+        "jquery": "1.11.3",
+        "xlsx": "https://cdn.sheetjs.com/xlsx-0.19.3/xlsx-0.19.3.tgz"
+    },
+    "overrides": {
+        "xlsx": "https://cdn.sheetjs.com/xlsx-0.19.3/xlsx-0.19.3.tgz"
     }
 }

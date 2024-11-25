@@ -4,19 +4,15 @@
 
     use App\Entity\Ordenantzaparrafoa;
     use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface;
-use Doctrine\ORM\OptimisticLockException;
+    use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepositoryInterface;
+    use Doctrine\ORM\OptimisticLockException;
     use Doctrine\ORM\ORMException;
     use Doctrine\ORM\Query;
     use Doctrine\Persistence\ManagerRegistry;
     use Gedmo\Sortable\Entity\Repository\SortableRepository;
 
-    // class OrdenantzaparrafoaRepository extends SortableRepository
-    // {
 
-    // }
-
-        /**
+     /**
      * @extends ServiceEntityRepository<Ordenantzaparrafoa>
      *
      * @method Ordenantzaparrafoa|null find($id, $lockMode = null, $lockVersion = null)

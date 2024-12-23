@@ -8,9 +8,10 @@ use App\Repository\AzpiatalaparrafoaondorenRepository;
 use App\Repository\AzpiatalaRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Azpiatalaparrafoaondoren controller.
@@ -32,10 +33,9 @@ class AzpiatalaparrafoaondorenController extends AbstractController
     }
 
     /**
-     * @Route("/up/{id}", name="admin_azpiatalaparrafoaondoren_up")
-     * @Method("GET")
+     * @Route("/up/{id}", name="admin_azpiatalaparrafoaondoren_up", methods={"GET"})
      */
-    public function upAction(Request $request, Azpiatalaparrafoaondoren $op)
+    public function up(Request $request, Azpiatalaparrafoaondoren $op): RedirectResponse
     {
         $op->setOrdena($op->getOrdena() - 1);
         $this->em->persist($op);
@@ -45,10 +45,9 @@ class AzpiatalaparrafoaondorenController extends AbstractController
     }
 
     /**
-     * @Route("/down/{id}", name="admin_azpiatalaparrafoaondoren_down")
-     * @Method("GET")
+     * @Route("/down/{id}", name="admin_azpiatalaparrafoaondoren_down", methods={"GET"})
      */
-    public function downAction(Request $request, Azpiatalaparrafoaondoren $op)
+    public function down(Request $request, Azpiatalaparrafoaondoren $op): RedirectResponse
     {
         $op->setOrdena($op->getOrdena() + 1);
         $this->em->persist($op);
@@ -59,10 +58,9 @@ class AzpiatalaparrafoaondorenController extends AbstractController
     /**
      * Lists all azpiatalaparrafoaondoren entities.
      *
-     * @Route("/", name="admin_azpiatalaparrafoaondoren_index")
-     * @Method("GET")
+     * @Route("/", name="admin_azpiatalaparrafoaondoren_index", methods={"GET"})
      */
-    public function indexAction()
+    public function index(): Response
     {
 
         $azpiatalaparrafoaondorens = $this->apoRepo->findAll();
@@ -75,10 +73,9 @@ class AzpiatalaparrafoaondorenController extends AbstractController
     /**
      * Creates a new azpiatalaparrafoaondoren entity.
      *
-     * @Route("/new/{azpiatalaid}", options = { "expose" = true }, name="admin_azpiatalaparrafoaondoren_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new/{azpiatalaid}", options={"expose"=true}, name="admin_azpiatalaparrafoaondoren_new", methods={"GET", "POST"})
      */
-    public function newAction(Request $request, $azpiatalaid )
+    public function new(Request $request, $azpiatalaid )
     {
         $em = $this->getDoctrine();
 
@@ -106,10 +103,9 @@ class AzpiatalaparrafoaondorenController extends AbstractController
 
     /**
      *
-     * @Route("/ezabatu/{id}", options = { "expose" = true }, name="admin_azpiatalaparrafoaondoren_ezabatu")
-     * @Method("GET")
+     * @Route("/ezabatu/{id}", options={"expose"=true}, name="admin_azpiatalaparrafoaondoren_ezabatu", methods={"GET"})
      */
-    public function ezabatuAction(Azpiatalaparrafoaondoren $azpiatalaparrafoaondoren)
+    public function ezabatu(Azpiatalaparrafoaondoren $azpiatalaparrafoaondoren): Response
     {
         $deleteForm = $this->createDeleteForm($azpiatalaparrafoaondoren);
 
@@ -122,10 +118,9 @@ class AzpiatalaparrafoaondorenController extends AbstractController
     /**
      * Deletes a azpiatalaparrafoaondoren entity.
      *
-     * @Route("/{id}", name="admin_azpiatalaparrafoaondoren_delete")
-     * @Method("DELETE")
+     * @Route("/{id}", name="admin_azpiatalaparrafoaondoren_delete", methods={"DELETE"})
      */
-    public function deleteAction(Request $request, Azpiatalaparrafoaondoren $azpiatalaparrafoaondoren)
+    public function delete(Request $request, Azpiatalaparrafoaondoren $azpiatalaparrafoaondoren): RedirectResponse
     {
         $form = $this->createDeleteForm($azpiatalaparrafoaondoren);
         $form->handleRequest($request);
@@ -143,13 +138,13 @@ class AzpiatalaparrafoaondorenController extends AbstractController
      *
      * @param Azpiatalaparrafoaondoren $azpiatalaparrafoaondoren The azpiatalaparrafoaondoren entity
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return Form The form
      */
     private function createDeleteForm(Azpiatalaparrafoaondoren $azpiatalaparrafoaondoren)
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('admin_azpiatalaparrafoaondoren_delete', array('id' => $azpiatalaparrafoaondoren->getId())))
-            ->setMethod('DELETE')
+            ->setMethod(Request::METHOD_DELETE)
             ->getForm()
         ;
     }

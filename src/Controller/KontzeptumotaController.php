@@ -4,12 +4,13 @@ namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Kontzeptumota;
 use App\Form\KontzeptumotaType;
 use App\Repository\KontzeptumotaRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Kontzeptumota controller.
@@ -31,10 +32,9 @@ class KontzeptumotaController extends AbstractController
     /**
      * Lists all Kontzeptumota entities.
      *
-     * @Route("/", name="admin_kontzeptumota_index")
-     * @Method("GET")
+     * @Route("/", name="admin_kontzeptumota_index", methods={"GET"})
      */
-    public function indexAction()
+    public function index(): Response
     {
 
         $kontzeptumotas = $this->kontzeptumotaRepo->findAll();
@@ -47,10 +47,9 @@ class KontzeptumotaController extends AbstractController
     /**
      * Creates a new Kontzeptumota entity.
      *
-     * @Route("/new", name="admin_kontzeptumota_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", name="admin_kontzeptumota_new", methods={"GET", "POST"})
      */
-    public function newAction(Request $request)
+    public function new(Request $request)
     {
         $kontzeptumotum = new Kontzeptumota();
         $form = $this->createForm(KontzeptumotaType::class, $kontzeptumotum);
@@ -73,10 +72,9 @@ class KontzeptumotaController extends AbstractController
     /**
      * Finds and displays a Kontzeptumota entity.
      *
-     * @Route("/{id}", name="admin_kontzeptumota_show")
-     * @Method("GET")
+     * @Route("/{id}", name="admin_kontzeptumota_show", methods={"GET"})
      */
-    public function showAction(Kontzeptumota $kontzeptumotum)
+    public function show(Kontzeptumota $kontzeptumotum): Response
     {
         $deleteForm = $this->createDeleteForm($kontzeptumotum);
 
@@ -89,10 +87,9 @@ class KontzeptumotaController extends AbstractController
     /**
      * Displays a form to edit an existing Kontzeptumota entity.
      *
-     * @Route("/{id}/edit", name="admin_kontzeptumota_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", name="admin_kontzeptumota_edit", methods={"GET", "POST"})
      */
-    public function editAction(Request $request, Kontzeptumota $kontzeptumotum)
+    public function edit(Request $request, Kontzeptumota $kontzeptumotum)
     {
         $deleteForm = $this->createDeleteForm($kontzeptumotum);
         $editForm = $this->createForm(KontzeptumotaType::class, $kontzeptumotum);
@@ -115,10 +112,9 @@ class KontzeptumotaController extends AbstractController
     /**
      * Deletes a Kontzeptumota entity.
      *
-     * @Route("/{id}", name="admin_kontzeptumota_delete")
-     * @Method("DELETE")
+     * @Route("/{id}", name="admin_kontzeptumota_delete", methods={"DELETE"})
      */
-    public function deleteAction(Request $request, Kontzeptumota $kontzeptumotum)
+    public function delete(Request $request, Kontzeptumota $kontzeptumotum): RedirectResponse
     {
         $form = $this->createDeleteForm($kontzeptumotum);
         $form->handleRequest($request);
@@ -136,13 +132,13 @@ class KontzeptumotaController extends AbstractController
      *
      * @param Kontzeptumota $kontzeptumotum The Kontzeptumota entity
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return Form The form
      */
     private function createDeleteForm(Kontzeptumota $kontzeptumotum)
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('admin_kontzeptumota_delete', array('id' => $kontzeptumotum->getId())))
-            ->setMethod('DELETE')
+            ->setMethod(Request::METHOD_DELETE)
             ->getForm()
         ;
     }

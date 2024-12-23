@@ -7,8 +7,7 @@ use App\Entity\Azpiatala;
 use Pagerfanta\Exception\NotValidCurrentPageException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Historikoa;
 use App\Entity\Ordenantza;
 use App\Entity\Ordenantzaparrafoa;
@@ -20,6 +19,8 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\ArrayAdapter;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
 
 /**
@@ -43,11 +44,10 @@ class HistorikoaController extends AbstractController {
     /**
      * Lists all Historikoa entities.
      *
-     * @Route("/", defaults={"page" = 1}, name="admin_historikoa_index")
-     * @Route("/page{page}", name="admin_historikoa_paginated")
-     * @Method("GET")
+     * @Route("/", defaults={"page"=1}, name="admin_historikoa_index", methods={"GET"})
+     * @Route("/page{page}", name="admin_historikoa_paginated", methods={"GET"})
      */
-    public function indexAction($page)
+    public function index($page): Response
     {
         $historikoas = $this->historikoaRepo->findBy([],['id' => 'DESC']);
         $deleteForms = array();
@@ -78,13 +78,11 @@ class HistorikoaController extends AbstractController {
     /**
      * Creates a new Historikoa entity.
      *
-     * @Route("/new", name="admin_historikoa_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", name="admin_historikoa_new", methods={"GET", "POST"})
      * @param Request $request
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @return RedirectResponse|Response
      */
-    public function newAction(Request $request, TCPDFController $tcpdfController)
+    public function new(Request $request, TCPDFController $tcpdfController)
     {
 
         $ordenantzas = $this->ordenantzaRepo->findAllOrderByKodea();
@@ -277,10 +275,9 @@ class HistorikoaController extends AbstractController {
     /**
      * Finds and displays a Historikoa entity.
      *
-     * @Route("/{id}", name="admin_historikoa_show")
-     * @Method("GET")
+     * @Route("/{id}", name="admin_historikoa_show", methods={"GET"})
      */
-    public function showAction(Historikoa $historikoa)
+    public function show(Historikoa $historikoa): Response
     {
         $deleteForm = $this->createDeleteForm($historikoa);
 
@@ -293,10 +290,9 @@ class HistorikoaController extends AbstractController {
     /**
      * Displays a form to edit an existing Historikoa entity.
      *
-     * @Route("/{id}/edit", name="admin_historikoa_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", name="admin_historikoa_edit", methods={"GET", "POST"})
      */
-    public function editAction(Request $request, Historikoa $historikoa)
+    public function edit(Request $request, Historikoa $historikoa)
     {
         $deleteForm = $this->createDeleteForm($historikoa);
         $editForm = $this->createForm('App\Form\HistorikoaType', $historikoa);
@@ -321,10 +317,9 @@ class HistorikoaController extends AbstractController {
     /**
      * Deletes a Historikoa entity.
      *
-     * @Route("/{id}", name="admin_historikoa_delete")
-     * @Method("DELETE")
+     * @Route("/{id}", name="admin_historikoa_delete", methods={"DELETE"})
      */
-    public function deleteAction(Request $request, Historikoa $historikoa)
+    public function delete(Request $request, Historikoa $historikoa): RedirectResponse
     {
         $form = $this->createDeleteForm($historikoa);
         $form->handleRequest($request);
@@ -344,13 +339,13 @@ class HistorikoaController extends AbstractController {
      *
      * @param Historikoa $historikoa The Historikoa entity
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return Form The form
      */
     private function createDeleteForm(Historikoa $historikoa)
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('admin_historikoa_delete', array('id' => $historikoa->getId())))
-            ->setMethod('DELETE')
+            ->setMethod(Request::METHOD_DELETE)
             ->getForm();
     }
 

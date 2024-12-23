@@ -1,74 +1,74 @@
 <?php
 
-    namespace App\Entity;
+namespace App\Entity;
 
-    use AMREU\UserBundle\Model\User as BaseUser;
-    use Doctrine\ORM\Mapping as ORM;
-    use App\Annotation\UdalaEgiaztatu;
+use AMREU\UserBundle\Model\User as BaseUser;
+use Doctrine\ORM\Mapping as ORM;
+use App\Annotation\UdalaEgiaztatu;
+
+/**
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Table(name="user")
+ * @UdalaEgiaztatu(userFieldName="udala_id")
+ */
+class User extends BaseUser
+{
 
     /**
-     * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
-     * @ORM\Table(name="user")
-     * @UdalaEgiaztatu(userFieldName="udala_id")
+     * @ORM\Id
+     * @ORM\Column(type="integer")
+     * @ORM\GeneratedValue(strategy="AUTO")
      */
-    class User extends BaseUser
-    {
+    protected $id;
 
-        /**
-         * @ORM\Id
-         * @ORM\Column(type="integer")
-         * @ORM\GeneratedValue(strategy="AUTO")
-         */
-        protected $id;
+    /**
+     * @ORM\Column(type="string", length=180, unique=true)
+     */
+    protected $username;
 
-        /**
-         * @ORM\Column(type="string", length=180, unique=true)
-         */
-        protected $username;
+    /**
+     * @ORM\Column(type="json")
+     */
+    protected $roles = [];
 
-        /**
-         * @ORM\Column(type="json")
-         */
-        protected $roles = [];
+    /**
+     * @var string The hashed password
+     * @ORM\Column(type="string")
+     */
+    protected $password;
 
-        /**
-         * @var string The hashed password
-         * @ORM\Column(type="string")
-         */
-        protected $password;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $firstName;
 
-        /**
-         * @ORM\Column(type="string", length=255)
-         */
-        protected $firstName;
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $email;
 
-        /**
-         * @ORM\Column(type="string", length=255)
-         */
-        protected $email;
+    /**
+     * @ORM\Column(type="boolean", options={"default":"1"}, nullable=false)
+     */
+    protected $activated = true;
 
-        /**
-         * @ORM\Column(type="boolean", options={"default":"1"}, nullable=false)
-         */
-        protected $activated = true;
-
-        /**
-         * @ORM\Column(type="datetime", nullable=true)
-         */
-        protected $lastLogin;
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    protected $lastLogin;
 
 
-        /**
-         * @var string
-         * @ORM\Column(name="hizkuntza", type="string", length=10, nullable=true)
-         */
-        private $hizkuntza;
+    /**
+     * @var string
+     * @ORM\Column(name="hizkuntza", type="string", length=10, nullable=true)
+     */
+    private $hizkuntza;
 
-        /**
-         * @var Udala
-         * @ORM\ManyToOne(targetEntity="Udala")
-         */
-        private $udala;
+    /**
+     * @var Udala
+     * @ORM\ManyToOne(targetEntity="Udala")
+     */
+    private $udala;
 
     /**
      * Set udala

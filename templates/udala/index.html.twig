@@ -29,9 +29,6 @@
                     <ul class="list-inline">
                         <li><a href="{{ path('udala_show', { 'id': udala.id }) }}" class="fa fa-search"></a></li>
                         {% if is_granted('ROLE_ADMIN') %}
-                            {#<li>{{ form_start(deleteforms[udala.id],{'attr': {'id': udala.id}}) }}#}
-                            {#<a href="#" onclick="document.getElementById({{ udala.id }}).submit();" ><i class="fa fa-trash text-danger"></i></a>#}
-                            {#{{ form_end(deleteforms[udala.id]) }}</li>#}
                             <li>{{ form_start(deleteforms[udala.id],{'attr': {'id': udala.id}}) }}
                                 <a href="#" onclick="ezabatu({{ udala.id }});" ><i class="fa fa-trash text-danger"></i></a>
                                 {{ form_end(deleteforms[udala.id]) }}</li>

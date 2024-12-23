@@ -4,11 +4,12 @@ namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Atala;
 use App\Repository\OrdenantzaRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Atala controller.
@@ -31,10 +32,9 @@ class AtalaController extends AbstractController
     /**
      * Creates a new Atala entity.
      *
-     * @Route("/new/{ordenantzaid}", name="admin_atala_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new/{ordenantzaid}", name="admin_atala_new", methods={"GET", "POST"})
      */
-    public function newAction(Request $request, $ordenantzaid)
+    public function new(Request $request, $ordenantzaid)
     {
         $atala = new Atala();
         $ordenantza = $this->ordenantzaRepo->find( $ordenantzaid );
@@ -60,10 +60,9 @@ class AtalaController extends AbstractController
 
     /**
      *
-     * @Route("/ezabatu/{id}", options = { "expose" = true }, name="admin_atala_ezabatu")
-     * @Method("GET")
+     * @Route("/ezabatu/{id}", options={"expose"=true}, name="admin_atala_ezabatu", methods={"GET"})
      */
-    public function ezabatuAction(Atala $atala)
+    public function ezabatu(Atala $atala): Response
     {
             
         $deleteForm = $this->createDeleteForm($atala);
@@ -78,10 +77,9 @@ class AtalaController extends AbstractController
     /**
      * Deletes a Atala entity.
      *
-     * @Route("/{id}", name="admin_atala_delete")
-     * @Method("DELETE")
+     * @Route("/{id}", name="admin_atala_delete", methods={"DELETE"})
      */
-    public function deleteAction(Request $request, Atala $atala)
+    public function delete(Request $request, Atala $atala): RedirectResponse
     {
         $form = $this->createDeleteForm($atala);
         $form->handleRequest($request);
@@ -107,13 +105,13 @@ class AtalaController extends AbstractController
      *
      * @param Atala $atala The Atala entity
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return Form The form
      */
     private function createDeleteForm(Atala $atala)
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('admin_atala_delete', array('id' => $atala->getId())))
-            ->setMethod('DELETE')
+            ->setMethod(Request::METHOD_DELETE)
             ->getForm()
         ;
     }

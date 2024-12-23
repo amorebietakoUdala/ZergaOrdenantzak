@@ -332,11 +332,11 @@ class Atala
     /**
      * Set ordenantza
      *
-     * @param \App\Entity\Ordenantza $ordenantza
+     * @param Ordenantza $ordenantza
      *
      * @return Atala
      */
-    public function setOrdenantza(\App\Entity\Ordenantza $ordenantza = null)
+    public function setOrdenantza(Ordenantza $ordenantza = null)
     {
         $this->ordenantza = $ordenantza;
 
@@ -346,7 +346,7 @@ class Atala
     /**
      * Get ordenantza
      *
-     * @return \App\Entity\Ordenantza
+     * @return Ordenantza
      */
     public function getOrdenantza()
     {
@@ -356,11 +356,11 @@ class Atala
     /**
      * Add parrafoak
      *
-     * @param \App\Entity\Atalaparrafoa $parrafoak
+     * @param Atalaparrafoa $parrafoak
      *
      * @return Atala
      */
-    public function addParrafoak(\App\Entity\Atalaparrafoa $parrafoak)
+    public function addParrafoak(Atalaparrafoa $parrafoak)
     {
         $this->parrafoak[] = $parrafoak;
 
@@ -370,9 +370,9 @@ class Atala
     /**
      * Remove parrafoak
      *
-     * @param \App\Entity\Atalaparrafoa $parrafoak
+     * @param Atalaparrafoa $parrafoak
      */
-    public function removeParrafoak(\App\Entity\Atalaparrafoa $parrafoak)
+    public function removeParrafoak(Atalaparrafoa $parrafoak)
     {
         $this->parrafoak->removeElement($parrafoak);
     }
@@ -390,11 +390,11 @@ class Atala
     /**
      * Add azpiatalak
      *
-     * @param \App\Entity\Azpiatala $azpiatalak
+     * @param Azpiatala $azpiatalak
      *
      * @return Atala
      */
-    public function addAzpiatalak(\App\Entity\Azpiatala $azpiatalak)
+    public function addAzpiatalak(Azpiatala $azpiatalak)
     {
         $this->azpiatalak[] = $azpiatalak;
 
@@ -404,9 +404,9 @@ class Atala
     /**
      * Remove azpiatalak
      *
-     * @param \App\Entity\Azpiatala $azpiatalak
+     * @param Azpiatala $azpiatalak
      */
-    public function removeAzpiatalak(\App\Entity\Azpiatala $azpiatalak)
+    public function removeAzpiatalak(Azpiatala $azpiatalak)
     {
         $this->azpiatalak->removeElement($azpiatalak);
     }
@@ -424,11 +424,11 @@ class Atala
     /**
      * Set udala
      *
-     * @param \App\Entity\Udala $udala
+     * @param Udala $udala
      *
      * @return Atala
      */
-    public function setUdala(\App\Entity\Udala $udala = null)
+    public function setUdala(Udala $udala = null)
     {
         $this->udala = $udala;
 
@@ -438,7 +438,7 @@ class Atala
     /**
      * Get udala
      *
-     * @return \App\Entity\Udala
+     * @return Udala
      */
     public function getUdala()
     {

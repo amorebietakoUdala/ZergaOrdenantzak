@@ -4,6 +4,7 @@ fos_rest:
    param_fetcher_listener:  true
    allowed_methods_listener:  true
    routing_loader:
+          enabled: false               
           default_format: json
    view:
        mime_types:

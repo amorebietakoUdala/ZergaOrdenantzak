@@ -3,14 +3,16 @@
 namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Udala;
 use App\Form\UdalaType;
 use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Form;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Udala controller.
@@ -29,11 +31,10 @@ class UdalaController extends AbstractController
     /**
      * Lists all Udala entities.
      *
-     * @Route("/", defaults={"page" = 1}, name="udala_index")
-     * @Route("/page{page}", name="udala_index_paginated")
-     * @Method("GET")
+     * @Route("/", defaults={"page"=1}, name="udala_index", methods={"GET"})
+     * @Route("/page{page}", name="udala_index_paginated", methods={"GET"})
      */
-    public function indexAction($page)
+    public function index($page)
     {
         if ($this->isGranted('ROLE_SUPER_ADMIN'))
         {
@@ -83,10 +84,9 @@ class UdalaController extends AbstractController
     /**
      * Creates a new Udala entity.
      *
-     * @Route("/new", name="udala_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new", name="udala_new", methods={"GET", "POST"})
      */
-    public function newAction(Request $request)
+    public function new(Request $request)
     {
         if ($this->isGranted('ROLE_SUPER_ADMIN')) {
             $udala = new Udala();
@@ -113,10 +113,9 @@ class UdalaController extends AbstractController
     /**
      * Finds and displays a Udala entity.
      *
-     * @Route("/{id}", name="udala_show")
-     * @Method("GET")
+     * @Route("/{id}", name="udala_show", methods={"GET"})
      */
-    public function showAction(Udala $udala)
+    public function show(Udala $udala): Response
     {
         $deleteForm = $this->createDeleteForm($udala);
 
@@ -129,10 +128,9 @@ class UdalaController extends AbstractController
     /**
      * Displays a form to edit an existing Udala entity.
      *
-     * @Route("/{id}/edit", name="udala_edit")
-     * @Method({"GET", "POST"})
+     * @Route("/{id}/edit", name="udala_edit", methods={"GET", "POST"})
      */
-    public function editAction(Request $request, Udala $udala)
+    public function edit(Request $request, Udala $udala)
     {
         $deleteForm = $this->createDeleteForm($udala);
         $editForm = $this->createForm(UdalaType::class, $udala);
@@ -155,10 +153,9 @@ class UdalaController extends AbstractController
     /**
      * Deletes a Udala entity.
      *
-     * @Route("/{id}", name="udala_delete")
-     * @Method("DELETE")
+     * @Route("/{id}", name="udala_delete", methods={"DELETE"})
      */
-    public function deleteAction(Request $request, Udala $udala)
+    public function delete(Request $request, Udala $udala): RedirectResponse
     {
         $form = $this->createDeleteForm($udala);
         $form->handleRequest($request);
@@ -176,13 +173,13 @@ class UdalaController extends AbstractController
      *
      * @param Udala $udala The Udala entity
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return Form The form
      */
     private function createDeleteForm(Udala $udala)
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('udala_delete', array('id' => $udala->getId())))
-            ->setMethod('DELETE')
+            ->setMethod(Request::METHOD_DELETE)
             ->getForm()
         ;
     }

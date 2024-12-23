@@ -7,15 +7,15 @@ framework:
     # Remove or comment this section to explicitly disable session support.
     session:
         # handler_id set to null will use default session handler from php.ini
-        handler_id:  ~
-        save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
+        handler_id: null
+        name: PHP_SESSION_ZERGAORDENANTZAK
         
     fragments: true
     php_errors:
         log: true
 
-    templating:
-        engines: ['twig']
-    
+    # templating:
+    #     engines: ['twig']
+
     annotations:
         enabled: true

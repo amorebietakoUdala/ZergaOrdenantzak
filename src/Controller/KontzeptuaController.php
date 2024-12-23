@@ -1,15 +1,16 @@
 <?php
 
-    namespace App\Controller;
+namespace App\Controller;
 
-        use App\Repository\AzpiatalaRepository;
-    use Symfony\Component\HttpFoundation\Request;
-    use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-    use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-    use App\Entity\Kontzeptua;
-    use App\Form\KontzeptuaType;
-    use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\AzpiatalaRepository;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Routing\Annotation\Route;
+use App\Entity\Kontzeptua;
+use App\Form\KontzeptuaType;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
     /**
      * Kontzeptua controller.
@@ -31,10 +32,9 @@
         /**
          * Creates a new Kontzeptua entity.
          *
-         * @Route("/new/{azpiatalaid}", options = { "expose" = true }, name="admin_kontzeptua_new")
-         * @Method({"GET", "POST"})
+         * @Route("/new/{azpiatalaid}", options={"expose"=true}, name="admin_kontzeptua_new", methods={"GET", "POST"})
          */
-        public function newAction ( Request $request, $azpiatalaid )
+        public function new ( Request $request, $azpiatalaid )
         {
             $azpiatala = $this->azpiatalaRepo->find( $azpiatalaid );
             $kontzeptua = new Kontzeptua();
@@ -64,10 +64,9 @@
 
         /**
          *
-         * @Route("/{id}/edit/{ordenantzaid}", options = { "expose" = true }, name="admin_kontzeptua_edit")
-         * @Method({"GET", "POST"})
+         * @Route("/{id}/edit/{ordenantzaid}", options={"expose"=true}, name="admin_kontzeptua_edit", methods={"GET", "POST"})
          */
-        public function editAction(Request $request, Kontzeptua $kontzeptua, $ordenantzaid)
+        public function edit(Request $request, Kontzeptua $kontzeptua, $ordenantzaid)
         {
             $deleteForm = $this->createDeleteForm($kontzeptua);
             $editForm = $this->createForm(KontzeptuaType::class, $kontzeptua);
@@ -92,10 +91,9 @@
 
         /**
          *
-         * @Route("/ezabatu/{id}", options = { "expose" = true }, name="admin_kontzeptua_ezabatu")
-         * @Method("GET")
+         * @Route("/ezabatu/{id}", options={"expose"=true}, name="admin_kontzeptua_ezabatu", methods={"GET"})
          */
-        public function ezabatuAction(Kontzeptua $kontzeptua)
+        public function ezabatu(Kontzeptua $kontzeptua): Response
         {
 
             $deleteForm = $this->createDeleteForm($kontzeptua);
@@ -109,10 +107,9 @@
         /**
          * Deletes a Kontzeptua entity.
          *
-         * @Route("/{id}", name="admin_kontzeptua_delete")
-         * @Method("DELETE")
+         * @Route("/{id}", name="admin_kontzeptua_delete", methods={"DELETE"})
          */
-        public function deleteAction ( Request $request, Kontzeptua $kontzeptua )
+        public function delete ( Request $request, Kontzeptua $kontzeptua ): RedirectResponse
         {
             $form = $this->createDeleteForm( $kontzeptua );
             $form->handleRequest( $request );
@@ -130,13 +127,13 @@
          *
          * @param Kontzeptua $kontzeptua The Kontzeptua entity
          *
-         * @return \Symfony\Component\Form\Form The form
+         * @return Form The form
          */
         private function createDeleteForm ( Kontzeptua $kontzeptua )
         {
             return $this->createFormBuilder()
                 ->setAction( $this->generateUrl( 'admin_kontzeptua_delete', array ('id' => $kontzeptua->getId()) ) )
-                ->setMethod( 'DELETE' )
+                ->setMethod( Request::METHOD_DELETE )
                 ->getForm();
         }
     }

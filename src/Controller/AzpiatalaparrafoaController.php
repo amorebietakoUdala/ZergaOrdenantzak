@@ -4,12 +4,13 @@ namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Azpiatalaparrafoa;
 use App\Form\AzpiatalaparrafoaType;
 use App\Repository\AzpiatalaRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
     /**
      * Azpiatalaparrafoa controller.
@@ -28,10 +29,9 @@ use Doctrine\ORM\EntityManagerInterface;
             $this->azpiatalaRepo = $azpiatalaRepo;
         }
         /**
-         * @Route("/up/{id}", name="admin_azpiatalaparrafoa_up")
-         * @Method("GET")
+         * @Route("/up/{id}", name="admin_azpiatalaparrafoa_up", methods={"GET"})
          */
-        public function upAction(Request $request, Azpiatalaparrafoa $op)
+        public function up(Request $request, Azpiatalaparrafoa $op): RedirectResponse
         {
             $op->setOrdena($op->getOrdena() - 1);
             $this->em->persist($op);
@@ -41,10 +41,9 @@ use Doctrine\ORM\EntityManagerInterface;
         }
 
         /**
-         * @Route("/down/{id}", name="admin_azpiatalaparrafoa_down")
-         * @Method("GET")
+         * @Route("/down/{id}", name="admin_azpiatalaparrafoa_down", methods={"GET"})
          */
-        public function downAction(Request $request, Azpiatalaparrafoa $op)
+        public function down(Request $request, Azpiatalaparrafoa $op): RedirectResponse
         {
             $op->setOrdena($op->getOrdena() + 1);
             $this->em->persist($op);
@@ -56,10 +55,9 @@ use Doctrine\ORM\EntityManagerInterface;
         /**
          * Creates a new Azpiatalaparrafoa entity.
          *
-         * @Route("/new/{azpiatalaid}", options = { "expose" = true }, name="admin_azpiatalaparrafoa_new")
-         * @Method({"GET", "POST"})
+         * @Route("/new/{azpiatalaid}", options={"expose"=true}, name="admin_azpiatalaparrafoa_new", methods={"GET", "POST"})
          */
-        public function newAction ( Request $request, $azpiatalaid )
+        public function new ( Request $request, $azpiatalaid )
         {
             $azpiatala = $this->azpiatalaRepo->find( $azpiatalaid );
             $azpiatalaparrafoa = new Azpiatalaparrafoa();
@@ -88,10 +86,9 @@ use Doctrine\ORM\EntityManagerInterface;
 
         /**
          *
-         * @Route("/ezabatu/{id}", options = { "expose" = true }, name="admin_azpiatalaparrafoa_ezabatu")
-         * @Method("GET")
+         * @Route("/ezabatu/{id}", options={"expose"=true}, name="admin_azpiatalaparrafoa_ezabatu", methods={"GET"})
          */
-        public function ezabatuAction(Azpiatalaparrafoa $azpiatalaparrafoa)
+        public function ezabatu(Azpiatalaparrafoa $azpiatalaparrafoa): Response
         {
             $deleteForm = $this->createDeleteForm($azpiatalaparrafoa);
 
@@ -104,10 +101,9 @@ use Doctrine\ORM\EntityManagerInterface;
         /**
          * Deletes a Azpiatalaparrafoa entity.
          *
-         * @Route("/{id}", name="admin_azpiatalaparrafoa_delete")
-         * @Method("DELETE")
+         * @Route("/{id}", name="admin_azpiatalaparrafoa_delete", methods={"DELETE"})
          */
-        public function deleteAction ( Request $request, Azpiatalaparrafoa $azpiatalaparrafoa )
+        public function delete ( Request $request, Azpiatalaparrafoa $azpiatalaparrafoa ): RedirectResponse
         {
             $form = $this->createDeleteForm( $azpiatalaparrafoa );
             $form->handleRequest( $request );
@@ -125,7 +121,7 @@ use Doctrine\ORM\EntityManagerInterface;
          *
          * @param Azpiatalaparrafoa $azpiatalaparrafoa The Azpiatalaparrafoa entity
          *
-         * @return \Symfony\Component\Form\Form The form
+         * @return Form The form
          */
         private function createDeleteForm ( Azpiatalaparrafoa $azpiatalaparrafoa )
         {
@@ -133,7 +129,7 @@ use Doctrine\ORM\EntityManagerInterface;
                 ->setAction(
                     $this->generateUrl( 'admin_azpiatalaparrafoa_delete', array ('id' => $azpiatalaparrafoa->getId()) )
                 )
-                ->setMethod( 'DELETE' )
+                ->setMethod( Request::METHOD_DELETE )
                 ->getForm();
         }
     }

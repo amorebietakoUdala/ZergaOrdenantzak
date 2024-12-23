@@ -16,20 +16,20 @@ use App\Repository\AzpiatalaRepository;
 use App\Repository\KontzeptuaRepository;
 use App\Repository\OrdenantzaRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use FOS\RestBundle\Controller\FOSRestController;
+use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations;
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\View\View;
 use Nelmio\ApiDocBundle\Annotation\ApiDoc;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 
 /**
  * API.
  *
  * @Route("/api")
  */
-class ApiController extends FOSRestController
+class ApiController extends AbstractFOSRestController
 {
 
     private $em = null;
@@ -70,7 +70,7 @@ class ApiController extends FOSRestController
      * @Annotations\View()
      * @Get("/ordenantzakbykodea/{kodea}.{_format}")
      */
-    public function getOrdenantzakbykodeaAction(Request $request, $kodea)
+    public function getOrdenantzakbykodea(Request $request, $kodea)
     {
         $_format = $request->get('_format');
         $ordenantzak = $this->ordenantzaRepo->getOrdenantzakByUdalKodea($kodea);
@@ -93,7 +93,7 @@ class ApiController extends FOSRestController
      * @Annotations\View()
      * @Get("/ordenantzakbyid/{udalaid}")
      */
-    public function getOrdenantzakByUdalaAction(Request $request, $udalaid)
+    public function getOrdenantzakByUdala(Request $request, $udalaid)
     {
         $_format = $request->get('_format','json');
         $ordenantzak = $this->em->getRepository(Ordenantza::class)->findBy(['udala' => $udalaid]);
@@ -114,7 +114,7 @@ class ApiController extends FOSRestController
      * @Get("/ordenantza/{id}")
      * 
      */
-    public function getOrdenantzaAction(Request $request, $id)
+    public function getOrdenantza(Request $request, $id)
     {
         $_format = $request->get('_format');
         $ordenantza = $this->em->getRepository(Ordenantza::class)->find($id);
@@ -142,7 +142,7 @@ class ApiController extends FOSRestController
      * @Annotations\View()
      * @Get("/tributuak/{ordenantzaid}")
      */
-    public function getAtalakAction(Request $request, $ordenantzaid)
+    public function getAtalak(Request $request, $ordenantzaid)
     {
         $_format = $request->get('_format','json');
         $atalak = $this->atalaRepo->getAtalakByOrdenantzaId($ordenantzaid);
@@ -159,7 +159,7 @@ class ApiController extends FOSRestController
      * @Annotations\View()
      * @Get("/tributua/{id}")
      */
-    public function getAtalaAction(Request $request, $id)
+    public function getAtala(Request $request, $id)
     {
         $_format = $request->get('_format','json');   
         $atala = $this->em->getRepository(Atala::class)->find($id);
@@ -185,7 +185,7 @@ class ApiController extends FOSRestController
      * @Annotations\View()
      * @Get("/udalzergak/{udalaid}")
      */
-    public function getAzpiatalakByUdalaAction(Request $request, $udalaid)
+    public function getAzpiatalakByUdala(Request $request, $udalaid)
     {
         $_format = $request->get('_format','json');
         $azpiatalak = $this->azpiatalaRepo->getAzpiatalakByUdala($udalaid);
@@ -209,7 +209,7 @@ class ApiController extends FOSRestController
      * @Annotations\View()
      * @Get("/zergak/{tributuaid}")
      */
-    public function getAzpiatalakAction(Request $request, $tributuaid)
+    public function getAzpiatalak(Request $request, $tributuaid)
     {
         $_format = $request->get('_format','json');
         $azpiatalak = $this->azpiatalaRepo->getAzpiatalaByAtala($tributuaid);
@@ -230,7 +230,7 @@ class ApiController extends FOSRestController
      * @Annotations\View()
      * @Get("/zerga/{id}")
      */
-    public function getAzpiatalaAction(Request $request, $id)
+    public function getAzpiatala(Request $request, $id)
     {
         $_format = $request->get('_format','json');
         $azpiatala = $this->em->getRepository(Azpiatala::class)->find($id);
@@ -251,7 +251,7 @@ class ApiController extends FOSRestController
      * @Annotations\View()
      * @Get("/kontzeptua/{id}.{_format}")
      */
-    public function getKontzeptuaAction($id, $_format = "json")
+    public function getKontzeptua($id, $_format = "json")
     {
         /** @var Kontzeptua $kontzeptua */
         $kontzeptua = $this->kontzeptuaRepo->find($id);
@@ -272,13 +272,13 @@ class ApiController extends FOSRestController
      * @Annotations\View()
      * @Get("/exam/{kodea}.{_format}")
      */
-    public function getExamPricesAction($kodea, $_format = "json")
+    public function getExamPrices($kodea, $_format = "json")
     {
         /* 'Tasas según grupo azpiatalaren kodea azterketen prezioak bilatzeko
          * Gero erreziboen aplikazioan helbidea ezartzen da kontzeptu bakoitzeko
          * eta behar den zenbatekoa itzultzen du. Zenbatekoa baino ez du itzultzen.
          */
-        $azterketaAzpiatala = $this->container->getParameter('azterketa_azpiatala');
+        $azterketaAzpiatala = $this->getParameter('azterketa_azpiatala');
         $kontzeptua = $this->kontzeptuaRepo->findOneBy([
             'azpiatala' => $azterketaAzpiatala,
             'kodea_prod' => $kodea,

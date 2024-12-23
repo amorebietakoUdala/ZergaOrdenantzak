@@ -7,8 +7,7 @@ use App\Entity\Azpiatalaparrafoa;
 use App\Entity\Azpiatalaparrafoaondoren;
 use App\Entity\Historikoa;
 use Symfony\Component\HttpFoundation\Request;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Ordenantza;
 use App\Form\OrdenantzaType;
 use App\Repository\AtalaparrafoaRepository;
@@ -23,8 +22,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
-
+use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
 
     /**
      * Ordenantza controller.
@@ -42,6 +42,8 @@ use Symfony\Component\HttpFoundation\Response;
         private $apoRepo;
         private $azpiatalaparrafoaRepo;
         private $kontzeptuaRepo;
+        private $tcpdfController;
+        private $rootDir;
 
         public function __construct(
             EntityManagerInterface $em, 
@@ -51,7 +53,9 @@ use Symfony\Component\HttpFoundation\Response;
             AtalaparrafoaRepository $atalaparrafoaRepo,
             AzpiatalaparrafoaondorenRepository $apoRepo,
             AzpiatalaparrafoaRepository $azpiatalaparrafoaRepo,
-            KontzeptuaRepository $kontzeptuaRepo 
+            KontzeptuaRepository $kontzeptuaRepo,
+            TCPDFController $tcpdfController,
+            string $rootDir
         ) 
         {
             $this->em = $em;
@@ -62,13 +66,14 @@ use Symfony\Component\HttpFoundation\Response;
             $this->apoRepo = $apoRepo;
             $this->azpiatalaparrafoaRepo = $azpiatalaparrafoaRepo;
             $this->kontzeptuaRepo = $kontzeptuaRepo;
+            $this->tcpdfController = $tcpdfController;
+            $this->rootDir = $rootDir;
         }
 
         /**
-         * @Route("/eguneratu/{id}", name="admin_ordenantza_eguneratu")
-         * @Method("POST")
+         * @Route("/eguneratu/{id}", name="admin_ordenantza_eguneratu", methods={"POST"})
          */
-        public function eguneratuAction ( Request $request, $id )
+        public function eguneratu ( Request $request, $id ): JsonResponse
         {
             /** @var Ordenantza $ordenantza  */
             $ordenantza = $this->ordenantzaRepo->find( $id );
@@ -103,10 +108,9 @@ use Symfony\Component\HttpFoundation\Response;
         }
 
         /**
-         * @Route("/eguneratuparrafoa/{id}", name="admin_ordenantza_parrafoak_eguneratu")
-         * @Method("POST")
+         * @Route("/eguneratuparrafoa/{id}", name="admin_ordenantza_parrafoak_eguneratu", methods={"POST"})
          */
-        public function eguneratuparrafoakAction ( Request $request, $id )
+        public function eguneratuparrafoak ( Request $request, $id ): JsonResponse
         {
             $ordenantzaparrafoa = $this->ordenantzaparrafoaRepo->find( $id );
             $name = $request->request->get( 'name' );
@@ -137,10 +141,9 @@ use Symfony\Component\HttpFoundation\Response;
         }
 
         /**
-         * @Route("/eguneratuatala/{id}", name="admin_ordenantza_atala_eguneratu")
-         * @Method("POST")
+         * @Route("/eguneratuatala/{id}", name="admin_ordenantza_atala_eguneratu", methods={"POST"})
          */
-        public function eguneratuatalaAction ( Request $request, $id )
+        public function eguneratuatala ( Request $request, $id ): JsonResponse
         {
             $atala = $this->azpiatalaRepo->find( $id );
             $name = $request->request->get( 'name' );
@@ -175,10 +178,9 @@ use Symfony\Component\HttpFoundation\Response;
         }
 
         /**
-         * @Route("/eguneratuatalaparrafoa/{id}", name="admin_ordenantza_atalaparrafoa_eguneratu")
-         * @Method("POST")
+         * @Route("/eguneratuatalaparrafoa/{id}", name="admin_ordenantza_atalaparrafoa_eguneratu", methods={"POST"})
          */
-        public function eguneratuatalaparrafoaAction ( Request $request, $id )
+        public function eguneratuatalaparrafoa ( Request $request, $id ): JsonResponse
         {
             $atalap = $this->atalaparrafoaRepo->find( $id );
             $name = $request->request->get( 'name' );
@@ -210,10 +212,9 @@ use Symfony\Component\HttpFoundation\Response;
         }
 
         /**
-         * @Route("/eguneratuazpiatala/{id}", name="admin_ordenantza_azpiatala_eguneratu")
-         * @Method("POST")
+         * @Route("/eguneratuazpiatala/{id}", name="admin_ordenantza_azpiatala_eguneratu", methods={"POST"})
          */
-        public function eguneratuazpiatalaAction ( Request $request, $id )
+        public function eguneratuazpiatala ( Request $request, $id ): JsonResponse
         {
             /** @var Azpiatala $azpiatala */
             $azpiatala = $this->azpiatalaRepo->find( $id );
@@ -249,10 +250,9 @@ use Symfony\Component\HttpFoundation\Response;
         }
 
         /**
-         * @Route("/eguneratuazpiatalaparrafoa/{id}", name="admin_ordenantza_azpiatalaparrafoaondoren_eguneratu")
-         * @Method("POST")
+         * @Route("/eguneratuazpiatalaparrafoa/{id}", name="admin_ordenantza_azpiatalaparrafoaondoren_eguneratu", methods={"POST"})
          */
-        public function eguneratuazpiatalaparrafoaondorenAction ( Request $request, $id )
+        public function eguneratuazpiatalaparrafoaondoren ( Request $request, $id ): JsonResponse
         {
 
             /** @var Azpiatalaparrafoaondoren $azpiatalap */
@@ -286,10 +286,9 @@ use Symfony\Component\HttpFoundation\Response;
         }
 
         /**
-         * @Route("/eguneratuazpiatalaparrafoaondoren/{id}", name="admin_ordenantza_azpiatalaparrafoa_eguneratu")
-         * @Method("POST")
+         * @Route("/eguneratuazpiatalaparrafoaondoren/{id}", name="admin_ordenantza_azpiatalaparrafoa_eguneratu", methods={"POST"})
          */
-        public function eguneratuazpiatalaparrafoaAction ( Request $request, $id )
+        public function eguneratuazpiatalaparrafoa ( Request $request, $id ): JsonResponse
         {
 
             /** @var Azpiatalaparrafoa $azpiatalap */
@@ -324,10 +323,9 @@ use Symfony\Component\HttpFoundation\Response;
 
 
         /**
-         * @Route("/eguneratuazpiatalakontzeptuoa/{id}", name="admin_ordenantza_azpiatalakontzeptua_eguneratu")
-         * @Method("POST")
+         * @Route("/eguneratuazpiatalakontzeptuoa/{id}", name="admin_ordenantza_azpiatalakontzeptua_eguneratu", methods={"POST"})
          */
-        public function eguneratuazpiatalakontzeptuaAction ( Request $request, $id )
+        public function eguneratuazpiatalakontzeptua ( Request $request, $id ): JsonResponse
         {
             $azpiatalap = $this->kontzeptuaRepo->find( $id );
             $name = $request->request->get( 'name' );
@@ -365,10 +363,9 @@ use Symfony\Component\HttpFoundation\Response;
         /**
          * Lists all Ordenantza entities.
          *
-         * @Route("/", name="admin_ordenantza_index")
-         * @Method("GET")
+         * @Route("/", name="admin_ordenantza_index", methods={"GET"})
          */
-        public function indexAction ()
+        public function index (): Response
         {
             $ordenantzas = $this->ordenantzaRepo->findBy( array (), array ( 'kodea' => 'ASC' ) );
 
@@ -383,10 +380,9 @@ use Symfony\Component\HttpFoundation\Response;
         /**
          * Creates a new Ordenantza entity.
          *
-         * @Route("/new", name="admin_ordenantza_new")
-         * @Method({"GET", "POST"})
+         * @Route("/new", name="admin_ordenantza_new", methods={"GET", "POST"})
          */
-        public function newAction ( Request $request )
+        public function new ( Request $request )
         {
             $ordenantza = new Ordenantza();
             $form = $this->createForm( OrdenantzaType::class, $ordenantza );
@@ -412,13 +408,11 @@ use Symfony\Component\HttpFoundation\Response;
         /**
          * Finds and displays a Ordenantza entity.
          *
-         * @Route("/{id}/erakutsi", name="admin_ordenantza_show")
-         * @Method("GET")
+         * @Route("/{id}/erakutsi", name="admin_ordenantza_show", methods={"GET"})
          * @param Ordenantza $ordenantza
-         *
          * @return Response
          */
-        public function showAction ( Ordenantza $ordenantza )
+        public function show ( Ordenantza $ordenantza ): Response
         {
             $deleteForm = $this->createDeleteForm( $ordenantza );
             $deleteForms = array ();
@@ -427,7 +421,7 @@ use Symfony\Component\HttpFoundation\Response;
                     ->setAction(
                         $this->generateUrl( 'admin_ordenantzaparrafoa_delete', array ( 'id' => $p->getId() ) )
                     )
-                    ->setMethod( 'DELETE' )
+                    ->setMethod( Request::METHOD_DELETE )
                     ->getForm()->createView();
             }
 
@@ -443,16 +437,15 @@ use Symfony\Component\HttpFoundation\Response;
         /**
          * Finds and displays a Ordenantza entity.
          *
-         * @Route("/pdf/show/{id}", name="admin_ordenantza_show_pdf")
-         * @Method("GET")
+         * @Route("/pdf/show/{id}", name="admin_ordenantza_show_pdf", methods={"GET"})
          */
-        public function showpdfAction ( Ordenantza $ordenantza )
+        public function showpdf ( Ordenantza $ordenantza )
         {
 
             $mihtml = $this->render( 'ordenantza/pdf.html.twig', array ( 'ordenantza' => $ordenantza ) );
 
 
-            $pdf = $this->get( "white_october.tcpdf" )->create(
+            $pdf = $this->tcpdfController->create(
                 'vertical',
                 PDF_UNIT,
                 PDF_PAGE_FORMAT,
@@ -466,7 +459,7 @@ use Symfony\Component\HttpFoundation\Response;
             $pdf->SetFont( 'helvetica', '', 11, '', true );
 
             $pdf->AddPage();
-            $path = $this->get( 'kernel' )->getRootDir().'/../web/doc/';
+            $path = $this->rootDir.'/../web/doc/';
             $filename = $this->getFilename( $this->getUser()->getUdala()->getKodea(), $ordenantza->getKodea() );
             $pdf->writeHTMLCell(
                 $w = 0,
@@ -487,14 +480,13 @@ use Symfony\Component\HttpFoundation\Response;
         /**
          * Finds and displays a Ordenantza entity.
          *
-         * @Route("/pdf/export/", name="admin_ordenantza_export_pdf")
-         * @Method("GET")
+         * @Route("/pdf/export/", name="admin_ordenantza_export_pdf", methods={"GET"})
          */
-        public function exportpdfAction ()
+        public function exportpdf (): RedirectResponse
         {
             $ordenantzas = $this->ordenantzaRepo->findAll();
 
-            $pdf = $this->get( "white_october.tcpdf" )->create(
+            $pdf = $this->tcpdfController->create(
                 'vertical',
                 PDF_UNIT,
                 PDF_PAGE_FORMAT,
@@ -573,10 +565,9 @@ use Symfony\Component\HttpFoundation\Response;
         /**
          * Displays a form to edit an existing Ordenantza entity.
          *
-         * @Route("/{id}/edit", name="admin_ordenantza_edit")
-         * @Method({"GET", "POST"})
+         * @Route("/{id}/edit", name="admin_ordenantza_edit", methods={"GET", "POST"})
          */
-        public function editAction ( Request $request, Ordenantza $ordenantza )
+        public function edit ( Request $request, Ordenantza $ordenantza ): Response
         {
             $deleteForm = $this->createDeleteForm( $ordenantza );
             $deleteForms = array ();
@@ -586,7 +577,7 @@ use Symfony\Component\HttpFoundation\Response;
                     ->setAction(
                         $this->generateUrl( 'admin_ordenantzaparrafoa_delete', array ( 'id' => $p->getId() ) )
                     )
-                    ->setMethod( 'DELETE' )
+                    ->setMethod( Request::METHOD_DELETE )
                     ->getForm()->createView();
             }
 
@@ -602,10 +593,9 @@ use Symfony\Component\HttpFoundation\Response;
         /**
          * Deletes a Ordenantza entity.
          *
-         * @Route("/{id}", name="admin_ordenantza_delete")
-         * @Method("DELETE")
+         * @Route("/{id}", name="admin_ordenantza_delete", methods={"DELETE"})
          */
-        public function deleteAction ( Request $request, Ordenantza $ordenantza )
+        public function delete ( Request $request, Ordenantza $ordenantza ): RedirectResponse
         {
             $form = $this->createDeleteForm( $ordenantza );
             $form->handleRequest( $request );
@@ -627,13 +617,13 @@ use Symfony\Component\HttpFoundation\Response;
          *
          * @param Ordenantza $ordenantza The Ordenantza entity
          *
-         * @return \Symfony\Component\Form\Form The form
+         * @return Form The form
          */
         private function createDeleteForm ( Ordenantza $ordenantza )
         {
             return $this->createFormBuilder()
                 ->setAction( $this->generateUrl( 'admin_ordenantza_delete', array ( 'id' => $ordenantza->getId() ) ) )
-                ->setMethod( 'DELETE' )
+                ->setMethod( Request::METHOD_DELETE )
                 ->getForm();
         }
 
@@ -641,7 +631,7 @@ use Symfony\Component\HttpFoundation\Response;
         {
             $fs = new Filesystem();
 
-            $base = $this->get( 'kernel' )->getRootDir().'/../web/doc/';
+            $base = $this->rootDir.'/../web/doc/';
 
             try {
                 if ( $fs->exists( $base.$udala ) == false ) {
@@ -656,10 +646,9 @@ use Symfony\Component\HttpFoundation\Response;
         }
 
         /**
-         * @Route("/html", name="admin_ordenantza_html")
-         * @Method("GET")
+         * @Route("/html", name="admin_ordenantza_html", methods={"GET"})
          */
-        public function htmlAction ()
+        public function html (): Response
         {
             $ordenantzas = $this->ordenantzaRepo->findAllOrderByKodea();
 
@@ -695,10 +684,9 @@ use Symfony\Component\HttpFoundation\Response;
         }
 
         /**
-         * @Route("/esportatu/{id}", name="admin_ordenantza_esportatu")
-         * @Method("GET")
+         * @Route("/esportatu/{id}", name="admin_ordenantza_esportatu", methods={"GET"})
          */
-        public function esportatuAction ( $id )
+        public function esportatu ( $id ): Response
         {
             $ordenantza = $this->ordenantzaRepo->find( $id );
 
@@ -732,10 +720,9 @@ use Symfony\Component\HttpFoundation\Response;
         }
 
         /**
-         * @Route("/ezabatu/{id}", options = { "expose" = true }, name="admin_ordenantza_ezabatu")
-         * @Method("GET")
+         * @Route("/ezabatu/{id}", options={"expose"=true}, name="admin_ordenantza_ezabatu", methods={"GET"})
          */
-        public function ezabatuAction ( Ordenantza $ordenantza )
+        public function ezabatu ( Ordenantza $ordenantza ): Response
         {
 
             $deleteForm = $this->createDeleteForm( $ordenantza );

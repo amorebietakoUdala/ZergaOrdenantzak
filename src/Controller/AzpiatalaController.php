@@ -4,12 +4,13 @@ namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Azpiatala;
 use App\Form\AzpiatalaType;
 use App\Repository\AtalaRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Azpiatala controller.
@@ -31,10 +32,9 @@ class AzpiatalaController extends AbstractController
     /**
      * Creates a new Azpiatala entity.
      *
-     * @Route("/new/{atalaid}", options = { "expose" = true }, name="admin_azpiatala_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new/{atalaid}", options={"expose"=true}, name="admin_azpiatala_new", methods={"GET", "POST"})
      */
-    public function newAction(Request $request, $atalaid)
+    public function new(Request $request, $atalaid)
     {
 
         $atala = $this->atalaRepo->find( $atalaid );
@@ -61,10 +61,9 @@ class AzpiatalaController extends AbstractController
 
     /**
      *
-     * @Route("/ezabatu/{id}", options = { "expose" = true }, name="admin_azpiatala_ezabatu")
-     * @Method("GET")
+     * @Route("/ezabatu/{id}", options={"expose"=true}, name="admin_azpiatala_ezabatu", methods={"GET"})
      */
-    public function ezabatuAction(Azpiatala $azpiatala)
+    public function ezabatu(Azpiatala $azpiatala): Response
     {
 
         $deleteForm = $this->createDeleteForm($azpiatala);
@@ -78,10 +77,9 @@ class AzpiatalaController extends AbstractController
     /**
      * Deletes a Azpiatala entity.
      *
-     * @Route("/{id}", name="admin_azpiatala_delete")
-     * @Method("DELETE")
+     * @Route("/{id}", name="admin_azpiatala_delete", methods={"DELETE"})
      */
-    public function deleteAction(Request $request, Azpiatala $azpiatala)
+    public function delete(Request $request, Azpiatala $azpiatala): RedirectResponse
     {
         $form = $this->createDeleteForm($azpiatala);
         $form->handleRequest($request);
@@ -99,13 +97,13 @@ class AzpiatalaController extends AbstractController
      *
      * @param Azpiatala $azpiatala The Azpiatala entity
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return Form The form
      */
     private function createDeleteForm(Azpiatala $azpiatala)
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('admin_azpiatala_delete', array('id' => $azpiatala->getId())))
-            ->setMethod('DELETE')
+            ->setMethod(Request::METHOD_DELETE)
             ->getForm()
         ;
     }

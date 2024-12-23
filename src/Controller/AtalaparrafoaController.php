@@ -4,12 +4,13 @@ namespace App\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Atalaparrafoa;
 use App\Form\AtalaparrafoaType;
 use App\Repository\AtalaRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
@@ -30,10 +31,9 @@ class AtalaparrafoaController extends AbstractController
     }
 
     /**
-     * @Route("/up/{id}", name="admin_atalaparrafoa_up")
-     * @Method("GET")
+     * @Route("/up/{id}", name="admin_atalaparrafoa_up", methods={"GET"})
      */
-    public function upAction(Request $request, Atalaparrafoa $op)
+    public function up(Request $request, Atalaparrafoa $op): RedirectResponse
     {
         $op->setOrdena($op->getOrdena() - 1);
         $this->em->persist($op);
@@ -43,10 +43,9 @@ class AtalaparrafoaController extends AbstractController
     }
 
     /**
-     * @Route("/down/{id}", name="admin_atalaparrafoa_down")
-     * @Method("GET")
+     * @Route("/down/{id}", name="admin_atalaparrafoa_down", methods={"GET"})
      */
-    public function downAction(Request $request, Atalaparrafoa $op)
+    public function down(Request $request, Atalaparrafoa $op): RedirectResponse
     {
         $op->setOrdena($op->getOrdena() + 1);
         $this->em->persist($op);
@@ -59,10 +58,9 @@ class AtalaparrafoaController extends AbstractController
     /**
      * Creates a new Atalaparrafoa entity.
      *
-     * @Route("/new/{atalaid}", options = { "expose" = true }, name="admin_atalaparrafoa_new")
-     * @Method({"GET", "POST"})
+     * @Route("/new/{atalaid}", options={"expose"=true}, name="admin_atalaparrafoa_new", methods={"GET", "POST"})
      */
-    public function newAction(Request $request, $atalaid)
+    public function new(Request $request, $atalaid)
     {
 
         $atala = $this->atalaRepo->find( $atalaid );
@@ -94,10 +92,9 @@ class AtalaparrafoaController extends AbstractController
 
     /**
      *
-     * @Route("/ezabatu/{id}", options = { "expose" = true }, name="admin_atalaparrafoa_ezabatu")
-     * @Method("GET")
+     * @Route("/ezabatu/{id}", options={"expose"=true}, name="admin_atalaparrafoa_ezabatu", methods={"GET"})
      */
-    public function ezabatuAction(Atalaparrafoa $atalaparrafoa)
+    public function ezabatu(Atalaparrafoa $atalaparrafoa): Response
     {
 
         $deleteForm = $this->createDeleteForm($atalaparrafoa);
@@ -111,10 +108,9 @@ class AtalaparrafoaController extends AbstractController
     /**
      * Deletes a Atalaparrafoa entity.
      *
-     * @Route("/{id}", name="admin_atalaparrafoa_delete")
-     * @Method("DELETE")
+     * @Route("/{id}", name="admin_atalaparrafoa_delete", methods={"DELETE"})
      */
-    public function deleteAction(Request $request, Atalaparrafoa $atalaparrafoa)
+    public function delete(Request $request, Atalaparrafoa $atalaparrafoa): RedirectResponse
     {
         $form = $this->createDeleteForm($atalaparrafoa);
         $form->handleRequest($request);
@@ -132,13 +128,13 @@ class AtalaparrafoaController extends AbstractController
      *
      * @param Atalaparrafoa $atalaparrafoa The Atalaparrafoa entity
      *
-     * @return \Symfony\Component\Form\Form The form
+     * @return Form The form
      */
     private function createDeleteForm(Atalaparrafoa $atalaparrafoa)
     {
         return $this->createFormBuilder()
             ->setAction($this->generateUrl('admin_atalaparrafoa_delete', array('id' => $atalaparrafoa->getId())))
-            ->setMethod('DELETE')
+            ->setMethod(Request::METHOD_DELETE)
             ->getForm()
         ;
     }

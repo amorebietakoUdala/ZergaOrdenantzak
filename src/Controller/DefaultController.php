@@ -7,19 +7,18 @@ use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\Settings;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Ordenantza;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends AbstractController
 {
 
     /**
-     * @Route("/kudeatu", name="api_kudeatzailea")
-     * @Method("GET")
+     * @Route("/kudeatu", name="api_kudeatzailea", methods={"GET"})
      */
-    public function apikudeatzaileaAction()
+    public function apikudeatzailea(): Response
     {
         return $this->render('apikudeatzailea.html.twig', array(
             'udala' => $this->getUser()->getUdala()
@@ -29,10 +28,9 @@ class DefaultController extends AbstractController
     /**
      * Finds and displays a Ordenantza entity.
      *
-     * @Route("/admin/exportatu/{id}", name="exportatu")
-     * @Method("GET")
+     * @Route("/admin/exportatu/{id}", name="exportatu", methods={"GET"})
      */
-    public function exportatuAction(Ordenantza $ordenantza)
+    public function exportatu(Ordenantza $ordenantza): Response
     {
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
 
@@ -141,10 +139,9 @@ class DefaultController extends AbstractController
     /**
      * Lists all Ordenantza entities.
      *
-     * @Route("/hizkuntza/{_locale}", name="hizkuntza_aldatu")
-     * @Method("GET")
+     * @Route("/hizkuntza/{_locale}", name="hizkuntza_aldatu", methods={"GET"})
      */
-    public function hizkuntzaAction(Request $request)
+    public function hizkuntza(Request $request): RedirectResponse
     {
         /* historikotik ez du funtzionatzen orrialde batetan badago */
         $ref = str_replace("app_dev.php/", "", parse_url($request->headers->get('referer'),PHP_URL_PATH ));
@@ -173,7 +170,7 @@ class DefaultController extends AbstractController
         return $str;
     }
 
-    public function erroreaAction()
+    public function errorea()
     {
         return $this->render('errorea.html.twig');
     }

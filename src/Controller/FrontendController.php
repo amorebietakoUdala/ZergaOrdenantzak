@@ -3,8 +3,7 @@
 namespace App\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Ordenantza;
 use App\Repository\HistorikoaRepository;
 use App\Repository\OrdenantzaRepository;
@@ -20,12 +19,21 @@ class FrontendController extends AbstractController
     private $em;
     private $ordenantzaRepo;
     private $historikoaRepo;
+    private $tcpdfController;
+    private $rootDir;
 
-    public function __construct(EntityManagerInterface $em, OrdenantzaRepository $ordenantzaRepo, HistorikoaRepository $historikoaRepo)
+    public function __construct(
+        EntityManagerInterface $em, 
+        OrdenantzaRepository $ordenantzaRepo, 
+        HistorikoaRepository $historikoaRepo, 
+        TCPDFController $tcpdfController,
+        string $rootDir )
     {
         $this->em = $em;
         $this->ordenantzaRepo = $ordenantzaRepo;
         $this->historikoaRepo = $historikoaRepo;
+        $this->tcpdfController = $tcpdfController;
+        $this->rootDir = $rootDir;
     }
 
     /**
@@ -36,7 +44,7 @@ class FrontendController extends AbstractController
      *     }
      * )
      */
-    public function indexAction($udala)
+    public function index(int $udala): Response
     {
         $query = $this->em->createQuery('
           SELECT o FROM App:Ordenantza o LEFT JOIN App:Udala u  WITH o.udala=u.id
@@ -54,16 +62,11 @@ class FrontendController extends AbstractController
     }
 
     /**
- * Finds and displays a Ordenantza entity (OFT).
- *
- * @Route("/{id}/odt", name="frontend_ordenantza_odt",
- *         requirements={
- *           "id": "\d+"
- *          }
- * )
- * @Method("GET")
- */
-    public function odtAction($id)
+     * Finds and displays a Ordenantza entity (OFT).
+     *
+     * @Route("/{id}/odt", name="frontend_ordenantza_odt", requirements={"id"="\d+"}, methods={"GET"})
+     */
+    public function odt(int $id)
     {
          $ordenantza = $this->ordenantzaRepo->getOrdenantzabat($id);
 //        $parrafoak = $ordenantza->getParrafoak();
@@ -77,10 +80,10 @@ class FrontendController extends AbstractController
 
 
         //$azala = $this->render('frontend/azala.html.twig',array('eguna'=>date("Y"),'udala'=>$this->getUser()->getUdala()));
-        //$pdf = $this->get("white_october.tcpdf")->create('vertical', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
+        //$pdf = $this->tcpdfController->create('vertical', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
         $TBS = $this->container->get('opentbs');
 
-        $o = $this->get('kernel')->getRootDir() . '/../web/doc/064/txantiloia.odt';
+        $o = $this->rootDir . '/../web/doc/064/txantiloia.odt';
 
         $TBS->LoadTemplate($o, OPENTBS_ALREADY_UTF8);
         //$TBS->Plugin(OPENTBS_DEBUG_INFO);
@@ -105,14 +108,9 @@ class FrontendController extends AbstractController
     /**
      * Finds and displays a Ordenantza entity (OFT).
      *
-     * @Route("/{id}/html", name="frontend_ordenantza_html",
-     *         requirements={
-     *           "id": "\d+"
-     *          }
-     * )
-     * @Method("GET")
+     * @Route("/{id}/html", name="frontend_ordenantza_html", requirements={"id"="\d+"}, methods={"GET"})
      */
-    public function htmlAction($id)
+    public function html(int $id): Response
     {
        $ordenantza = $this->ordenantzaRepo->find($id);
 
@@ -149,15 +147,9 @@ class FrontendController extends AbstractController
     /**
      * Finds and displays a Ordenantza entity (PDF).
      *
-     * @Route("/{udala}/{_locale}/pdf", name="frontend_ordenantza_pdf",
-     *         requirements={
-     *           "_locale": "eu|es",
-     *           "udala": "\d+"
-     *          }
-     * )
-     * @Method("GET")
+     * @Route("/{udala}/{_locale}/pdf", name="frontend_ordenantza_pdf", requirements={"_locale"="eu|es", "udala"="\d+"}, methods={"GET"})
      */
-    public function pdfAction($udala, TCPDFController $tcpdfController)
+    public function pdf(int $udala, TCPDFController $tcpdfController)
     {
         $ordenantzas = $this->ordenantzaRepo->findBy([ 'udala' => $udala ]);
 
@@ -187,39 +179,13 @@ class FrontendController extends AbstractController
         $pdf->Output($filename.".pdf",'I'); // This will output the PDF as a response directly
     }
 
-    // private function getFilename($udala, $ordenantzaKodea)
-    // {
-    //     $fs = new Filesystem();
-
-    //     $base = $this->get('kernel')->getRootDir() . '/../web/doc/';
-
-    //     try {
-    //         if ( $fs->exists($base . $udala) == false ) {
-    //             $fs->mkdir($base .$udala);
-    //         }
-    //     } catch (IOExceptionInterface $e) {
-    //         echo "Arazoa bat egon da karpeta sortzerakoan ".$e->getPath();
-    //     }
-
-    //     return $base.$udala."/".$ordenantzaKodea;
-
-    // }
-
-
-
     /**
      * Lists all Historikoa entities.
      *
-     * @Route("/{udala}/{_locale}/hist", defaults={"page" = 1}, name="frontend_historikoa_index",
-     *         requirements={
-     *           "_locale": "eu|es",
-     *           "udala": "\d+"
-     *          }
-     * )
-     * @Route("/{udala}/{_locale}/hist/page{page}", name="frontend_historikoa_paginated")
-     * @Method("GET")
+     * @Route("/{udala}/{_locale}/hist", defaults={"page"=1}, name="frontend_historikoa_index", requirements={"_locale"="eu|es", "udala"="\d+"}, methods={"GET"})
+     * @Route("/{udala}/{_locale}/hist/page{page}", name="frontend_historikoa_paginated", methods={"GET"})
      */
-    public function historikoaAction($page,$udala)
+    public function historikoa($page,int $udala): Response
     {
         //$historikoas =  $this->em->createQuery("SELECT h FROM App:Historikoa h order by h.id DESC")->getResult();
         $historikoas = $this->historikoaRepo->findBy([],['id' => 'DESC']);
@@ -245,15 +211,9 @@ class FrontendController extends AbstractController
     /**
      * Finds and displays a Ordenantza entity.
      *
-     * @Route("/{udala}/{_locale}/{id}", name="frontend_ordenantza_show",
-     *         requirements={
-     *           "_locale": "eu|es",
-     *           "udala": "\d+"
-     *          }
-     * )
-     * @Method("GET")
+     * @Route("/{udala}/{_locale}/{id}", name="frontend_ordenantza_show", requirements={"_locale"="eu|es", "udala"="\d+"}, methods={"GET"})
      */
-    public function showAction(Ordenantza $ordenantza,$udala)
+    public function show(Ordenantza $ordenantza,int $udala): Response
     {
         return $this->render('frontend/show.html.twig', array(
             'ordenantza' => $ordenantza,

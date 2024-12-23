@@ -22,6 +22,7 @@ services:
         bind:
             $allowedRoles: ["ROLE_USER", "ROLE_ADMIN"]
             $class: App\Entity\User
+            $rootDir: '%kernel.project_dir%'
 
     Symfony\Component\Ldap\Ldap:
         arguments: ['@Symfony\Component\Ldap\Adapter\ExtLdap\Adapter']

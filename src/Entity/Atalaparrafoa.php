@@ -264,11 +264,11 @@ class Atalaparrafoa
     /**
      * Set atala
      *
-     * @param \App\Entity\Atala $atala
+     * @param Atala $atala
      *
      * @return Atalaparrafoa
      */
-    public function setAtala(\App\Entity\Atala $atala = null)
+    public function setAtala(Atala $atala = null)
     {
         $this->atala = $atala;
 
@@ -278,7 +278,7 @@ class Atalaparrafoa
     /**
      * Get atala
      *
-     * @return \App\Entity\Atala
+     * @return Atala
      */
     public function getAtala()
     {
@@ -288,11 +288,11 @@ class Atalaparrafoa
     /**
      * Set udala
      *
-     * @param \App\Entity\Udala $udala
+     * @param Udala $udala
      *
      * @return Atalaparrafoa
      */
-    public function setUdala(\App\Entity\Udala $udala = null)
+    public function setUdala(Udala $udala = null)
     {
         $this->udala = $udala;
 
@@ -302,7 +302,7 @@ class Atalaparrafoa
     /**
      * Get udala
      *
-     * @return \App\Entity\Udala
+     * @return Udala
      */
     public function getUdala()
     {

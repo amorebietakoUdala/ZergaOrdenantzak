@@ -160,13 +160,13 @@ ul#ulzzoo {
 $(document).ready(function() {
         $('[data-toggle="tooltip"]').tooltip()
         var items = [];
-        var url = "/zzoo/api/ordenantzakbykodea/{{ udala.kodea }}.json";
+        var url = "/zzoo/api/ordenantzakbykodea/{{ udala.kodea }}?format=json";
 
         var bootstrap_enabled = (typeof $().modal == 'function');
         $('body').on('click', 'a.btntaula', function () {
 
             var miid = $(this).data('id');
-            var url = "/zzoo/api/zerga/" + miid + ".json";
+            var url = "/zzoo/api/zerga/" + miid + "?format=json";
             var nModal = $('#nireModal');
             $('#modalContent').empty();
             $.getJSON(url, function(data) {
@@ -298,13 +298,13 @@ ul#ulzzoo {
 $(document).ready(function() {
         $('[data-toggle="tooltip"]').tooltip()
         var items = [];
-        var url = "/zzoo/api/ordenantzakbykodea/{{ udala.kodea }}.json";
+        var url = "/zzoo/api/ordenantzakbykodea/{{ udala.kodea }}?format=json";
 
         var bootstrap_enabled = (typeof $().modal == 'function');
         $('body').on('click', 'a.btntaula', function () {
 
             var miid = $(this).data('id');
-            var url = "/zzoo/api/zerga/" + miid + ".json";
+            var url = "/zzoo/api/zerga/" + miid + "?format=json";
             var nModal = $('#nireModal');
             $('#modalContent').empty();
             $.getJSON(url, function(data) {

@@ -24,7 +24,7 @@ use Symfony\Component\Filesystem\Filesystem;
 use Symfony\Component\Filesystem\Exception\IOExceptionInterface;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
-use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
+use Qipsius\TCPDFBundle\Controller\TCPDFController;
 
     /**
      * Ordenantza controller.
@@ -386,7 +386,9 @@ use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
         {
             $ordenantza = new Ordenantza();
             $form = $this->createForm( OrdenantzaType::class, $ordenantza );
-            $form->getData()->setUdala( $this->getUser()->getUdala() );
+            /** @var User $user */
+            $user = $this->getUser();
+            $form->getData()->setUdala( $user->getUdala() );
             $form->handleRequest( $request );
 
             if ( $form->isSubmitted() && $form->isValid() ) {
@@ -453,14 +455,16 @@ use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
                 'UTF-8',
                 false
             );
-            $pdf->SetAuthor( $this->getUser()->getUdala() );
+            /** @var User $user */
+            $user = $this->getUser();
+            $pdf->SetAuthor( $user->getUdala() );
             $pdf->SetTitle( ($ordenantza->getIzenburuaeu()) );
             $pdf->setFontSubsetting( true );
             $pdf->SetFont( 'helvetica', '', 11, '', true );
 
             $pdf->AddPage();
             $path = $this->rootDir.'/../web/doc/';
-            $filename = $this->getFilename( $this->getUser()->getUdala()->getKodea(), $ordenantza->getKodea() );
+            $filename = $this->getFilename( $user->getUdala()->getKodea(), $ordenantza->getKodea() );
             $pdf->writeHTMLCell(
                 $w = 0,
                 $h = 0,
@@ -494,8 +498,10 @@ use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
                 'UTF-8',
                 false
             );
-            $pdf->SetAuthor( $this->getUser()->getUdala() );
-            $pdf->SetTitle( $this->getUser()->getUdala()."-Zerga Ordenantzak" );
+            /** @var User $user */
+            $user = $this->getUser();
+            $pdf->SetAuthor( $user->getUdala() );
+            $pdf->SetTitle( $user->getUdala()."-Zerga Ordenantzak" );
 
             $pdf->setFontSubsetting( true );
             $pdf->SetFont( 'helvetica', '', 11, '', true );
@@ -505,10 +511,10 @@ use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
             $pdf->AddPage();
 
             $eguna = date( "Y-m-d_His" );
-            $filename = $this->getFilename( $this->getUser()->getUdala()->getKodea(), "ZergaOrdenantzak-".$eguna );
+            $filename = $this->getFilename( $user->getUdala()->getKodea(), "ZergaOrdenantzak-".$eguna );
             $azala = $this->render(
                 'ordenantza/azala.html.twig',
-                array ( 'eguna' => date( "Y" ), 'udala' => $this->getUser()->getUdala() )
+                array ( 'eguna' => date( "Y" ), 'udala' => $user->getUdala() )
             );
             $pdf->writeHTMLCell(
                 $w = 0,
@@ -548,7 +554,7 @@ use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
             $historikoa = New Historikoa();
             $historikoa->setCreatedAt( New \DateTime() );
             $historikoa->setUpdatedAt( New \DateTime() );
-            $historikoa->setUdala( $this->getUser()->getUdala() );
+            $historikoa->setUdala( $user->getUdala() );
             $historikoa->setFitxategia( "ZergaOrdenantzak-".$eguna.".pdf" );
 
             $this->em->persist( $historikoa );
@@ -651,13 +657,14 @@ use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
         public function html (): Response
         {
             $ordenantzas = $this->ordenantzaRepo->findAllOrderByKodea();
-
+            /** @var User $user */
+            $user = $this->getUser();
             $nireordenantza = $this->render(
                 'ordenantza/web.html.twig',
                 array (
                     'ordenantzas' => $ordenantzas,
                     'eguna'       => date( "Y" ),
-                    'udala'       => $this->getUser()->getUdala(),
+                    'udala'       => $user->getUdala(),
                 )
             );
 

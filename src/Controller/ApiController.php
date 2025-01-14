@@ -15,13 +15,17 @@ use App\Repository\AtalaRepository;
 use App\Repository\AzpiatalaRepository;
 use App\Repository\KontzeptuaRepository;
 use App\Repository\OrdenantzaRepository;
+use App\Repository\UdalaRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\Annotations;
 use FOS\RestBundle\Controller\Annotations\Get;
 use FOS\RestBundle\View\View;
-use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+use OpenApi\Annotations as OA;
+use Nelmio\ApiDocBundle\Annotation\Model;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
@@ -37,13 +41,15 @@ class ApiController extends AbstractFOSRestController
     private $atalaRepo = null;
     private $azpiatalaRepo = null;
     private $kontzeptuaRepo = null;
+    private $udalaRepo = null;
 
     public function __construct(
         EntityManagerInterface $em, 
         OrdenantzaRepository $ordenantzaRepo, 
         AtalaRepository $atalaRepo,
         AzpiatalaRepository $azpiatalaRepo,
-        KontzeptuaRepository $kontzeptuaRepo
+        KontzeptuaRepository $kontzeptuaRepo,
+        UdalaRepository $udalaRepo
     )
     {
         $this->em = $em;
@@ -51,51 +57,69 @@ class ApiController extends AbstractFOSRestController
         $this->atalaRepo = $atalaRepo;
         $this->azpiatalaRepo = $azpiatalaRepo;
         $this->kontzeptuaRepo = $kontzeptuaRepo;
+        $this->udalaRepo = $udalaRepo;
     }
 
 //    ORDENANTZAK
 
     /**
-     * Udal baten Ordenantza zerrenda Udal-Kodea bidez.
-     *
-     * @ApiDoc(
-     *   resource = true,
-     *   description = "Ordenantza guztien zerrenda eskuratu",
-     *   statusCodes = {
-     *     200 = "Zuzena denean"
-     *   }
-     * )
-     *
+     * Ordenantza guztien zerrenda Udal kodea adierazita
+     * 
      * @return array|View
+     * 
      * @Annotations\View()
-     * @Get("/ordenantzakbykodea/{kodea}.{_format}")
+     * @OA\Response(
+     *     response=200,
+     *     description="Ordenantza guztien zerrenda Udal kodea adierazita",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=Ordenantza::class))
+     *     )
+     * )
+     * @OA\Response(
+     *    response=404,
+     *    description="Udala ez da aurkitu"
+     * )     
+     * @Get("/ordenantzakbykodea/{kodea}")
      */
     public function getOrdenantzakbykodea(Request $request, $kodea)
     {
-        $_format = $request->get('_format');
+        $_format = $request->get('_format','json');
+        $udala = $this->udalaRepo->findOneBy(['kodea' => $kodea]);
+        if ( null === $udala) {
+            return new JsonResponse(null, Response::HTTP_NOT_FOUND);
+        }
         $ordenantzak = $this->ordenantzaRepo->getOrdenantzakByUdalKodea($kodea);
         return $this->returnResponseDataAsFormat($ordenantzak, $_format);
     }
 
     /**
-     * Udal baten Ordenantza zerrenda.
-     *
-     * @ApiDoc(
-     *   resource = true,
-     *   description = "Ordenantza guztien zerrenda eskuratu",
-     *   statusCodes = {
-     *     200 = "Zuzena denean"
-     *   }
-     * )
+     * Udal baten ordenantza zerrenda udalaren identifikatzailea adierazita
      *
      * @return array|View
      *
      * @Annotations\View()
+     * @OA\Response(
+     *     response=200,
+     *     description="Udal baten ordenantza zerrenda udalaren identifikatzailea adierazita",
+     *     @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=Ordenantza::class))
+     *     )
+     * )
+     * @OA\Response(
+     *    response=404,
+     *    description="Udala ez da aurkitu"
+     * )     
      * @Get("/ordenantzakbyid/{udalaid}")
      */
     public function getOrdenantzakByUdala(Request $request, $udalaid)
     {
         $_format = $request->get('_format','json');
+        $udala = $this->udalaRepo->find($udalaid);
+        if ( null === $udala) {
+            return new JsonResponse(null, Response::HTTP_NOT_FOUND);
+        }
         $ordenantzak = $this->em->getRepository(Ordenantza::class)->findBy(['udala' => $udalaid]);
         $udala = $this->em->getRepository(Udala::class)->find($udalaid);
         return $this->returnResponseDataAsFormat($ordenantzak,$_format,'api/index.html.twig',[
@@ -105,19 +129,35 @@ class ApiController extends AbstractFOSRestController
     }
 
     /**
-     * @ApiDoc(
-     *   resource = true,
-     *   description = "Ordenantza baten informazioa eskuratu"
-     * )
+     * Ordenantza bat itzuli json edo html formatuan
      *
+     * @OA\Parameter(
+     *    name="_format",
+     *    in="query",
+     *    description="Formato de respuesta (json o html)",
+     *    required=false,
+     *    @OA\Schema(type="string", enum={"json", "html"})
+     * ),
+     * @OA\Response(
+     *    response=200,
+     *    description="Ordenantza bat itzuli json edo html formatuan",
+     *    @OA\JsonContent(ref=@Model(type=Ordenantza::class))
+     * ),
+     * @OA\Response(
+     *    response=404,
+     *    description="Ordenantza ez da aurkitu"
+     * )
      * @Annotations\View()
      * @Get("/ordenantza/{id}")
-     * 
+     * @return array|View
      */
     public function getOrdenantza(Request $request, $id)
     {
-        $_format = $request->get('_format');
-        $ordenantza = $this->em->getRepository(Ordenantza::class)->find($id);
+        $_format = $request->get('_format','json');
+        $ordenantza = $this->ordenantzaRepo->find($id);
+        if ( null === $ordenantza ) {
+            return new JsonResponse(null, Response::HTTP_NOT_FOUND);
+        }
         return $this->returnResponseDataAsFormat($ordenantza, $_format, 'api/ordenantza.html.twig', [
             'ordenantza' => $ordenantza
         ]);
@@ -126,18 +166,23 @@ class ApiController extends AbstractFOSRestController
 //    ATALAK
 
     /**
-     * Ordenantza batem tributu guztien zerrenda.
-     *
-     * @ApiDoc(
-     *   resource = true,
-     *   description = "Ordenantza baten tributu guztien zerrenda eskuratu",
-     *   statusCodes = {
-     *     200 = "Zuzena denean"
-     *   }
-     * )
+     * Ordenantza baten tributu guztien zerrenda.
      *
      * @param $ordenantzaid
      *
+     * @OA\Response(
+     *    response=200,
+     *    description="Ordenantza baten tributu guztien zerrenda",
+     *    @OA\JsonContent(
+     *        type="array",
+     *        @OA\Items(ref=@Model(type=Atala::class))
+     *    )
+     * ),
+     * @OA\Response(
+     *    response=404,
+     *    description="Ordenantza ez da aurkitu"
+     * )
+     * 
      * @return View
      * @Annotations\View()
      * @Get("/tributuak/{ordenantzaid}")
@@ -145,41 +190,60 @@ class ApiController extends AbstractFOSRestController
     public function getAtalak(Request $request, $ordenantzaid)
     {
         $_format = $request->get('_format','json');
+        $ordenantza = $this->ordenantzaRepo->find($ordenantzaid);
+        if ( null === $ordenantza ) {
+            return new JsonResponse(null, Response::HTTP_NOT_FOUND);
+        }        
         $atalak = $this->atalaRepo->getAtalakByOrdenantzaId($ordenantzaid);
-        // TODO Ez funtzionatzen ez duelako plantillarik html formatuan ateratzeko
         return $this->returnResponseDataAsFormat($atalak, $_format);
     }
 
     /**
-     * @ApiDoc(
-     *   resource = true,
-     *   description = "Tributu baten informazioa eskuratu"
-     * )
+     * Tributu bat itzuli
      *
+     * @param $id
+     *
+     * @OA\Response(
+     *    response=200,
+     *    description="Tributu bat itzuli",
+     *    @OA\JsonContent(ref=@Model(type=Atala::class))
+     *    )
+     * ),
+     * @OA\Response(
+     *    response=404,
+     *    description="Tributua ez da aurkitu"
+     * )
+     * 
+     * @return View
      * @Annotations\View()
      * @Get("/tributua/{id}")
      */
     public function getAtala(Request $request, $id)
     {
         $_format = $request->get('_format','json');   
-        $atala = $this->em->getRepository(Atala::class)->find($id);
-        // TODO Ez funtzionatzen ez duelako plantillarik html formatuan ateratzeko
+        $atala = $this->atalaRepo->find($id);
+        if ( null === $atala ) {
+            return new JsonResponse(null, Response::HTTP_NOT_FOUND);
+        }        
         return $this->returnResponseDataAsFormat($atala, $_format);
     }
 
 //    AZPIATALAK
 
     /**
-     * Udal baten zergen zerrenda.
+     * Udal baten zergen zerrenda
      *
-     * @ApiDoc(
-     *   resource = true,
-     *   description = "Udal baten zerga guztien zerrenda eskuratu",
-     *   statusCodes = {
-     *     200 = "Zuzena denean"
-     *   }
+     * @OA\Response(
+     *    response=200,
+     *    description="Udal baten zergen zerrenda",
+     *    @OA\Items(ref=@Model(type=Azpiatala::class))
+     *    )
+     * ),
+     * @OA\Response(
+     *    response=404,
+     *    description="Udala ez da aurkitu"
      * )
-     *
+     * 
      * @return View
      *
      * @Annotations\View()
@@ -188,22 +252,29 @@ class ApiController extends AbstractFOSRestController
     public function getAzpiatalakByUdala(Request $request, $udalaid)
     {
         $_format = $request->get('_format','json');
+        $udala = $this->udalaRepo->find($udalaid);
+        if ( null === $udala ) {
+            return new JsonResponse(null, Response::HTTP_NOT_FOUND);
+        }        
         $azpiatalak = $this->azpiatalaRepo->getAzpiatalakByUdala($udalaid);
         return $this->returnResponseDataAsFormat($azpiatalak, $_format);
     }
     
     /**
-     * Udal baten zergen zerrenda.
-     *
-     * @ApiDoc(
-     *   resource = true,
-     *   description = "Udal baten zerga guztien zerrenda eskuratu",
-     *   statusCodes = {
-     *     200 = "Zuzena denean"
-     *   }
-     * )
+     * Udal baten zergen zerrenda tributu identifikatzailea erabiliz
      *
      * @param $tributuaid
+     *
+     * @OA\Response(
+     *    response=200,
+     *    description="Udal baten zergen zerrenda tributu identifikatzailea erabiliz",
+     *    @OA\Items(ref=@Model(type=Azpiatala::class))
+     *    )
+     * ),
+     * @OA\Response(
+     *    response=404,
+     *    description="Udala ez da aurkitu"
+     * )
      *
      * @return View
      * @Annotations\View()
@@ -212,19 +283,28 @@ class ApiController extends AbstractFOSRestController
     public function getAzpiatalak(Request $request, $tributuaid)
     {
         $_format = $request->get('_format','json');
+        $tributua = $this->atalaRepo->find($tributuaid);
+        if ( null === $tributua ) {
+            return new JsonResponse(null, Response::HTTP_NOT_FOUND);
+        }        
         $azpiatalak = $this->azpiatalaRepo->getAzpiatalaByAtala($tributuaid);
         return $this->returnResponseDataAsFormat($azpiatalak, $_format);
     }
 
     /**
-     * @ApiDoc(
-     *   resource = true,
-     *   description = "Zerga baten informazioa eskuratu",
-     *   statusCodes = {
-     *     200 = "Zuzena denean"
-     *   }
+     * Zerga bat itzuli bere identifikatzailea erabiliz
+     * 
+     * @OA\Response(
+     *    response=200,
+     *    description="Zerga bat itzuli bere identifikatzailea erabiliz",
+     *    @OA\JsonContent(ref=@Model(type=Azpiatala::class))
+     *    )
+     * ),
+     * @OA\Response(
+     *    response=404,
+     *    description="Udala ez da aurkitu"
      * )
-     *
+     * 
      * @return View
      *
      * @Annotations\View()
@@ -233,47 +313,64 @@ class ApiController extends AbstractFOSRestController
     public function getAzpiatala(Request $request, $id)
     {
         $_format = $request->get('_format','json');
-        $azpiatala = $this->em->getRepository(Azpiatala::class)->find($id);
+        $azpiatala = $this->azpiatalaRepo->find($id);
+        if ( null === $azpiatala ) {
+            return new JsonResponse(null, Response::HTTP_NOT_FOUND);
+        }        
         return $this->returnResponseDataAsFormat($azpiatala, $_format);
     }
 
     /**
-     * @ApiDoc(
-     *   resource = true,
-     *   description = "kontzeptu baten zenbatekoa itzuli. Indarrean daudenak.",
-     *   statusCodes = {
-     *     200 = "Zuzena denean"
-     *   }
+     * Kontzeptu bat itzuli bere identifikatzailea erabiliz
+     * 
+     * @OA\Response(
+     *    response=200,
+     *    description="Kontzeptu bat itzuli bere identifikatzailea erabiliz",
+     *    @OA\JsonContent(ref=@Model(type=Kontzeptua::class))
+     *    )
+     * ),
+     * @OA\Response(
+     *    response=404,
+     *    description="Ez da kontzeptua aurkitu"
      * )
-     *
+     * 
      * @return View
      *
      * @Annotations\View()
-     * @Get("/kontzeptua/{id}.{_format}")
+     * @Get("/kontzeptua/{id}")
      */
-    public function getKontzeptua($id, $_format = "json")
+    public function getKontzeptua(Request $request, $id)
     {
+        $_format = $request->get('_format','json');
         /** @var Kontzeptua $kontzeptua */
         $kontzeptua = $this->kontzeptuaRepo->find($id);
+        if ( null === $kontzeptua ) {
+            return new JsonResponse(null, Response::HTTP_NOT_FOUND);
+        }        
         return $this->returnResponseDataAsFormat(str_replace(',', '.', $kontzeptua->getKopuruaProd()), $_format);
     }
 
     /**
-     * @ApiDoc(
-     *   resource = true,
-     *   description = "Azterketa kategoria baten azterketan parte hartzeko tasa itzuli.",
-     *   statusCodes = {
-     *     200 = "Zuzena denean"
-     *   }
+     * Azterketen prezioa lortu kodea erabiliz
+     * 
+     * @OA\Response(
+     *    response=200,
+     *    description="Azterketen prezioa lortu kodea erabiliz",
+     *    )
+     * ),
+     * @OA\Response(
+     *    response=404,
+     *    description="Ez da azterketa aurkitu"
      * )
-     *
+     * 
      * @return View
      *
      * @Annotations\View()
-     * @Get("/exam/{kodea}.{_format}")
+     * @Get("/exam/{kodea}")
      */
-    public function getExamPrices($kodea, $_format = "json")
+    public function getExamPrices(Request $request, $kodea, $_format = "json")
     {
+        $_format = $request->get('_format','json');
         /* 'Tasas según grupo azpiatalaren kodea azterketen prezioak bilatzeko
          * Gero erreziboen aplikazioan helbidea ezartzen da kontzeptu bakoitzeko
          * eta behar den zenbatekoa itzultzen du. Zenbatekoa baino ez du itzultzen.
@@ -283,18 +380,18 @@ class ApiController extends AbstractFOSRestController
             'azpiatala' => $azterketaAzpiatala,
             'kodea_prod' => $kodea,
         ]);
+        if ( null === $kontzeptua ) {
+            return new JsonResponse(null, Response::HTTP_NOT_FOUND);
+        }
         return $this->returnResponseDataAsFormat(str_replace(',', '.', $kontzeptua->getKopuruaProd()), $_format);
     }
-
 
     private function returnResponseDataAsFormat($data, $_format = 'json', $template = null, $templateData = []) {
         $view = View::create();
         $view->setData($data);
         //dump($_format);die;
-        if (null !== $_format && $_format === 'html') {
-            $view->setTemplate($template);
-            $view->setTemplateData($templateData);
-            $view->setFormat('html');
+        if (null !== $_format && $_format === 'html' && null !== $template) {
+            return $this->render($template,$templateData);
         }
         if (null !== $_format && $_format === 'json') {
             $view->setFormat('json'); 

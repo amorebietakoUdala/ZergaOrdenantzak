@@ -367,11 +367,11 @@ class Kontzeptua
     /**
      * Set azpiatala
      *
-     * @param \App\Entity\Azpiatala $azpiatala
+     * @param Azpiatala $azpiatala
      *
      * @return Kontzeptua
      */
-    public function setAzpiatala(\App\Entity\Azpiatala $azpiatala = null)
+    public function setAzpiatala(Azpiatala $azpiatala = null)
     {
         $this->azpiatala = $azpiatala;
 
@@ -381,7 +381,7 @@ class Kontzeptua
     /**
      * Get azpiatala
      *
-     * @return \App\Entity\Azpiatala
+     * @return Azpiatala
      */
     public function getAzpiatala()
     {
@@ -391,11 +391,11 @@ class Kontzeptua
     /**
      * Set baldintza
      *
-     * @param \App\Entity\Baldintza $baldintza
+     * @param Baldintza $baldintza
      *
      * @return Kontzeptua
      */
-    public function setBaldintza(\App\Entity\Baldintza $baldintza = null)
+    public function setBaldintza(Baldintza $baldintza = null)
     {
         $this->baldintza = $baldintza;
 
@@ -405,7 +405,7 @@ class Kontzeptua
     /**
      * Get baldintza
      *
-     * @return \App\Entity\Baldintza
+     * @return Baldintza
      */
     public function getBaldintza()
     {
@@ -415,11 +415,11 @@ class Kontzeptua
     /**
      * Set kontzeptumota
      *
-     * @param \App\Entity\Kontzeptumota $kontzeptumota
+     * @param Kontzeptumota $kontzeptumota
      *
      * @return Kontzeptua
      */
-    public function setKontzeptumota(\App\Entity\Kontzeptumota $kontzeptumota = null)
+    public function setKontzeptumota(Kontzeptumota $kontzeptumota = null)
     {
         $this->kontzeptumota = $kontzeptumota;
 
@@ -429,7 +429,7 @@ class Kontzeptua
     /**
      * Get kontzeptumota
      *
-     * @return \App\Entity\Kontzeptumota
+     * @return Kontzeptumota
      */
     public function getKontzeptumota()
     {
@@ -439,11 +439,11 @@ class Kontzeptua
     /**
      * Set udala
      *
-     * @param \App\Entity\Udala $udala
+     * @param Udala $udala
      *
      * @return Kontzeptua
      */
-    public function setUdala(\App\Entity\Udala $udala = null)
+    public function setUdala(Udala $udala = null)
     {
         $this->udala = $udala;
 
@@ -453,7 +453,7 @@ class Kontzeptua
     /**
      * Get udala
      *
-     * @return \App\Entity\Udala
+     * @return Udala
      */
     public function getUdala()
     {

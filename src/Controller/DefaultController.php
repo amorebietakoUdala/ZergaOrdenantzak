@@ -20,9 +20,9 @@ class DefaultController extends AbstractController
      */
     public function apikudeatzailea(): Response
     {
-        return $this->render('apikudeatzailea.html.twig', array(
+        return $this->render('apikudeatzailea.html.twig', [
             'udala' => $this->getUser()->getUdala()
-        ));
+        ]);
     }
 
     /**

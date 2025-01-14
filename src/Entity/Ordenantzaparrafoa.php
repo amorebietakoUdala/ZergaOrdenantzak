@@ -264,11 +264,11 @@ class Ordenantzaparrafoa
     /**
      * Set ordenantza
      *
-     * @param \App\Entity\Ordenantza $ordenantza
+     * @param Ordenantza $ordenantza
      *
      * @return Ordenantzaparrafoa
      */
-    public function setOrdenantza(\App\Entity\Ordenantza $ordenantza = null)
+    public function setOrdenantza(Ordenantza $ordenantza = null)
     {
         $this->ordenantza = $ordenantza;
 
@@ -278,7 +278,7 @@ class Ordenantzaparrafoa
     /**
      * Get ordenantza
      *
-     * @return \App\Entity\Ordenantza
+     * @return Ordenantza
      */
     public function getOrdenantza()
     {
@@ -288,11 +288,11 @@ class Ordenantzaparrafoa
     /**
      * Set udala
      *
-     * @param \App\Entity\Udala $udala
+     * @param Udala $udala
      *
      * @return Ordenantzaparrafoa
      */
-    public function setUdala(\App\Entity\Udala $udala = null)
+    public function setUdala(Udala $udala = null)
     {
         $this->udala = $udala;
 
@@ -302,7 +302,7 @@ class Ordenantzaparrafoa
     /**
      * Get udala
      *
-     * @return \App\Entity\Udala
+     * @return Udala
      */
     public function getUdala()
     {

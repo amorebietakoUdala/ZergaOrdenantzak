@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e83c7a3502e26f82cd77eddc6806be41",
+    "content-hash": "25f8086ffa2a17b2e46a6e964602e43d",
     "packages": [
         {
             "name": "amorebietakoudala/user-bundle",

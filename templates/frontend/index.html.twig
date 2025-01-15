@@ -14,17 +14,7 @@
 			<a href="{{ path('frontend_historikoa_index', { 'udala': udala}) }}">{{ "Historikoa kontsultatu" | trans }}</a>
 		</li>
 		<li>
-			<a href="{{ path('frontend_ordenantza_pdf', { 'udala': udala}) }}" target="_blank" class="fa fa-file-pdf-o">
-				{% if ordenantza.id is defined %}
-					<li>
-						<a href="{{ path('frontend_ordenantza_odt', { 'id': ordenantza.id, }) }}" target="_blank" class="fa fa-file-pdf-o">
-						{% endif %}
-						{#{% if app.request.locale == 'eu'%}Pdf (eu)#}
-						{#{% else %}Pdf (es)#}
-						{#{% endif %}#}
-					PDF
-				</li>
-			</a>
+			<a href="{{ path('frontend_ordenantza_pdf', { 'udala': udala}) }}" target="_blank" class="fa fa-file-pdf-o">PDF</a>
 		</li>
 		</li>
 			<li class="list-inline"> <a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'es'})) }}">ES</a>

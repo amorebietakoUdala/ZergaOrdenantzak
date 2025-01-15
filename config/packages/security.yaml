@@ -1,6 +1,6 @@
 security:
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
-    encoders:
+    password_hashers:
         AMREU\UserBundle\Model\UserInterface: bcrypt
         legacy:
             algorithm: sodium
@@ -29,7 +29,8 @@ security:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: lazy
+            anonymous: true
+            lazy: true
             pattern: ^/
             guard:
                 authenticators:

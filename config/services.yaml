@@ -12,6 +12,7 @@ parameters:
     izfe_login_path: ''
     zzoo_aplikazioaren_API_url: '%env(ZZOO_APLIKAZIOAREN_API_URL)%'
     locale: 'eu'
+    azterketa_azpiatala: 62
 
 services:
     # default configuration for services in *this* file
@@ -57,21 +58,7 @@ services:
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
 
-    # App\Filter\ConfiguratorEventSubscriber:
-    #     arguments:
-    #         - "@doctrine.orm.default_entity_manager"
-    #         - "@security.token_storage"
-    #         - "@annotation_reader"
-    #     tags:
-    #         - { name: kernel.event_listener, event: kernel.request }
-    
-    # twig.extension.text:
-    #     class: Twig_Extensions_Extension_Text
-    #     tags:
-    #         - { name: twig.extension }
-
-    Swift_Mailer: '@swiftmailer.mailer.default'
-    WhiteOctober\TCPDFBundle\Controller\TCPDFController: '@white_october.tcpdf'
+    Qipsius\TCPDFBundle\Controller\TCPDFController: '@qipsius.tcpdf'
 
     # easycorp.easylog.handler:
     #         class: EasyCorp\EasyLog\EasyLogHandler

@@ -33,8 +33,7 @@ $(function () {
     // param = "http://zzoo.dev/app_dev.php/api";
     // **************************************************
     // **************************************************
-  //  var udala = "{{ udala.kodea }}";
-    var url = param + "/ordenantzakbykodea/" + udala + ".json";
+    var url = param + "/ordenantzakbykodea/" + udala + "?format=json";
   //  var locale = "{{ app.request.getLocale() }}";
 
     // Ordenantzak
@@ -61,7 +60,7 @@ $(function () {
     $('#cmbOrdenantza').on('click', function () {
         $('#nireloader').addClass('loading');
         var ordenantzaid = $(this).val();
-        var url = param + "/tributuak/" + ordenantzaid + ".json";
+        var url = param + "/tributuak/" + ordenantzaid + "?format=json";
         var jqxhr = $.getJSON(url, function (result) {
             $("#cmbAtala").empty();
             if (locale === "es") {
@@ -112,7 +111,7 @@ $(function () {
 
         $('#nireloader').addClass('loading');
         var atalaid = $(this).val();
-        var url = param + "/zergak/" + atalaid + ".json";
+        var url = param + "/zergak/" + atalaid + "?format=json";
 
         var jqxhr = $.getJSON(url, function (result2) {
             $("#cmbKontzeptua").empty();
@@ -191,11 +190,11 @@ $(function () {
 
 function eginAdibidea($locale, $id, $mitext) {
     $('#emaitza').empty();
-    var url = "/zzoo/api/zerga/" + $id + ".json";
+    var url = "/zzoo/api/zerga/" + $id + "?format=json";
     // **************************************************
     // **************************************************
     // DEBUG ONLY!!!
-    // var url = "http://zzoo.dev/app_dev.php/api/zerga/" + $id + ".json";
+    // var url = "http://zzoo.dev/app_dev.php/api/zerga/" + $id + "?format=json";
     // **************************************************
     // **************************************************
     var colap =0;
@@ -359,7 +358,7 @@ nireDiv + '\n' +
 '&#x3C;script language=&#x22;javascript&#x22;&#x3E;'+'\n' +
 '&#x9;$(document).ready(function() {'+'\n' +
 '&#x9;&#x9;$(&#x27;.cp_oculta' + $apId + '&#x27;).css(&#x27;display&#x27;,&#x27;none&#x27;);'+'\n' +
-'&#x9;&#x9;var url = &#x22;/zzoo/api/zerga/' + $apId + '.json&#x22;;'+'\n' +
+'&#x9;&#x9;var url = &#x22;/zzoo/api/zerga/' + $apId + '?format=json&#x22;;'+'\n' +
 '&#x9;&#x9;$.getJSON(url, function(data) {'+'\n' +
 '&#x9;&#x9;$(&#x27;#nireH3' + $apId + '&#x27;).text ((data.' + nireIzen + ').replace(&#x22;&#x3C;br&#x3E;&#x22;,&#x22;&#x22;).replace(&#x22;&#x26;nbsp;&#x22;,&#x22; &#x22;));'+'\n' +
 '&#x9;&#x9;&#x9;var kontzeptuak = data.kontzeptuak;'+'\n' +

@@ -5,13 +5,14 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Ordenantza;
+use App\Entity\User;
 use App\Repository\HistorikoaRepository;
 use App\Repository\OrdenantzaRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Symfony\Component\HttpFoundation\Response;
-use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
+use Qipsius\TCPDFBundle\Controller\TCPDFController;
 
 class FrontendController extends AbstractController
 {
@@ -59,50 +60,6 @@ class FrontendController extends AbstractController
             'udala'=>$udala,
         ));        
         
-    }
-
-    /**
-     * Finds and displays a Ordenantza entity (OFT).
-     *
-     * @Route("/{id}/odt", name="frontend_ordenantza_odt", requirements={"id"="\d+"}, methods={"GET"})
-     */
-    public function odt(int $id)
-    {
-         $ordenantza = $this->ordenantzaRepo->getOrdenantzabat($id);
-//        $parrafoak = $ordenantza->getParrafoak();
-
-//        $izenburuaeu = $ordenantza->getIzenburuaeu();
-//        $izenburuaes = $ordenantza->getIzenburuaes();
-
-//        foreach ( $ordenantza->getParrafoak() as $parrafoa ) {
-//            $ord[0]["parrafoa"]=array("parrafoaeu"=>$parrafoa->getTestuaeu(),"parrafoaes"=>$parrafoa->getTestuaes());
-//        }
-
-
-        //$azala = $this->render('frontend/azala.html.twig',array('eguna'=>date("Y"),'udala'=>$this->getUser()->getUdala()));
-        //$pdf = $this->tcpdfController->create('vertical', PDF_UNIT, PDF_PAGE_FORMAT, true, 'UTF-8', false);
-        $TBS = $this->container->get('opentbs');
-
-        $o = $this->rootDir . '/../web/doc/064/txantiloia.odt';
-
-        $TBS->LoadTemplate($o, OPENTBS_ALREADY_UTF8);
-        //$TBS->Plugin(OPENTBS_DEBUG_INFO);
-        // replace variables
-        $TBS->MergeField('ordenantza', $ordenantza[0]);
-        $TBS->MergeBlock('ordenantza', $ordenantza);
-//        $data = array();
-//        $data[] = array('id'=> 'A', 'firstname'=>'Sandra' , 'name'=>'Hill'      , 'number'=>'1523d', 'score'=>200, 'email_1'=>'sh@tbs.com',  'email_2'=>'sandra@tbs.com',  'email_3'=>'s.hill@tbs.com');
-//        $data[] = array('rank'=> 'A', 'firstname'=>'Roger'  , 'name'=>'Smith'     , 'number'=>'1234f', 'score'=>800, 'email_1'=>'rs@tbs.com',  'email_2'=>'robert@tbs.com',  'email_3'=>'r.smith@tbs.com' );
-//        $data[] = array('rank'=> 'B', 'firstname'=>'William', 'name'=>'Mac Dowell', 'number'=>'5491y', 'score'=>130, 'email_1'=>'wmc@tbs.com', 'email_2'=>'william@tbs.com', 'email_3'=>'w.m.dowell@tbs.com' );
-//        $TBS->MergeBlock('parrafoa', $data);
-        //$TBS->MergeBlock('ordenantza', $ordenantza);
-//        $TBS->MergeBlock('par', $ordenantza[0]['parrafoak']);
-        //$TBS->MergeField('client', array('portada' => $azala));
-        //$TBS->MergeField('client', array('portada' => 'KK','name' => 'Ford Prefect'));
-        // send the file
-        //$TBS->Show(OPENTBS_DOWNLOAD, $o);
-        //$TBS->Show(OPENTBS_FILE, $o2);
-        $TBS->Show(OPENTBS_DOWNLOAD, '/doc/txantiloia.odt');
     }
 
     /**
@@ -163,8 +120,9 @@ class FrontendController extends AbstractController
         $pdf->setHeaderData('',0,'','',array(0,0,0), array(255,255,255) );
 
         $pdf->AddPage();
-
-        $azala = $this->render('frontend/azala.html.twig',array('eguna'=>date("Y"),'udala'=>$this->getUser()->getUdala()));
+        /** @var User $user */
+        $user = $this->getUser();
+        $azala = $this->render('frontend/azala.html.twig',array('eguna'=>date("Y"),'udala'=>$user->getUdala()));
         $pdf->writeHTMLCell($w = 0, $h = 0, $x = '', $y = '', $azala->getContent(), $border = 0, $ln = 1, $fill = 0, $reseth = true, $align = '', $autopadding = true);
         $pdf->AddPage();
 

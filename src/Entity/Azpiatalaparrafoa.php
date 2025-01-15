@@ -270,11 +270,11 @@ class Azpiatalaparrafoa
     /**
      * Set azpiatala
      *
-     * @param \App\Entity\Azpiatala $azpiatala
+     * @param Azpiatala $azpiatala
      *
      * @return Azpiatalaparrafoa
      */
-    public function setAzpiatala(\App\Entity\Azpiatala $azpiatala = null)
+    public function setAzpiatala(Azpiatala $azpiatala = null)
     {
         $this->azpiatala = $azpiatala;
 
@@ -284,7 +284,7 @@ class Azpiatalaparrafoa
     /**
      * Get azpiatala
      *
-     * @return \App\Entity\Azpiatala
+     * @return Azpiatala
      */
     public function getAzpiatala()
     {
@@ -294,11 +294,11 @@ class Azpiatalaparrafoa
     /**
      * Set udala
      *
-     * @param \App\Entity\Udala $udala
+     * @param Udala $udala
      *
      * @return Azpiatalaparrafoa
      */
-    public function setUdala(\App\Entity\Udala $udala = null)
+    public function setUdala(Udala $udala = null)
     {
         $this->udala = $udala;
 
@@ -308,7 +308,7 @@ class Azpiatalaparrafoa
     /**
      * Get udala
      *
-     * @return \App\Entity\Udala
+     * @return Udala
      */
     public function getUdala()
     {

@@ -21,7 +21,7 @@ use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\ArrayAdapter;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
-use WhiteOctober\TCPDFBundle\Controller\TCPDFController;
+use Qipsius\TCPDFBundle\Controller\TCPDFController;
 
 /**
  * Historikoa controller.
@@ -89,7 +89,9 @@ class HistorikoaController extends AbstractController {
 
         $historikoa = new Historikoa();
         $form = $this->createForm(HistorikoaType::class, $historikoa);
-        $form->getData()->setUdala($this->getUser()->getUdala());
+        /** @var User $user */
+        $user = $this->getUser();
+        $form->getData()->setUdala($user->getUdala());
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid())
@@ -97,7 +99,7 @@ class HistorikoaController extends AbstractController {
             /** @var Ordenantza $ordenantza */
             foreach ($ordenantzas as $ordenantza)
             {
-                $filename = $this->getFilename($this->getUser()->getUdala()->getKodea(), $ordenantza->getKodea());
+                $filename = $this->getFilename($user->getUdala()->getKodea(), $ordenantza->getKodea());
                 /* Begiratu ezabatze marka duen, baldin badu ezabatu */
                 if ($ordenantza->getEzabatu() == 1)
                 {
@@ -230,8 +232,8 @@ class HistorikoaController extends AbstractController {
             //$pdf->footerTitle = $form["indarreandata"]->getData()->format('Y/m/d');
 
 
-            $pdf->SetAuthor($this->getUser()->getUdala());
-            $pdf->SetTitle($this->getUser()->getUdala() . "-Zerga Ordenantzak");
+            $pdf->SetAuthor($user->getUdala());
+            $pdf->SetTitle($user->getUdala() . "-Zerga Ordenantzak");
 
             $pdf->setFontSubsetting(true);
             $pdf->SetFont('helvetica', '', 11, '', true);
@@ -241,9 +243,9 @@ class HistorikoaController extends AbstractController {
             $pdf->AddPage();
 
             $eguna = date("Y-m-d_His");
-            $filename = $this->getFilename($this->getUser()->getUdala()->getKodea(), "ZergaOrdenantzak-" . $eguna);
+            $filename = $this->getFilename($user->getUdala()->getKodea(), "ZergaOrdenantzak-" . $eguna);
 
-            $azala = $this->render('ordenantza/azala.html.twig', array('eguna' => date("Y"), 'udala' => $this->getUser()->getUdala()));
+            $azala = $this->render('ordenantza/azala.html.twig', array('eguna' => date("Y"), 'udala' => $user->getUdala()));
 
             $pdf->writeHTMLCell($w = 0, $h = 0, $x = '', $y = '', $azala->getContent(), $border = 0, $ln = 1, $fill = 0, $reseth = true, $align = '', $autopadding = true);
 

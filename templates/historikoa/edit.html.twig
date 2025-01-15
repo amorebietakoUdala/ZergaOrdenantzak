@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h1>{{ "Historikoa" | trans }}</h1>
+
+    {{ form_start(edit_form) }}
+
+    <div class="row">
+        <div class="form-group  field-text col-sm-3">
+            {{ form_label(edit_form.onartzedata, 'Udalbatzarrararen data'|trans, { 'label_attr': {'class': 'control-label'} }) }}
+            {{ form_errors(edit_form.onartzedata) }}
+            {{ form_widget(edit_form.onartzedata, {'attr': {'class': 'form-control js-datepicker'}}) }}
+        </div>
+
+        <div class="form-group field-text col-sm-3">
+            {{ form_label(edit_form.bogargitaratzedata,  'GAO: Hasierako onarpena'|trans, { 'label_attr': {'class': 'control-label'} }) }}
+            {{ form_errors(edit_form.bogargitaratzedata) }}
+            {{ form_widget(edit_form.bogargitaratzedata, {'attr': {'class': 'form-control js-datepicker'}}) }}
+        </div>
+
+        <div class="form-group field-text col-sm-3">
+            {{ form_label(edit_form.bogbehinbetikodata, 'GAO: Behin betiko onarpena'|trans, { 'label_attr': {'class': 'control-label'} }) }}
+            {{ form_errors(edit_form.bogbehinbetikodata) }}
+            {{ form_widget(edit_form.bogbehinbetikodata, {'attr': {'class': 'form-control js-datepicker'}}) }}
+            {{ form_label(edit_form.bogargitaratzedatatestua, 'Akats zuzenketak (testua)'|trans, { 'label_attr': {'class': 'control-label'} }) }}
+            {{ form_errors(edit_form.bogargitaratzedatatestua) }}
+            {{ form_widget(edit_form.bogargitaratzedatatestua, {'attr': {'class': 'form-control'}}) }}
+        </div>
+
+        <div class="form-group field-text col-sm-3">
+            {{ form_label(edit_form.indarreandata, 'Indarreko data'|trans, { 'label_attr': {'class': 'control-label'} }) }}
+            {{ form_errors(edit_form.indarreandata) }}
+            {{ form_widget(edit_form.indarreandata, {'attr': {'class': 'form-control js-datepicker'}}) }}
+        </div>
+
+    </div>
+
+    <div class="form-group  field-text">
+        {{ form_label(edit_form.bogestekaeu, 'G.A.O. esteka eskaraz'| trans, { 'label_attr': {'class': 'control-label'} }) }}
+        {{ form_errors(edit_form.bogestekaeu) }}
+        {{ form_widget(edit_form.bogestekaeu, {'attr': {'class': 'form-control'}}) }}
+    </div>
+
+    <div class="form-group  field-text">
+        {{ form_label(edit_form.bogestekaes, 'G.A.O. esteka erdaraz'| trans, { 'label_attr': {'class': 'control-label'} }) }}
+        {{ form_errors(edit_form.bogestekaes) }}
+        {{ form_widget(edit_form.bogestekaes, {'attr': {'class': 'form-control'}}) }}
+    </div>
+
+    <div class="form-group  field-text">
+        {{ form_label(edit_form.aldaketakeu, 'Aldaketak euskaraz'| trans, { 'label_attr': {'class': 'control-label'} }) }}
+        {{ form_errors(edit_form.aldaketakeu) }}
+        {{ form_widget(edit_form.aldaketakeu, {'attr': {'class': 'form-control'}}) }}
+    </div>
+
+    <div class="form-group  field-text">
+        {{ form_label(edit_form.aldaketakes, 'Aldaketak erdaraz'| trans, { 'label_attr': {'class': 'control-label'} }) }}
+        {{ form_errors(edit_form.aldaketakes) }}
+        {{ form_widget(edit_form.aldaketakes, {'attr': {'class': 'form-control'}}) }}
+    </div>
+
+    <ul class="list-inline">
+        <li>
+            <input class="btn btn-primary" type="submit" value="{{ "Gorde"|trans }}"/>
+        </li>
+        <li>
+            <a href="{{ path('admin_historikoa_index') }}">{{ "Itzuli zerrendara" |trans }}</a>
+        </li>
+    </ul>
+
+
+    {{ form_end(edit_form) }}
+{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    {{ encore_entry_link_tags('historikoa-new') }}
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    {{ encore_entry_script_tags('historikoa-new') }}
+{% endblock %}

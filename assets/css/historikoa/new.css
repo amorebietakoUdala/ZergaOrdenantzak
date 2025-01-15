@@ -1,0 +1,8 @@
+@import '../calendar/bootstrap-datepicker3.min.css';
+
+
+/* Make inline editables take the full width of their parents */
+
+.dropdown-menu {
+      font-size: 13px;
+}

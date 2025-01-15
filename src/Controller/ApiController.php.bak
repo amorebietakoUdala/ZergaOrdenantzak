@@ -1,0 +1,182 @@
+<?php
+/**
+ * User: iibarguren
+ * Date: 31/05/16
+ * Time: 10:09
+ */
+
+namespace App\Controller;
+
+use App\Repository\AtalaRepository;
+use App\Repository\AzpiatalaRepository;
+use App\Repository\OrdenantzaRepository;
+use Doctrine\ORM\EntityManagerInterface;
+use FOS\RestBundle\Controller\AbstractFOSRestController;
+use FOS\RestBundle\Controller\Annotations;
+use FOS\RestBundle\View\View;
+use Nelmio\ApiDocBundle\Annotation\ApiDoc;
+
+class ApiController extends AbstractFOSRestController
+{
+
+    private $em;
+    private $ordenantzaRepo;
+    private $atalaRepo;
+    private $azpiatalaRepo;
+
+    public function __construct(
+        EntityManagerInterface $em, 
+        OrdenantzaRepository $ordenantzaRepo, 
+        AtalaRepository $atalaRepo,
+        AzpiatalaRepository $azpiatalaRepo
+    )
+    {
+        $this->em = $em;
+        $this->ordenantzaRepo = $ordenantzaRepo;
+        $this->atalaRepo = $atalaRepo;
+        $this->azpiatalaRepo = $azpiatalaRepo;
+    }
+
+    /**
+     * Ordenantza guztien zerrenda.
+     *
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Ordenantza guztien zerrenda eskuratu",
+     *   statusCodes = {
+     *     200 = "Zuzena denean"
+     *   }
+     * )
+     *
+     *
+     * @return array data
+     *
+     * @Annotations\View()
+     */
+    public function getOrdenantzakAction()
+    {
+        $ordenantzak = $this->ordenantzaRepo->findAll();
+        $view = View::create();
+        $view->setData($ordenantzak);
+        header('content-type: application/json; charset=utf-8');
+        header("access-control-allow-origin: *");
+        return $view;
+
+    }// "get_ordenantzak"            [GET] /ordenantzak
+
+    /**
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Ordenantza baten informazioa eskuratu"
+     * )
+     *
+     * @Annotations\View()
+     */
+    public function getOrdenantzaAction($id){
+        $ordenantza = $this->ordenantzaRepo->find($id);
+        header('content-type: application/json; charset=utf-8');
+        header("access-control-allow-origin: *");
+        return $ordenantza;
+    }// "get_ordenantza"            [GET] /ordenantza/{id}
+
+    /**
+     * Atal guztien zerrenda.
+     *
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Atal guztien zerrenda eskuratu",
+     *   statusCodes = {
+     *     200 = "Zuzena denean"
+     *   }
+     * )
+     *
+     *
+     * @return array data
+     *
+     * @Annotations\View()
+     */
+    public function getAtalakAction()
+    {
+        $atalak = $this->atalaRepo->findAll();
+        $view = View::create();
+        $view->setData($atalak);
+        header('content-type: application/json; charset=utf-8');
+        header("access-control-allow-origin: *");
+        return $view;
+
+    }// "get_atalak"            [GET] /atalak
+
+    /**
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Atal baten informazioa eskuratu"
+     * )
+     *
+     * @Annotations\View()
+     */
+    public function getAtalaAction($id){
+        $atala = $this->atalaRepo->find($id);
+        header('content-type: application/json; charset=utf-8');
+        header("access-control-allow-origin: *");
+        return $atala;
+    }// "get_atala"            [GET] /atala/{id}
+
+    /**
+     * Udal baten Azpiatal zerrenda.
+     *
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Azpiatal guztien zerrenda eskuratu",
+     *   statusCodes = {
+     *     200 = "Zuzena denean"
+     *   }
+     * )
+     *
+     *
+     * @return array data
+     *
+     * @Annotations\View()
+     */
+    public function getAzpiatalakAction($udalaid)
+    {
+        /** @var  $query \Doctrine\DBAL\Query\QueryBuilder */
+        // $query = $em->createQuery('SELECT p.id, p.kodea, p.izenburuaeu FROM App:Azpiatala p WHERE p.udala=:udalaid');
+        // $query->setParameter( 'udalaid', $udalaid );
+        // $azpiatalak = $query->getResult();
+        $azpiatalak = $this->azpiatalaRepo->findAzpiatalakByUdala($udalaid);
+
+        $view = View::create();
+        $view->setData($azpiatalak);
+        header('content-type: application/json; charset=utf-8');
+        header("access-control-allow-origin: *");
+        return $view;
+
+    }// "get_azpiatalak"            [GET] /azpiatalak/{udalaid}
+
+    /**
+     *
+     * @ApiDoc(
+     *   resource = true,
+     *   description = "Azpiatal guztien zerrenda eskuratu",
+     *   statusCodes = {
+     *     200 = "Zuzena denean"
+     *   }
+     * )
+     *
+     *
+     * @return array data
+     *
+     * @Annotations\View()
+     */
+    public function getAzpiatalaAction($id)
+    {
+        $azpiatalak = $this->azpiatalaRepo->find( $id );
+        $view = View::create();
+        $view->setData($azpiatalak);
+        header('content-type: application/json; charset=utf-8');
+        header("access-control-allow-origin: *");
+        return $view;
+
+    }// "get_azpiatala"            [GET] /azpiatala/{id}
+
+}

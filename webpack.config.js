@@ -28,6 +28,7 @@ Encore
     .addEntry('baldintza-index', './assets/js/baldintza/index.js')
     .addEntry('apikudeatzailea', './assets/js/apikudeatzailea/main.js')
     .addEntry('frontend-index', './assets/js/frontend/index.js')
+    .addEntry('default-list', './assets/js/frontend/list.js')
     .addEntry('frontend-show', './assets/js/frontend/show.js')
     .addEntry('udala-index', './assets/js/udala/index.js')
     .addEntry('user-list', './assets/js/user/list.js')

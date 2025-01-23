@@ -14,6 +14,26 @@ use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends AbstractController
 {
+    private $zzoo_aplikazioaren_API_url;
+
+    public function __construct( string $zzoo_aplikazioaren_API_url )
+    {
+        $this->zzoo_aplikazioaren_API_url = $zzoo_aplikazioaren_API_url;
+    }
+
+     /**
+     * @Route("/ordenantzak/{udala}/{_locale}/", name="ordenantzakList", 
+     *    requirements={
+     *           "_locale": "eu|es"
+     * })
+     */
+    public function ordenantzakListAction(Request $request, $udala)
+    {
+        return $this->render('default\list.html.twig', array(
+            'udala' => $udala,
+            'apiUrl' => $this->zzoo_aplikazioaren_API_url
+        ));
+    }
 
     /**
      * @Route("/kudeatu", name="api_kudeatzailea", methods={"GET"})

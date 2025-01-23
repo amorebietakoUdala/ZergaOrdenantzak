@@ -1,0 +1,19 @@
+ul#ulzzoo {
+   margin-left: 14px !important;
+}
+ul#ulzzoo li {
+   list-style-type: none;
+}
+.popover {
+   z-index: 9999 !important;
+}
+
+.popover .editable-buttons {
+   margin-left: 15px !important;
+}
+
+.divAkzioak {
+   display: block;
+   height: 18px;
+   text-align: right;
+}

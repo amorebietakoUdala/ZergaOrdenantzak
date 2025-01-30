@@ -16,9 +16,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Udala controller.
- *
- * @Route("/{_locale}/admin/udala")
  */
+#[Route(path: '/{_locale}/admin/udala')]
 class UdalaController extends AbstractController
 {
     private $em;
@@ -30,10 +29,9 @@ class UdalaController extends AbstractController
 
     /**
      * Lists all Udala entities.
-     *
-     * @Route("/", defaults={"page"=1}, name="udala_index", methods={"GET"})
-     * @Route("/page{page}", name="udala_index_paginated", methods={"GET"})
      */
+    #[Route(path: '/', defaults: ['page' => 1], name: 'udala_index', methods: ['GET'])]
+    #[Route(path: '/page{page}', name: 'udala_index_paginated', methods: ['GET'])]
     public function index($page)
     {
         if ($this->isGranted('ROLE_SUPER_ADMIN'))
@@ -83,9 +81,8 @@ class UdalaController extends AbstractController
 
     /**
      * Creates a new Udala entity.
-     *
-     * @Route("/new", name="udala_new", methods={"GET", "POST"})
      */
+    #[Route(path: '/new', name: 'udala_new', methods: ['GET', 'POST'])]
     public function new(Request $request)
     {
         if ($this->isGranted('ROLE_SUPER_ADMIN')) {
@@ -112,9 +109,8 @@ class UdalaController extends AbstractController
 
     /**
      * Finds and displays a Udala entity.
-     *
-     * @Route("/{id}", name="udala_show", methods={"GET"})
      */
+    #[Route(path: '/{id}', name: 'udala_show', methods: ['GET'])]
     public function show(Udala $udala): Response
     {
         $deleteForm = $this->createDeleteForm($udala);
@@ -127,9 +123,8 @@ class UdalaController extends AbstractController
 
     /**
      * Displays a form to edit an existing Udala entity.
-     *
-     * @Route("/{id}/edit", name="udala_edit", methods={"GET", "POST"})
      */
+    #[Route(path: '/{id}/edit', name: 'udala_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Udala $udala)
     {
         $deleteForm = $this->createDeleteForm($udala);
@@ -152,9 +147,8 @@ class UdalaController extends AbstractController
 
     /**
      * Deletes a Udala entity.
-     *
-     * @Route("/{id}", name="udala_delete", methods={"DELETE"})
      */
+    #[Route(path: '/{id}', name: 'udala_delete', methods: ['DELETE'])]
     public function delete(Request $request, Udala $udala): RedirectResponse
     {
         $form = $this->createDeleteForm($udala);

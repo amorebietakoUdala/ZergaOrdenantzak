@@ -21,13 +21,8 @@ class DefaultController extends AbstractController
         $this->zzoo_aplikazioaren_API_url = $zzoo_aplikazioaren_API_url;
     }
 
-     /**
-     * @Route("/ordenantzak/{udala}/{_locale}/", name="ordenantzakList", 
-     *    requirements={
-     *           "_locale": "eu|es"
-     * })
-     */
-    public function ordenantzakListAction(Request $request, $udala)
+    #[Route(path: '/ordenantzak/{udala}/{_locale}/', name: 'ordenantzakList', requirements: ['_locale' => 'eu|es'])]
+    public function ordenantzakList($udala)
     {
         return $this->render('default\list.html.twig', array(
             'udala' => $udala,
@@ -35,9 +30,8 @@ class DefaultController extends AbstractController
         ));
     }
 
-    /**
-     * @Route("/kudeatu", name="api_kudeatzailea", methods={"GET"})
-     */
+    
+    #[Route(path: '/kudeatu', name: 'api_kudeatzailea', methods: ['GET'])]
     public function apikudeatzailea(): Response
     {
         return $this->render('apikudeatzailea.html.twig', [
@@ -47,9 +41,8 @@ class DefaultController extends AbstractController
 
     /**
      * Finds and displays a Ordenantza entity.
-     *
-     * @Route("/admin/exportatu/{id}", name="exportatu", methods={"GET"})
      */
+    #[Route(path: '/admin/exportatu/{id}', name: 'exportatu', methods: ['GET'])]
     public function exportatu(Ordenantza $ordenantza): Response
     {
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
@@ -159,8 +152,8 @@ class DefaultController extends AbstractController
     /**
      * Lists all Ordenantza entities.
      *
-     * @Route("/hizkuntza/{_locale}", name="hizkuntza_aldatu", methods={"GET"})
      */
+    #[Route(path: '/hizkuntza/{_locale}', name: 'hizkuntza_aldatu', methods: ['GET'])]
     public function hizkuntza(Request $request): RedirectResponse
     {
         /* historikotik ez du funtzionatzen orrialde batetan badago */

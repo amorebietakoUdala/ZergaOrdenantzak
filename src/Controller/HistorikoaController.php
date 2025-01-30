@@ -25,9 +25,8 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
 
 /**
  * Historikoa controller.
- *
- * @Route("/{_locale}/admin/historikoa")
  */
+#[Route(path: '/{_locale}/admin/historikoa')]
 class HistorikoaController extends AbstractController {
 
     private $em;
@@ -43,10 +42,9 @@ class HistorikoaController extends AbstractController {
 
     /**
      * Lists all Historikoa entities.
-     *
-     * @Route("/", defaults={"page"=1}, name="admin_historikoa_index", methods={"GET"})
-     * @Route("/page{page}", name="admin_historikoa_paginated", methods={"GET"})
      */
+    #[Route(path: '/', defaults: ['page' => 1], name: 'admin_historikoa_index', methods: ['GET'])]
+    #[Route(path: '/page{page}', name: 'admin_historikoa_paginated', methods: ['GET'])]
     public function index($page): Response
     {
         $historikoas = $this->historikoaRepo->findBy([],['id' => 'DESC']);
@@ -78,10 +76,10 @@ class HistorikoaController extends AbstractController {
     /**
      * Creates a new Historikoa entity.
      *
-     * @Route("/new", name="admin_historikoa_new", methods={"GET", "POST"})
      * @param Request $request
      * @return RedirectResponse|Response
      */
+    #[Route(path: '/new', name: 'admin_historikoa_new', methods: ['GET', 'POST'])]
     public function new(Request $request, TCPDFController $tcpdfController)
     {
 
@@ -276,9 +274,8 @@ class HistorikoaController extends AbstractController {
 
     /**
      * Finds and displays a Historikoa entity.
-     *
-     * @Route("/{id}", name="admin_historikoa_show", methods={"GET"})
      */
+    #[Route(path: '/{id}', name: 'admin_historikoa_show', methods: ['GET'])]
     public function show(Historikoa $historikoa): Response
     {
         $deleteForm = $this->createDeleteForm($historikoa);
@@ -291,9 +288,8 @@ class HistorikoaController extends AbstractController {
 
     /**
      * Displays a form to edit an existing Historikoa entity.
-     *
-     * @Route("/{id}/edit", name="admin_historikoa_edit", methods={"GET", "POST"})
      */
+    #[Route(path: '/{id}/edit', name: 'admin_historikoa_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Historikoa $historikoa)
     {
         $deleteForm = $this->createDeleteForm($historikoa);
@@ -318,17 +314,14 @@ class HistorikoaController extends AbstractController {
 
     /**
      * Deletes a Historikoa entity.
-     *
-     * @Route("/{id}", name="admin_historikoa_delete", methods={"DELETE"})
      */
+    #[Route(path: '/{id}', name: 'admin_historikoa_delete', methods: ['POST','DELETE'])]
     public function delete(Request $request, Historikoa $historikoa): RedirectResponse
     {
         $form = $this->createDeleteForm($historikoa);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid())
         {
-            
             $this->em->remove($historikoa);
             $this->em->flush();
         }
@@ -346,7 +339,7 @@ class HistorikoaController extends AbstractController {
     private function createDeleteForm(Historikoa $historikoa)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_historikoa_delete', array('id' => $historikoa->getId())))
+            ->setAction($this->generateUrl('admin_historikoa_delete', ['id' => $historikoa->getId()]))
             ->setMethod(Request::METHOD_DELETE)
             ->getForm();
     }

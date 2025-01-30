@@ -15,16 +15,15 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Baldintza controller.
- *
- * @Route("/{_locale}/admin/baldintza")
  */
+#[Route(path: '/{_locale}/admin/baldintza')]
 class BaldintzaController extends AbstractController
 {
 
     private $baldintzaRepo;
     private $em;
 
-    public function __construct(EntityManagerInterface $em, BaldintzaRepository $baldintzaRepo)
+    public function __construct(EntityManagerInterface $em, BaldintzaRepository $baldintzaRepo, private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
     {
         $this->em = $em;
         $this->baldintzaRepo = $baldintzaRepo;
@@ -32,9 +31,8 @@ class BaldintzaController extends AbstractController
 
     /**
      * Lists all baldintza entities.
-     *
-     * @Route("/", name="baldintza_index", methods={"GET"})
      */
+    #[Route(path: '/', name: 'baldintza_index', methods: ['GET'])]
     public function index(): Response
     {
         $baldintzas = $this->baldintzaRepo->findAll();
@@ -60,9 +58,8 @@ class BaldintzaController extends AbstractController
 
     /**
      * Creates a new baldintza entity.
-     *
-     * @Route("/new", name="baldintza_new", methods={"GET", "POST"})
      */
+    #[Route(path: '/new', name: 'baldintza_new', methods: ['GET', 'POST'])]
     public function new(Request $request)
     {
         $baldintza = new Baldintza();
@@ -87,9 +84,8 @@ class BaldintzaController extends AbstractController
 
     /**
      * Displays a form to edit an existing baldintza entity.
-     *
-     * @Route("/{id}/edit", options={"expose"=true}, name="baldintza_edit", methods={"GET", "POST"})
      */
+    #[Route(path: '/{id}/edit', options: ['expose' => true], name: 'baldintza_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Baldintza $baldintza)
     {
         $deleteForm = $this->createDeleteForm($baldintza);
@@ -97,7 +93,7 @@ class BaldintzaController extends AbstractController
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->getDoctrine()->getManager()->flush();
+            $this->managerRegistry->getManager()->flush();
 
             return $this->redirectToRoute('baldintza_index');
         }
@@ -111,9 +107,8 @@ class BaldintzaController extends AbstractController
 
     /**
      * Deletes a baldintza entity.
-     *
-     * @Route("/{id}", name="baldintza_delete", methods={"DELETE"})
      */
+    #[Route(path: '/{id}', name: 'baldintza_delete', methods: ['DELETE'])]
     public function delete(Request $request, Baldintza $baldintza): RedirectResponse
     {
         $form = $this->createDeleteForm($baldintza);

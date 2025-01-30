@@ -14,9 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Kontzeptumota controller.
- *
- * @Route("/admin/kontzeptumota")
  */
+#[Route(path: '/admin/kontzeptumota')]
 class KontzeptumotaController extends AbstractController
 {
 
@@ -31,9 +30,8 @@ class KontzeptumotaController extends AbstractController
 
     /**
      * Lists all Kontzeptumota entities.
-     *
-     * @Route("/", name="admin_kontzeptumota_index", methods={"GET"})
      */
+    #[Route(path: '/', name: 'admin_kontzeptumota_index', methods: ['GET'])]
     public function index(): Response
     {
 
@@ -46,9 +44,8 @@ class KontzeptumotaController extends AbstractController
 
     /**
      * Creates a new Kontzeptumota entity.
-     *
-     * @Route("/new", name="admin_kontzeptumota_new", methods={"GET", "POST"})
      */
+    #[Route(path: '/new', name: 'admin_kontzeptumota_new', methods: ['GET', 'POST'])]
     public function new(Request $request)
     {
         $kontzeptumotum = new Kontzeptumota();
@@ -71,9 +68,8 @@ class KontzeptumotaController extends AbstractController
 
     /**
      * Finds and displays a Kontzeptumota entity.
-     *
-     * @Route("/{id}", name="admin_kontzeptumota_show", methods={"GET"})
      */
+    #[Route(path: '/{id}', name: 'admin_kontzeptumota_show', methods: ['GET'])]
     public function show(Kontzeptumota $kontzeptumotum): Response
     {
         $deleteForm = $this->createDeleteForm($kontzeptumotum);
@@ -86,9 +82,8 @@ class KontzeptumotaController extends AbstractController
 
     /**
      * Displays a form to edit an existing Kontzeptumota entity.
-     *
-     * @Route("/{id}/edit", name="admin_kontzeptumota_edit", methods={"GET", "POST"})
      */
+    #[Route(path: '/{id}/edit', name: 'admin_kontzeptumota_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Kontzeptumota $kontzeptumotum)
     {
         $deleteForm = $this->createDeleteForm($kontzeptumotum);
@@ -111,9 +106,8 @@ class KontzeptumotaController extends AbstractController
 
     /**
      * Deletes a Kontzeptumota entity.
-     *
-     * @Route("/{id}", name="admin_kontzeptumota_delete", methods={"DELETE"})
      */
+    #[Route(path: '/{id}', name: 'admin_kontzeptumota_delete', methods: ['DELETE'])]
     public function delete(Request $request, Kontzeptumota $kontzeptumotum): RedirectResponse
     {
         $form = $this->createDeleteForm($kontzeptumotum);

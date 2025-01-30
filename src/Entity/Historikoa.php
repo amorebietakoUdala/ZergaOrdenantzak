@@ -3,110 +3,97 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use App\Annotation\UdalaEgiaztatu;
+use App\Attribute\UdalaEgiaztatu;
 use App\Repository\HistorikoaRepository;
 
 /**
  * Historikoa
  *
- * @ORM\Table(name="historikoa")
- * @ORM\Entity(repositoryClass=HistorikoaRepository::class)
- * @UdalaEgiaztatu(userFieldName="udala_id")
- */
+  */
+#[UdalaEgiaztatu(userFieldName: "udala_id")]
+#[ORM\Entity(repositoryClass: HistorikoaRepository::class)]
+#[ORM\Table(name: 'historikoa')]
 class Historikoa
 {
     /**
      * @var integer
-     *
-     * @ORM\Column(name="id", type="bigint", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(name: 'id', type: 'bigint', nullable: false)]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     private $id;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="onartzedata", type="date", nullable=true)
      */
+    #[ORM\Column(name: 'onartzedata', type: 'date', nullable: true)]
     private $onartzedata;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="bogargitaratzedata", type="date", nullable=true)
      */
+    #[ORM\Column(name: 'bogargitaratzedata', type: 'date', nullable: true)]
     private $bogargitaratzedata;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="$bogargitaratzedatatestua", type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: '$bogargitaratzedatatestua', type: 'string', length: 255, nullable: true)]
     private $bogargitaratzedatatestua;
 
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="bogbehinbetikodata", type="date", nullable=true)
      */
+    #[ORM\Column(name: 'bogbehinbetikodata', type: 'date', nullable: true)]
     private $bogbehinbetikodata;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="bogestekaeu", type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: 'bogestekaeu', type: 'string', length: 255, nullable: true)]
     private $bogestekaeu;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="bogestekaes", type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: 'bogestekaes', type: 'string', length: 255, nullable: true)]
     private $bogestekaes;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="indarreandata", type="date", nullable=true)
      */
+    #[ORM\Column(name: 'indarreandata', type: 'date', nullable: true)]
     private $indarreandata;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="aldaketakeu", type="text", length=65535, nullable=true)
      */
+    #[ORM\Column(name: 'aldaketakeu', type: 'text', length: 65535, nullable: true)]
     private $aldaketakeu;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="aldaketakes", type="text", length=65535, nullable=true)
      */
+    #[ORM\Column(name: 'aldaketakes', type: 'text', length: 65535, nullable: true)]
     private $aldaketakes;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="fitxategia", type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: 'fitxategia', type: 'string', length: 255, nullable: true)]
     private $fitxategia;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
+    #[ORM\Column(name: 'created_at', type: 'datetime', nullable: false)]
     private $createdAt;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
      */
+    #[ORM\Column(name: 'updated_at', type: 'datetime', nullable: false)]
     private $updatedAt;
 
     /**
@@ -116,11 +103,10 @@ class Historikoa
      * ************************************************************************************************************************************************************************
      * ************************************************************************************************************************************************************************
      */
-
     /**
      * @var Udala
-     * @ORM\ManyToOne(targetEntity="Udala")
      */
+    #[ORM\ManyToOne(targetEntity: Udala::class)]
     private $udala;
     
     public function __construct()

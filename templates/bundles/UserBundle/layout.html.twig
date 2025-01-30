@@ -27,7 +27,7 @@
         {% endblock authenticated %}
 
         {% block message %}
-            {{ include('@User/_messages.html.twig') }}
+            {{ include('@User/user/_messages.html.twig') }}
         {% endblock message %}
 
         {% if app.request.hasPreviousSession %}

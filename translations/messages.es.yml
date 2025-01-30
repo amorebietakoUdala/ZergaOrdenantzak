@@ -6,9 +6,14 @@ Historikoa: Historico
 Kontzeptua: Concepto
 Kopurua: Cantidad
 Unitatea: Unidad
-'Indarrean jarri': 'Poner en vigor'
+'': ''
+Udala: Udala
+Testua: Testua
+Texto: Texto
+Ordena: Ordena
+'Ordenantza ikusi': 'Ordenantza ikusi'
+'Indarrean jarri': 'Indarrean jarri'
 'Historikoa kontsultatu': 'Consulta del Historico'
-'Ordenantza ikusi': 'Ver ordenanza'
 Itxi: Cerrar
 'Onartze Data': 'Fecha aceptación'
 'B.O.G. argitaratze data': 'Fecha publicación en el B.O.'
@@ -17,9 +22,9 @@ Itxi: Cerrar
 'B.O.G. esteka erdaraz': 'Enlace al B.O. en castellano'
 'Aldaketak euskaraz': 'Cambios en euskera'
 'Aldaketak erdaraz': 'Cambios en castellano'
-'Kodea:': 'Código:'
-'Izenburua:': 'Título (Euskera):'
-'Título:': 'Título (Castellano):'
+'Kodea': 'Código'
+'Izenburua': 'Título (Euskera)'
+'Título': 'Título (Castellano)'
 'Odt-a eskuratu': 'Obtener Odt'
 Ezabatu: Eliminar
 'Aldaketak ezeztatu': 'Deshacer los cambios'
@@ -65,3 +70,21 @@ ordena: orden
 'Calendario Fiscal': 'Calendario Fiscal'
 'La información ofrecida a continuación carece de validez jurídica y se ofrece sólo a efectos informativos': 'La información ofrecida a continuación carece de validez jurídica y se ofrece sólo a efectos informativos'
 'Volver a la web del ayuntamiento': 'Volver a la web del ayuntamiento'
+'Kodea:': 'Código:'
+'Izenburua:': 'Título (Euskera):'
+'Título:': 'Título (Castellano):'
+'Anterior': 'Anterior'
+'Siguiente': 'Siguiente'
+'Ez da emaitzarik topatu': 'No se han encontrado resultados'
+'Kargatzen...': 'Cargando...'
+Id: 'Id'
+Onartzedata: 'Fecha de aprobación'
+Bogargitaratzedata: 'Fecha de publicación en el B.O.B.'
+Bogestekaeu: 'Enlace a la publicación en euskera'
+Bogestekaes: 'Enlace a la publicación en castellano'
+Indarreandata: 'Fecha de entrada en vigor'
+Aldaketakeu: 'Descripción de cambios en euskera'
+Aldaketakes: 'Descripción de cambios en castellano'
+Fitxategia: 'Fichero'
+Createdat: 'Fecha de creación'
+Updatedat: 'Fecha de actualización'

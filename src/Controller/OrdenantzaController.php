@@ -28,9 +28,8 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
 
     /**
      * Ordenantza controller.
-     *
-     * @Route("/{_locale}/admin/ordenantza")
      */
+    #[Route(path: '/{_locale}/admin/ordenantza')]
     class OrdenantzaController extends AbstractController
     {
 
@@ -44,6 +43,7 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
         private $kontzeptuaRepo;
         private $tcpdfController;
         private $rootDir;
+        private $odtPath;
 
         public function __construct(
             EntityManagerInterface $em, 
@@ -55,7 +55,8 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
             AzpiatalaparrafoaRepository $azpiatalaparrafoaRepo,
             KontzeptuaRepository $kontzeptuaRepo,
             TCPDFController $tcpdfController,
-            string $rootDir
+            string $rootDir,
+            string $odtPath
         ) 
         {
             $this->em = $em;
@@ -68,11 +69,10 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
             $this->kontzeptuaRepo = $kontzeptuaRepo;
             $this->tcpdfController = $tcpdfController;
             $this->rootDir = $rootDir;
+            $this->odtPath = $odtPath;
         }
 
-        /**
-         * @Route("/eguneratu/{id}", name="admin_ordenantza_eguneratu", methods={"POST"})
-         */
+        #[Route(path: '/eguneratu/{id}', name: 'admin_ordenantza_eguneratu', methods: ['POST'])]
         public function eguneratu ( Request $request, $id ): JsonResponse
         {
             /** @var Ordenantza $ordenantza  */
@@ -107,9 +107,7 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
             return $response;
         }
 
-        /**
-         * @Route("/eguneratuparrafoa/{id}", name="admin_ordenantza_parrafoak_eguneratu", methods={"POST"})
-         */
+        #[Route(path: '/eguneratuparrafoa/{id}', name: 'admin_ordenantza_parrafoak_eguneratu', methods: ['POST'])]
         public function eguneratuparrafoak ( Request $request, $id ): JsonResponse
         {
             $ordenantzaparrafoa = $this->ordenantzaparrafoaRepo->find( $id );
@@ -140,9 +138,7 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
             return $response;
         }
 
-        /**
-         * @Route("/eguneratuatala/{id}", name="admin_ordenantza_atala_eguneratu", methods={"POST"})
-         */
+        #[Route(path: '/eguneratuatala/{id}', name: 'admin_ordenantza_atala_eguneratu', methods: ['POST'])]
         public function eguneratuatala ( Request $request, $id ): JsonResponse
         {
             $atala = $this->azpiatalaRepo->find( $id );
@@ -177,9 +173,7 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
             return $response;
         }
 
-        /**
-         * @Route("/eguneratuatalaparrafoa/{id}", name="admin_ordenantza_atalaparrafoa_eguneratu", methods={"POST"})
-         */
+        #[Route(path: '/eguneratuatalaparrafoa/{id}', name: 'admin_ordenantza_atalaparrafoa_eguneratu', methods: ['POST'])]
         public function eguneratuatalaparrafoa ( Request $request, $id ): JsonResponse
         {
             $atalap = $this->atalaparrafoaRepo->find( $id );
@@ -211,9 +205,7 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
             return $response;
         }
 
-        /**
-         * @Route("/eguneratuazpiatala/{id}", name="admin_ordenantza_azpiatala_eguneratu", methods={"POST"})
-         */
+        #[Route(path: '/eguneratuazpiatala/{id}', name: 'admin_ordenantza_azpiatala_eguneratu', methods: ['POST'])]
         public function eguneratuazpiatala ( Request $request, $id ): JsonResponse
         {
             /** @var Azpiatala $azpiatala */
@@ -249,9 +241,7 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
             return $response;
         }
 
-        /**
-         * @Route("/eguneratuazpiatalaparrafoa/{id}", name="admin_ordenantza_azpiatalaparrafoaondoren_eguneratu", methods={"POST"})
-         */
+        #[Route(path: '/eguneratuazpiatalaparrafoa/{id}', name: 'admin_ordenantza_azpiatalaparrafoaondoren_eguneratu', methods: ['POST'])]
         public function eguneratuazpiatalaparrafoaondoren ( Request $request, $id ): JsonResponse
         {
 
@@ -285,9 +275,7 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
             return $response;
         }
 
-        /**
-         * @Route("/eguneratuazpiatalaparrafoaondoren/{id}", name="admin_ordenantza_azpiatalaparrafoa_eguneratu", methods={"POST"})
-         */
+        #[Route(path: '/eguneratuazpiatalaparrafoaondoren/{id}', name: 'admin_ordenantza_azpiatalaparrafoa_eguneratu', methods: ['POST'])]
         public function eguneratuazpiatalaparrafoa ( Request $request, $id ): JsonResponse
         {
 
@@ -322,9 +310,7 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
         }
 
 
-        /**
-         * @Route("/eguneratuazpiatalakontzeptuoa/{id}", name="admin_ordenantza_azpiatalakontzeptua_eguneratu", methods={"POST"})
-         */
+        #[Route(path: '/eguneratuazpiatalakontzeptuoa/{id}', name: 'admin_ordenantza_azpiatalakontzeptua_eguneratu', methods: ['POST'])]
         public function eguneratuazpiatalakontzeptua ( Request $request, $id ): JsonResponse
         {
             $azpiatalap = $this->kontzeptuaRepo->find( $id );
@@ -362,26 +348,23 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
 
         /**
          * Lists all Ordenantza entities.
-         *
-         * @Route("/", name="admin_ordenantza_index", methods={"GET"})
          */
+        #[Route(path: '/', name: 'admin_ordenantza_index', methods: ['GET'])]
         public function index (): Response
         {
-            $ordenantzas = $this->ordenantzaRepo->findBy( array (), array ( 'kodea' => 'ASC' ) );
-
+            $ordenantzas = $this->ordenantzaRepo->findBy([],['kodea' => 'ASC']);
             return $this->render(
                 'ordenantza/index.html.twig',
-                array (
+                [
                     'ordenantzas' => $ordenantzas,
-                )
+]
             );
         }
 
         /**
          * Creates a new Ordenantza entity.
-         *
-         * @Route("/new", name="admin_ordenantza_new", methods={"GET", "POST"})
          */
+        #[Route(path: '/new', name: 'admin_ordenantza_new', methods: ['GET', 'POST'])]
         public function new ( Request $request )
         {
             $ordenantza = new Ordenantza();
@@ -400,20 +383,20 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
 
             return $this->render(
                 'ordenantza/new.html.twig',
-                array (
+                [
                     'ordenantza' => $ordenantza,
                     'form'       => $form->createView(),
-                )
+                ]
             );
         }
 
         /**
          * Finds and displays a Ordenantza entity.
          *
-         * @Route("/{id}/erakutsi", name="admin_ordenantza_show", methods={"GET"})
          * @param Ordenantza $ordenantza
          * @return Response
          */
+        #[Route(path: '/{id}/erakutsi', name: 'admin_ordenantza_show', methods: ['GET'])]
         public function show ( Ordenantza $ordenantza ): Response
         {
             $deleteForm = $this->createDeleteForm( $ordenantza );
@@ -429,18 +412,17 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
 
             return $this->render(
                 'ordenantza/show.html.twig',
-                array (
+                [
                     'ordenantza'  => $ordenantza,
                     'delete_form' => $deleteForm->createView(),
-                )
+                ]
             );
         }
 
         /**
          * Finds and displays a Ordenantza entity.
-         *
-         * @Route("/pdf/show/{id}", name="admin_ordenantza_show_pdf", methods={"GET"})
          */
+        #[Route(path: '/pdf/show/{id}', name: 'admin_ordenantza_show_pdf', methods: ['GET'])]
         public function showpdf ( Ordenantza $ordenantza )
         {
 
@@ -483,9 +465,8 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
 
         /**
          * Finds and displays a Ordenantza entity.
-         *
-         * @Route("/pdf/export/", name="admin_ordenantza_export_pdf", methods={"GET"})
          */
+        #[Route(path: '/pdf/export/', name: 'admin_ordenantza_export_pdf', methods: ['GET'])]
         public function exportpdf (): RedirectResponse
         {
             $ordenantzas = $this->ordenantzaRepo->findAll();
@@ -570,9 +551,8 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
 
         /**
          * Displays a form to edit an existing Ordenantza entity.
-         *
-         * @Route("/{id}/edit", name="admin_ordenantza_edit", methods={"GET", "POST"})
          */
+        #[Route(path: '/{id}/edit', name: 'admin_ordenantza_edit', methods: ['GET', 'POST'])]
         public function edit ( Request $request, Ordenantza $ordenantza ): Response
         {
             $deleteForm = $this->createDeleteForm( $ordenantza );
@@ -589,18 +569,17 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
 
             return $this->render(
                 'ordenantza/edit.html.twig',
-                array (
+                [
                     'ordenantza'  => $ordenantza,
                     'delete_form' => $deleteForm->createView(),
-                )
+                ]
             );
         }
 
         /**
          * Deletes a Ordenantza entity.
-         *
-         * @Route("/{id}", name="admin_ordenantza_delete", methods={"DELETE"})
          */
+        #[Route(path: '/{id}', name: 'admin_ordenantza_delete', methods: ['DELETE'])]
         public function delete ( Request $request, Ordenantza $ordenantza ): RedirectResponse
         {
             $form = $this->createDeleteForm( $ordenantza );
@@ -651,9 +630,7 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
 
         }
 
-        /**
-         * @Route("/html", name="admin_ordenantza_html", methods={"GET"})
-         */
+        #[Route(path: '/html', name: 'admin_ordenantza_html', methods: ['GET'])]
         public function html (): Response
         {
             $ordenantzas = $this->ordenantzaRepo->findAllOrderByKodea();
@@ -661,14 +638,14 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
             $user = $this->getUser();
             $nireordenantza = $this->render(
                 'ordenantza/web.html.twig',
-                array (
+                [
                     'ordenantzas' => $ordenantzas,
                     'eguna'       => date( "Y" ),
                     'udala'       => $user->getUdala(),
-                )
+                ]
             );
 
-            $filename = "doc/export_".date( "Y_m_d_His" ).".odt";
+            $filename = $this->odtPath."/export_".date( "Y_m_d_His" ).".odt";
 
             file_put_contents( $filename, $nireordenantza->getContent() );
 
@@ -690,21 +667,19 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
 
         }
 
-        /**
-         * @Route("/esportatu/{id}", name="admin_ordenantza_esportatu", methods={"GET"})
-         */
+        #[Route(path: '/esportatu/{id}', name: 'admin_ordenantza_esportatu', methods: ['GET'])]
         public function esportatu ( $id ): Response
         {
             $ordenantza = $this->ordenantzaRepo->find( $id );
 
             $nireordenantza = $this->render(
                 'ordenantza/esportatu.html.twig',
-                array (
+                [
                     'ordenantza' => $ordenantza,
-                )
+                ]
             );
 
-            $filename = "doc/export_".date( "Y_m_d_His" ).".odt";
+            $filename = $this->odtPath."/export_".date( "Y_m_d_His" ).".odt";
 
             file_put_contents( $filename, $nireordenantza->getContent() );
 
@@ -726,9 +701,7 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
 
         }
 
-        /**
-         * @Route("/ezabatu/{id}", options={"expose"=true}, name="admin_ordenantza_ezabatu", methods={"GET"})
-         */
+        #[Route(path: '/ezabatu/{id}', options: ['expose' => true], name: 'admin_ordenantza_ezabatu', methods: ['GET'])]
         public function ezabatu ( Ordenantza $ordenantza ): Response
         {
 
@@ -736,10 +709,10 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
 
             return $this->render(
                 'ordenantza/_ordenantza_delete_form.html.twig',
-                array (
+                [
                     'delete_form' => $deleteForm->createView(),
                     'id'          => $ordenantza->getId(),
-                )
+                ]
             );
         }
 

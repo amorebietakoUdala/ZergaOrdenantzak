@@ -13,9 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Atala controller.
- *
- * @Route("/admin/atala")
  */
+#[Route(path: '/admin/atala')]
 class AtalaController extends AbstractController
 {
 
@@ -31,9 +30,8 @@ class AtalaController extends AbstractController
 
     /**
      * Creates a new Atala entity.
-     *
-     * @Route("/new/{ordenantzaid}", name="admin_atala_new", methods={"GET", "POST"})
      */
+    #[Route(path: '/new/{ordenantzaid}', name: 'admin_atala_new', methods: ['GET', 'POST'])]
     public function new(Request $request, $ordenantzaid)
     {
         $atala = new Atala();
@@ -58,10 +56,8 @@ class AtalaController extends AbstractController
         ));
     }
 
-    /**
-     *
-     * @Route("/ezabatu/{id}", options={"expose"=true}, name="admin_atala_ezabatu", methods={"GET"})
-     */
+    
+    #[Route(path: '/ezabatu/{id}', options: ['expose' => true], name: 'admin_atala_ezabatu', methods: ['GET'])]
     public function ezabatu(Atala $atala): Response
     {
             
@@ -76,9 +72,8 @@ class AtalaController extends AbstractController
     
     /**
      * Deletes a Atala entity.
-     *
-     * @Route("/{id}", name="admin_atala_delete", methods={"DELETE"})
      */
+    #[Route(path: '/{id}', name: 'admin_atala_delete', methods: ['DELETE'])]
     public function delete(Request $request, Atala $atala): RedirectResponse
     {
         $form = $this->createDeleteForm($atala);

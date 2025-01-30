@@ -36,7 +36,7 @@ class LocaleListener implements EventSubscriberInterface
         }
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
         return array(
             // must be registered after the default Locale listener

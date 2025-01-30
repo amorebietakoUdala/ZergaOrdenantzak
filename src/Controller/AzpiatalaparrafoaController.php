@@ -14,9 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 
     /**
      * Azpiatalaparrafoa controller.
-     *
-     * @Route("/admin/azpiatalaparrafoa")
      */
+    #[Route(path: '/admin/azpiatalaparrafoa')]
     class AzpiatalaparrafoaController extends AbstractController
     {
 
@@ -28,9 +27,7 @@ use Symfony\Component\HttpFoundation\Response;
             $this->em = $em;
             $this->azpiatalaRepo = $azpiatalaRepo;
         }
-        /**
-         * @Route("/up/{id}", name="admin_azpiatalaparrafoa_up", methods={"GET"})
-         */
+        #[Route(path: '/up/{id}', name: 'admin_azpiatalaparrafoa_up', methods: ['GET'])]
         public function up(Request $request, Azpiatalaparrafoa $op): RedirectResponse
         {
             $op->setOrdena($op->getOrdena() - 1);
@@ -40,9 +37,7 @@ use Symfony\Component\HttpFoundation\Response;
             return $this->redirect($request->headers->get('referer'));
         }
 
-        /**
-         * @Route("/down/{id}", name="admin_azpiatalaparrafoa_down", methods={"GET"})
-         */
+        #[Route(path: '/down/{id}', name: 'admin_azpiatalaparrafoa_down', methods: ['GET'])]
         public function down(Request $request, Azpiatalaparrafoa $op): RedirectResponse
         {
             $op->setOrdena($op->getOrdena() + 1);
@@ -54,9 +49,8 @@ use Symfony\Component\HttpFoundation\Response;
         
         /**
          * Creates a new Azpiatalaparrafoa entity.
-         *
-         * @Route("/new/{azpiatalaid}", options={"expose"=true}, name="admin_azpiatalaparrafoa_new", methods={"GET", "POST"})
          */
+        #[Route(path: '/new/{azpiatalaid}', options: ['expose' => true], name: 'admin_azpiatalaparrafoa_new', methods: ['GET', 'POST'])]
         public function new ( Request $request, $azpiatalaid )
         {
             $azpiatala = $this->azpiatalaRepo->find( $azpiatalaid );
@@ -84,10 +78,8 @@ use Symfony\Component\HttpFoundation\Response;
             );
         }
 
-        /**
-         *
-         * @Route("/ezabatu/{id}", options={"expose"=true}, name="admin_azpiatalaparrafoa_ezabatu", methods={"GET"})
-         */
+        
+        #[Route(path: '/ezabatu/{id}', options: ['expose' => true], name: 'admin_azpiatalaparrafoa_ezabatu', methods: ['GET'])]
         public function ezabatu(Azpiatalaparrafoa $azpiatalaparrafoa): Response
         {
             $deleteForm = $this->createDeleteForm($azpiatalaparrafoa);
@@ -100,9 +92,8 @@ use Symfony\Component\HttpFoundation\Response;
         
         /**
          * Deletes a Azpiatalaparrafoa entity.
-         *
-         * @Route("/{id}", name="admin_azpiatalaparrafoa_delete", methods={"DELETE"})
          */
+        #[Route(path: '/{id}', name: 'admin_azpiatalaparrafoa_delete', methods: ['DELETE','POST'])]
         public function delete ( Request $request, Azpiatalaparrafoa $azpiatalaparrafoa ): RedirectResponse
         {
             $form = $this->createDeleteForm( $azpiatalaparrafoa );

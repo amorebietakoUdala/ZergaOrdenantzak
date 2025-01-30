@@ -11,12 +11,9 @@
 {% block navright %}
     <ul class="nav navbar-nav navbar-right">
         <li><a href="{{ path('frontend_historikoa_index', { 'udala': udala}) }}">{{ "Historikoa kontsultatu" | trans }}</a></li>
-        <li><a href="{{ path('frontend_ordenantza_pdf', { 'udala': udala}) }}" target="_blank" class="fa fa-file-pdf-o" >
-                {#{% if app.request.locale == 'eu'%}Pdf (eu)#}
-                {#{% else %}Pdf (es)#}
-                {#{% endif %}#}
-                PDF
-            </a></li>
+        <li>
+            <a href="{{ path('frontend_ordenantza_pdf', { 'udala': udala}) }}" target="_blank" class="fa fa-file-pdf-o" >PDF</a>
+        </li>
         <li class="list-inline"><a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'es'})) }}">ES</a></li>
         <li class="list-inline"><a href="{{  path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'eu'}))}}">EU</a></li>
         <li class="list-inline">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</li>
@@ -36,7 +33,6 @@
         </div>
     </div>
 
-    {#<div class="row">&nbsp;</div>#}
     {% for p in ordenantza.parrafoak %}
         <div class="row ordenantzaparrafoa text-justify">
             <div class="col-xs-12">
@@ -49,7 +45,6 @@
         </div>
     {% endfor %}
 
-    {#<div class="row">&nbsp;</div>#}
     {% for atala in ordenantza.atalak %}
         {% if atala.utsa != 1 %}
             <div class="row atala">
@@ -123,7 +118,7 @@
     {% endfor %}
 
     <div id="loading" style="display:none;">
-        <p><img src="{{ asset('build/images/loading.svg') }}" /> Kargatzen...</p>
+        <p><img src="{{ asset('build/images/loading.svg') }}" /> {{ 'Kargatzen...' | trans }}</p>
     </div>
 {% endblock %}
 

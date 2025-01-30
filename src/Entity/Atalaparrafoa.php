@@ -4,112 +4,101 @@ namespace App\Entity;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
-use App\Annotation\UdalaEgiaztatu;
+use App\Attribute\UdalaEgiaztatu;
+use App\Repository\AtalaparrafoaRepository;
 use App\Repository\AtalaRepository;
 
 /**
  * Atalaparrafoa
  *
- * @ORM\Table(name="atalaparrafoa", indexes={@ORM\Index(name="atala_id_idx", columns={"atala_id"})})
- * @ORM\Entity(repositoryClass="App\Repository\AtalaparrafoaRepository")
- * @UdalaEgiaztatu(userFieldName="udala_id")
  */
+#[UdalaEgiaztatu(userFieldName: "udala_id")]
+#[ORM\Entity(repositoryClass: AtalaparrafoaRepository::class)]
+#[ORM\Table(name: 'atalaparrafoa')]
+#[ORM\Index(name: 'atala_id_idx', columns: ['atala_id'])]
 class Atalaparrafoa
 {
     /**
      * @var integer
-     *
-     * @ORM\Column(name="id", type="bigint", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(name: 'id', type: 'bigint', nullable: false)]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     private $id;
 
     /**
      * @var integer
      * @Gedmo\SortablePosition
-     * @ORM\Column(name="ordena", type="integer", nullable=true)
      */
+    #[ORM\Column(name: 'ordena', type: 'integer', nullable: true)]
     private $ordena;
 
     /**
      * @var integer
-     *
-     * @ORM\Column(name="ordena_prod", type="bigint", nullable=true)
      */
+    #[ORM\Column(name: 'ordena_prod', type: 'bigint', nullable: true)]
     private $ordena_prod;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="testuaeu", type="text", length=65535, nullable=true)
      */
+    #[ORM\Column(name: 'testuaeu', type: 'text', length: 65535, nullable: true)]
     private $testuaeu;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="testuaeu_prod", type="text", length=65535, nullable=true)
      */
+    #[ORM\Column(name: 'testuaeu_prod', type: 'text', length: 65535, nullable: true)]
     private $testuaeu_prod;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="testuaes", type="text", length=65535, nullable=true)
      */
+    #[ORM\Column(name: 'testuaes', type: 'text', length: 65535, nullable: true)]
     private $testuaes;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="testuaes_prod", type="text", length=65535, nullable=true)
      */
+    #[ORM\Column(name: 'testuaes_prod', type: 'text', length: 65535, nullable: true)]
     private $testuaes_prod;
 
     /**
      * @var bool
-     *
-     * @ORM\Column(name="ezabatu", type="boolean", nullable=true)
      */
+    #[ORM\Column(name: 'ezabatu', type: 'boolean', nullable: true)]
     private $ezabatu;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
+    #[ORM\Column(name: 'created_at', type: 'datetime', nullable: false)]
     private $createdAt;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
      */
+    #[ORM\Column(name: 'updated_at', type: 'datetime', nullable: false)]
     private $updatedAt;
 
     /**
      * ************************************************************************************************************************************************************************
      * ************************************************************************************************************************************************************************
      * ***** ERLAZIOAK
- * ************************************************************************************************************************************************************************
+     * ************************************************************************************************************************************************************************
      * ************************************************************************************************************************************************************************
      */
-    
     /**
      * @var \Atala
-     *
-     * @ORM\ManyToOne(targetEntity="Atala",inversedBy="parrafoak")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="atala_id", referencedColumnName="id")
-     * })
      */
+    #[ORM\ManyToOne(targetEntity: Atala::class, inversedBy: 'parrafoak')]
+    #[ORM\JoinColumn(name: 'atala_id', referencedColumnName: 'id')]
     private $atala;
 
     /**
      * @var Udala
-     * @ORM\ManyToOne(targetEntity="Udala")
      */
+    #[ORM\ManyToOne(targetEntity: Udala::class)]
     private $udala;
 
     public function __construct()

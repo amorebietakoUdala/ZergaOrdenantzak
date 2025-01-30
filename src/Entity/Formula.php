@@ -3,66 +3,60 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use App\Annotation\UdalaEgiaztatu;
+use App\Attribute\UdalaEgiaztatu;
 
 /**
  * Formula
  *
- * @ORM\Table(name="formula", indexes={@ORM\Index(name="atala_id_idx", columns={"atala_id"})})
- * @ORM\Entity
- * @UdalaEgiaztatu(userFieldName="udala_id")
  */
+#[UdalaEgiaztatu(userFieldName: "udala_id")]
+#[ORM\Entity]
+#[ORM\Table(name: 'formula')]
+#[ORM\Index(name: 'atala_id_idx', columns: ['atala_id'])]
 class Formula
 {
     /**
      * @var integer
-     *
-     * @ORM\Column(name="id", type="bigint", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(name: 'id', type: 'bigint', nullable: false)]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     private $id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="izenburuaeu", type="text", length=65535, nullable=true)
      */
+    #[ORM\Column(name: 'izenburuaeu', type: 'text', length: 65535, nullable: true)]
     private $izenburuaeu;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="izenburuaes", type="text", length=65535, nullable=true)
      */
+    #[ORM\Column(name: 'izenburuaes', type: 'text', length: 65535, nullable: true)]
     private $izenburuaes;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="kodeajs", type="text", length=65535, nullable=true)
      */
+    #[ORM\Column(name: 'kodeajs', type: 'text', length: 65535, nullable: true)]
     private $kodeajs;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="emaitzahtml", type="text", length=65535, nullable=true)
      */
+    #[ORM\Column(name: 'emaitzahtml', type: 'text', length: 65535, nullable: true)]
     private $emaitzahtml;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
+    #[ORM\Column(name: 'created_at', type: 'datetime', nullable: false)]
     private $createdAt;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
      */
+    #[ORM\Column(name: 'updated_at', type: 'datetime', nullable: false)]
     private $updatedAt;
 
     /**
@@ -72,21 +66,17 @@ class Formula
      * ************************************************************************************************************************************************************************
      * ************************************************************************************************************************************************************************
      */
-
     /**
      * @var \Atala
-     *
-     * @ORM\ManyToOne(targetEntity="Atala")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="atala_id", referencedColumnName="id")
-     * })
      */
+    #[ORM\ManyToOne(targetEntity: Atala::class)]
+    #[ORM\JoinColumn(name: 'atala_id', referencedColumnName: 'id')]
     private $atala;
 
     /**
      * @var Udala
-     * @ORM\ManyToOne(targetEntity="Udala")
      */
+    #[ORM\ManyToOne(targetEntity: Udala::class)]
     private $udala;
     
     public function __construct()

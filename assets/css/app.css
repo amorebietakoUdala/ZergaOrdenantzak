@@ -38,3 +38,7 @@
 <!-- HTML5 Shim and Respond.js add IE8 support of HTML5 elements and media queries -->
 {% include 'BraincraftedBootstrapBundle::ie8-support.html.twig' %}
 */
+
+div:where(.swal2-container) div:where(.swal2-popup) {
+	font-size: 1.5rem !important;
+}

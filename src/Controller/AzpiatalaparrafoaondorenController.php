@@ -15,9 +15,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Azpiatalaparrafoaondoren controller.
- *
- * @Route("admin/azpiatalaparrafoaondoren")
  */
+#[Route(path: 'admin/azpiatalaparrafoaondoren')]
 class AzpiatalaparrafoaondorenController extends AbstractController
 {
 
@@ -25,16 +24,14 @@ class AzpiatalaparrafoaondorenController extends AbstractController
     private $apoRepo;
     private $azpiatalaRepo;
 
-    public function __construct(EntityManagerInterface $em, AzpiatalaparrafoaondorenRepository $apoRepo, AzpiatalaRepository $azpiatalaRepo)
+    public function __construct(EntityManagerInterface $em, AzpiatalaparrafoaondorenRepository $apoRepo, AzpiatalaRepository $azpiatalaRepo, private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
     {
         $this->em = $em;
         $this->apoRepo = $apoRepo;
         $this->azpiatalaRepo = $azpiatalaRepo;
     }
 
-    /**
-     * @Route("/up/{id}", name="admin_azpiatalaparrafoaondoren_up", methods={"GET"})
-     */
+    #[Route(path: '/up/{id}', name: 'admin_azpiatalaparrafoaondoren_up', methods: ['GET'])]
     public function up(Request $request, Azpiatalaparrafoaondoren $op): RedirectResponse
     {
         $op->setOrdena($op->getOrdena() - 1);
@@ -44,9 +41,7 @@ class AzpiatalaparrafoaondorenController extends AbstractController
         return $this->redirect($request->headers->get('referer'));
     }
 
-    /**
-     * @Route("/down/{id}", name="admin_azpiatalaparrafoaondoren_down", methods={"GET"})
-     */
+    #[Route(path: '/down/{id}', name: 'admin_azpiatalaparrafoaondoren_down', methods: ['GET'])]
     public function down(Request $request, Azpiatalaparrafoaondoren $op): RedirectResponse
     {
         $op->setOrdena($op->getOrdena() + 1);
@@ -57,9 +52,8 @@ class AzpiatalaparrafoaondorenController extends AbstractController
     }
     /**
      * Lists all azpiatalaparrafoaondoren entities.
-     *
-     * @Route("/", name="admin_azpiatalaparrafoaondoren_index", methods={"GET"})
      */
+    #[Route(path: '/', name: 'admin_azpiatalaparrafoaondoren_index', methods: ['GET'])]
     public function index(): Response
     {
 
@@ -72,12 +66,11 @@ class AzpiatalaparrafoaondorenController extends AbstractController
 
     /**
      * Creates a new azpiatalaparrafoaondoren entity.
-     *
-     * @Route("/new/{azpiatalaid}", options={"expose"=true}, name="admin_azpiatalaparrafoaondoren_new", methods={"GET", "POST"})
      */
+    #[Route(path: '/new/{azpiatalaid}', options: ['expose' => true], name: 'admin_azpiatalaparrafoaondoren_new', methods: ['GET', 'POST'])]
     public function new(Request $request, $azpiatalaid )
     {
-        $em = $this->getDoctrine();
+        $em = $this->managerRegistry;
 
         $azpiatala = $this->azpiatalaRepo->find( $azpiatalaid );
         $azpiatalaparrafoaondoren = new Azpiatalaparrafoaondoren();
@@ -101,10 +94,8 @@ class AzpiatalaparrafoaondorenController extends AbstractController
         ));
     }
 
-    /**
-     *
-     * @Route("/ezabatu/{id}", options={"expose"=true}, name="admin_azpiatalaparrafoaondoren_ezabatu", methods={"GET"})
-     */
+    
+    #[Route(path: '/ezabatu/{id}', options: ['expose' => true], name: 'admin_azpiatalaparrafoaondoren_ezabatu', methods: ['GET'])]
     public function ezabatu(Azpiatalaparrafoaondoren $azpiatalaparrafoaondoren): Response
     {
         $deleteForm = $this->createDeleteForm($azpiatalaparrafoaondoren);
@@ -117,9 +108,8 @@ class AzpiatalaparrafoaondorenController extends AbstractController
 
     /**
      * Deletes a azpiatalaparrafoaondoren entity.
-     *
-     * @Route("/{id}", name="admin_azpiatalaparrafoaondoren_delete", methods={"DELETE"})
      */
+    #[Route(path: '/{id}', name: 'admin_azpiatalaparrafoaondoren_delete', methods: ['DELETE'])]
     public function delete(Request $request, Azpiatalaparrafoaondoren $azpiatalaparrafoaondoren): RedirectResponse
     {
         $form = $this->createDeleteForm($azpiatalaparrafoaondoren);

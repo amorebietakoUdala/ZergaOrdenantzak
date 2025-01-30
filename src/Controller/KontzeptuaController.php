@@ -14,9 +14,8 @@ use Symfony\Component\HttpFoundation\Response;
 
     /**
      * Kontzeptua controller.
-     *
-     * @Route("/admin/kontzeptua")
      */
+    #[Route(path: '/admin/kontzeptua')]
     class KontzeptuaController extends AbstractController
     {
 
@@ -31,9 +30,8 @@ use Symfony\Component\HttpFoundation\Response;
 
         /**
          * Creates a new Kontzeptua entity.
-         *
-         * @Route("/new/{azpiatalaid}", options={"expose"=true}, name="admin_kontzeptua_new", methods={"GET", "POST"})
          */
+        #[Route(path: '/new/{azpiatalaid}', options: ['expose' => true], name: 'admin_kontzeptua_new', methods: ['GET', 'POST'])]
         public function new ( Request $request, $azpiatalaid )
         {
             $azpiatala = $this->azpiatalaRepo->find( $azpiatalaid );
@@ -62,10 +60,8 @@ use Symfony\Component\HttpFoundation\Response;
             );
         }
 
-        /**
-         *
-         * @Route("/{id}/edit/{ordenantzaid}", options={"expose"=true}, name="admin_kontzeptua_edit", methods={"GET", "POST"})
-         */
+        
+        #[Route(path: '/{id}/edit/{ordenantzaid}', options: ['expose' => true], name: 'admin_kontzeptua_edit', methods: ['GET', 'POST'])]
         public function edit(Request $request, Kontzeptua $kontzeptua, $ordenantzaid)
         {
             $deleteForm = $this->createDeleteForm($kontzeptua);
@@ -89,10 +85,8 @@ use Symfony\Component\HttpFoundation\Response;
         }
 
 
-        /**
-         *
-         * @Route("/ezabatu/{id}", options={"expose"=true}, name="admin_kontzeptua_ezabatu", methods={"GET"})
-         */
+        
+        #[Route(path: '/ezabatu/{id}', options: ['expose' => true], name: 'admin_kontzeptua_ezabatu', methods: ['GET'])]
         public function ezabatu(Kontzeptua $kontzeptua): Response
         {
 
@@ -106,9 +100,8 @@ use Symfony\Component\HttpFoundation\Response;
         
         /**
          * Deletes a Kontzeptua entity.
-         *
-         * @Route("/{id}", name="admin_kontzeptua_delete", methods={"DELETE"})
          */
+        #[Route(path: '/{id}', name: 'admin_kontzeptua_delete', methods: ['DELETE'])]
         public function delete ( Request $request, Kontzeptua $kontzeptua ): RedirectResponse
         {
             $form = $this->createDeleteForm( $kontzeptua );

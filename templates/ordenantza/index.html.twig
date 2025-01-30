@@ -12,7 +12,7 @@
             <li><a href="#" class="dropdown-toggle" data-toggle="dropdown">{{ "message.admin" | trans }}<b class="caret"></b></a>
                 <ul class="dropdown-menu">
                     <li><a href="{{ path('udala_index') }}" class="fa fa-university"> Udalak</a></li>
-                    <li><a href="{{ path('admin_user_list') }}" class="fa fa-bars"> Erabiltzaileak</a></li>
+                    <li><a href="{{ path('admin_user_index') }}" class="fa fa-bars"> Erabiltzaileak</a></li>
                     <li role="separator" class="divider"></li>
                     <li><a href="{{ path('baldintza_index') }}">{{ "Baldintza" |trans }}</a></li>
                     <li role="separator" class="divider"></li>
@@ -29,12 +29,12 @@
 
 
         <li>&nbsp;</li>
-        <li class="list-inline"><a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'es'})) }}">ES</a></li>
-        <li class="list-inline"><a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'eu'}))}}">EU</a></li>
+        <li class="list-inline"><a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'es'})) }}">es</a></li>
+        <li class="list-inline"><a href="{{ path(app.request.get('_route'), app.request.get('_route_params')|merge({'_locale': 'eu'}))}}">eu</a></li>
         <li>&nbsp;</li>
         <li>
         {% if is_granted('ROLE_PREVIOUS_ADMIN') %}
-            <li class="list-inline"><a href="{{ path('admin_user_list', {'_switch_user': '_exit'}) }}">{{ 'Modu arruntera itzuli' | trans }}</a></li>
+            <li class="list-inline"><a href="{{ path('admin_user_index', {'_switch_user': '_exit'}) }}">{{ 'Modu arruntera itzuli' | trans }}</a></li>
         {% endif %}
         </li>
         </ul>

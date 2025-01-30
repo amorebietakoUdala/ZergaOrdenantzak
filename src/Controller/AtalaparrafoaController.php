@@ -15,9 +15,8 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * Atalaparrafoa controller.
- *
- * @Route("/admin/atalaparrafoa")
  */
+#[Route(path: '/admin/atalaparrafoa')]
 class AtalaparrafoaController extends AbstractController
 {
 
@@ -30,9 +29,7 @@ class AtalaparrafoaController extends AbstractController
         $this->atalaRepo = $atalaRepo;
     }
 
-    /**
-     * @Route("/up/{id}", name="admin_atalaparrafoa_up", methods={"GET"})
-     */
+    #[Route(path: '/up/{id}', name: 'admin_atalaparrafoa_up', methods: ['GET'])]
     public function up(Request $request, Atalaparrafoa $op): RedirectResponse
     {
         $op->setOrdena($op->getOrdena() - 1);
@@ -42,9 +39,7 @@ class AtalaparrafoaController extends AbstractController
         return $this->redirect($request->headers->get('referer'));
     }
 
-    /**
-     * @Route("/down/{id}", name="admin_atalaparrafoa_down", methods={"GET"})
-     */
+    #[Route(path: '/down/{id}', name: 'admin_atalaparrafoa_down', methods: ['GET'])]
     public function down(Request $request, Atalaparrafoa $op): RedirectResponse
     {
         $op->setOrdena($op->getOrdena() + 1);
@@ -57,9 +52,8 @@ class AtalaparrafoaController extends AbstractController
 
     /**
      * Creates a new Atalaparrafoa entity.
-     *
-     * @Route("/new/{atalaid}", options={"expose"=true}, name="admin_atalaparrafoa_new", methods={"GET", "POST"})
      */
+    #[Route(path: '/new/{atalaid}', options: ['expose' => true], name: 'admin_atalaparrafoa_new', methods: ['GET', 'POST'])]
     public function new(Request $request, $atalaid)
     {
 
@@ -90,10 +84,8 @@ class AtalaparrafoaController extends AbstractController
         ));
     }
 
-    /**
-     *
-     * @Route("/ezabatu/{id}", options={"expose"=true}, name="admin_atalaparrafoa_ezabatu", methods={"GET"})
-     */
+    
+    #[Route(path: '/ezabatu/{id}', options: ['expose' => true], name: 'admin_atalaparrafoa_ezabatu', methods: ['GET'])]
     public function ezabatu(Atalaparrafoa $atalaparrafoa): Response
     {
 
@@ -107,9 +99,8 @@ class AtalaparrafoaController extends AbstractController
 
     /**
      * Deletes a Atalaparrafoa entity.
-     *
-     * @Route("/{id}", name="admin_atalaparrafoa_delete", methods={"DELETE"})
      */
+    #[Route(path: '/{id}', name: 'admin_atalaparrafoa_delete', methods: ['DELETE'])]
     public function delete(Request $request, Atalaparrafoa $atalaparrafoa): RedirectResponse
     {
         $form = $this->createDeleteForm($atalaparrafoa);

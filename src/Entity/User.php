@@ -4,70 +4,57 @@ namespace App\Entity;
 
 use AMREU\UserBundle\Model\User as BaseUser;
 use Doctrine\ORM\Mapping as ORM;
-use App\Annotation\UdalaEgiaztatu;
+use App\Attribute\UdalaEgiaztatu;
+use App\Repository\UserRepository;
 
 /**
- * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
- * @ORM\Table(name="user")
  * @UdalaEgiaztatu(userFieldName="udala_id")
  */
+#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\Table(name: 'user')]
 class User extends BaseUser
 {
 
-    /**
-     * @ORM\Id
-     * @ORM\Column(type="integer")
-     * @ORM\GeneratedValue(strategy="AUTO")
-     */
+    #[ORM\Id]
+    #[ORM\Column(type: 'integer')]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     protected $id;
 
-    /**
-     * @ORM\Column(type="string", length=180, unique=true)
-     */
+    #[ORM\Column(type: 'string', length: 180, unique: true)]
     protected $username;
 
-    /**
-     * @ORM\Column(type="json")
-     */
+    #[ORM\Column(type: 'json')]
     protected $roles = [];
 
     /**
      * @var string The hashed password
-     * @ORM\Column(type="string")
      */
+    #[ORM\Column(type: 'string')]
     protected $password;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     protected $firstName;
 
-    /**
-     * @ORM\Column(type="string", length=255)
-     */
+    #[ORM\Column(type: 'string', length: 255)]
     protected $email;
 
-    /**
-     * @ORM\Column(type="boolean", options={"default":"1"}, nullable=false)
-     */
+    #[ORM\Column(type: 'boolean', options: ['default' => '1'], nullable: false)]
     protected $activated = true;
 
-    /**
-     * @ORM\Column(type="datetime", nullable=true)
-     */
+    #[ORM\Column(type: 'datetime', nullable: true)]
     protected $lastLogin;
 
 
     /**
      * @var string
-     * @ORM\Column(name="hizkuntza", type="string", length=10, nullable=true)
      */
+    #[ORM\Column(name: 'hizkuntza', type: 'string', length: 10, nullable: true)]
     private $hizkuntza;
 
     /**
      * @var Udala
-     * @ORM\ManyToOne(targetEntity="Udala")
      */
+    #[ORM\ManyToOne(targetEntity: Udala::class)]
     private $udala;
 
     /**

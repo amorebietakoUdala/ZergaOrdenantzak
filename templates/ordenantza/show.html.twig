@@ -67,7 +67,7 @@
                     {% if atala.utsa != 1 and atala.azpiatalak | length >0 %}
                         <li class="dropdown dropdown-submenu ">
                             <a href="#{{ atala.kodea }}" class="dropdown-toggle" data-toggle="dropdown" data-clicked="false" onclick="clickMe(this);">{{ atala.kodea }}
-                                - {{ atala.izenburuaeu | capitalize | truncate(50, true, '...') }}</a>
+                                - {{ atala.izenburuaeu | capitalize | slice(0, 50) ~ '...' }}</a>
                             <ul class="dropdown-menu scrollable-menu">
                                 {% for azpiatala in atala.azpiatalak %}
                                     {% if azpiatala.ezabatu != 1 %}
@@ -99,7 +99,7 @@
 
                     {% else %}
                         <li class="dropdown dropdown-submenu">
-                            <a href="#{{ atala.kodea }}" class="dropdown-toggle" data-toggle="dropdown" data-clicked="false" onclick="clickMe(this);">{{ atala.kodea }} - {{ atala.izenburuaeu|capitalize | truncate(50, true, '...') }}</a>
+                            <a href="#{{ atala.kodea }}" class="dropdown-toggle" data-toggle="dropdown" data-clicked="false" onclick="clickMe(this);">{{ atala.kodea }} - {{ atala.izenburuaeu|capitalize | slice(0, 50) ~ '...' }}</a>
                             <ul class="dropdown-menu">
                                 <li><a href="#" class="btnAzpiAtalBerria" data-atalaid="{{ atala.id }}"><span class="glyphicon glyphicon-plus"></span>{{ "message.azpiatala.berria" | trans }}</a></li>
                                 <li><a href="#" class="btnAtalaparrafoBerria" data-atalaid="{{ atala.id }}"><span class="glyphicon glyphicon-align-justify" aria-hidden="true">{{ "message.atala.parrafoa.berria" | trans }}</span> </a></li>
@@ -179,7 +179,7 @@
                         <div class="divTextua" id="ordenantzaparrafoa{{ p.id }}">
                             <span class="editable2" data-name="testuaeu" data-pk="{{ p.id }}" data-url="{{ path('admin_ordenantza_parrafoak_eguneratu', {'id': p.id}) }}" data-type="wysihtml5"
                                 tabindex="-1" style="display: block;">{{ p.testuaeu | raw }}</span>
-                            {{ render(controller('App\\Controller\\OrdenantzaparrafoaController:ezabatu', {'id': p.id})) }}
+                            {{ render(controller('App\\Controller\\OrdenantzaparrafoaController::ezabatu', {'id': p.id})) }}
                         </div>
                     </div>
                 </div>
@@ -517,11 +517,11 @@
     Insert formularioak
     #}
     <div id="divAtalBerria" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        {{ render(controller('App\\Controller\\AtalaController:new', {'ordenantzaid': ordenantza.id })) }}
+        {{ render(controller('App\\Controller\\AtalaController::new', {'ordenantzaid': ordenantza.id })) }}
     </div>
 
     <div id="divOrdenantzaparrafoBerria" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        {{ render(controller('App\\Controller\\OrdenantzaparrafoaController:new', {'ordenantzaid': ordenantza.id })) }}
+        {{ render(controller('App\\Controller\\OrdenantzaparrafoaController::new', {'ordenantzaid': ordenantza.id })) }}
     </div>
 
     <div id="divAzpiAtalBerria" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

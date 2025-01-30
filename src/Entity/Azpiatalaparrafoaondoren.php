@@ -3,7 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use App\Annotation\UdalaEgiaztatu;
+use App\Attribute\UdalaEgiaztatu;
 use Doctrine\Common\Collections\ArrayCollection;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
@@ -12,86 +12,76 @@ use App\Repository\AzpiatalaparrafoaondorenRepository;
 /**
  * Azpiatalaparrafoaondoren
  *
- * @ORM\Table(name="azpiatalaparrafoaondoren")
- * @ExclusionPolicy("all")
- * @ORM\Entity(repositoryClass=AzpiatalaparrafoaondorenRepository::class)
- * @UdalaEgiaztatu(userFieldName="udala_id")
  */
+#[ExclusionPolicy("all")]
+#[UdalaEgiaztatu(userFieldName: "udala_id")]
+#[ORM\Entity(repositoryClass: AzpiatalaparrafoaondorenRepository::class)]
+#[ORM\Table(name: 'azpiatalaparrafoaondoren')]
 class Azpiatalaparrafoaondoren
 {
     /**
      * @var integer
-     *
-     * @ORM\Column(name="id", type="bigint", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(name: 'id', type: 'bigint', nullable: false)]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     private $id;
 
     /**
      * @var integer
-     *
-     * @ORM\Column(name="ordena", type="bigint", nullable=true)
      */
+    #[ORM\Column(name: 'ordena', type: 'bigint', nullable: true)]
     private $ordena;
 
     /**
      * @var integer
-     * @Expose
-     *
-     * @ORM\Column(name="ordena_prod", type="bigint", nullable=true)
      */
+    #[Expose()]
+    #[ORM\Column(name: 'ordena_prod', type: 'bigint', nullable: true)]
     private $ordena_prod;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="testuaeu", type="text", length=65535, nullable=true)
      */
+    #[ORM\Column(name: 'testuaeu', type: 'text', length: 65535, nullable: true)]
     private $testuaeu;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="testuaeu_prod", type="text", length=65535, nullable=true)
      */
+    #[ORM\Column(name: 'testuaeu_prod', type: 'text', length: 65535, nullable: true)]
     private $testuaeu_prod;
 
     /**
      * @var string
-     * @Expose
-     *
-     * @ORM\Column(name="testuaes", type="text", length=65535, nullable=true)
      */
+    #[Expose()]
+    #[ORM\Column(name: 'testuaes', type: 'text', length: 65535, nullable: true)]
     private $testuaes;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="testuaes_prod", type="text", length=65535, nullable=true)
      */
+    #[ORM\Column(name: 'testuaes_prod', type: 'text', length: 65535, nullable: true)]
     private $testuaes_prod;
 
     /**
      * @var bool
-     * @Expose
-     *
-     * @ORM\Column(name="ezabatu", type="boolean", nullable=true)
      */
+    #[Expose()]
+    #[ORM\Column(name: 'ezabatu', type: 'boolean', nullable: true)]
     private $ezabatu;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
+    #[ORM\Column(name: 'created_at', type: 'datetime', nullable: false)]
     private $createdAt;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
      */
+    #[ORM\Column(name: 'updated_at', type: 'datetime', nullable: false)]
     private $updatedAt;
 
     /**
@@ -101,21 +91,17 @@ class Azpiatalaparrafoaondoren
      * ************************************************************************************************************************************************************************
      * ************************************************************************************************************************************************************************
      */
-
     /**
      * @var Azpiatala $azpiatala
-     *
-     * @ORM\ManyToOne(targetEntity="Azpiatala",inversedBy="parrafoakondoren")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="azpiatala_id", referencedColumnName="id")
-     * })
      */
+    #[ORM\ManyToOne(targetEntity: Azpiatala::class, inversedBy: 'parrafoakondoren')]
+    #[ORM\JoinColumn(name: 'azpiatala_id', referencedColumnName: 'id')]
     private $azpiatala;
 
     /**
      * @var Udala $udala
-     * @ORM\ManyToOne(targetEntity="Udala")
      */
+    #[ORM\ManyToOne(targetEntity: Udala::class)]
     private $udala;
 
     public function __construct()

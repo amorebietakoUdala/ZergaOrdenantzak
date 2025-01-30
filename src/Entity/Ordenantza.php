@@ -17,7 +17,7 @@ use JMS\Serializer\Annotation\Expose;
 #[ORM\Entity(repositoryClass: OrdenantzaRepository::class)]
 #[ORM\Table(name: 'ordenantza')]
 #[UdalaEgiaztatu(userFieldName: "udala_id")]
-class Ordenantza
+class Ordenantza implements \Stringable
 {
     /**
      * @var integer
@@ -113,7 +113,7 @@ class Ordenantza
         $this->updatedAt = new \DateTime();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getKodea();
     }

@@ -18,14 +18,11 @@ use Symfony\Component\HttpFoundation\Response;
 class AtalaController extends AbstractController
 {
 
-    private $em;
-
-    private $ordenantzaRepo;
-    
-    public function __construct(EntityManagerInterface $em, OrdenantzaRepository $ordenantzaRepo)
+    public function __construct(
+        private readonly EntityManagerInterface $em, 
+        private readonly OrdenantzaRepository $ordenantzaRepo
+    )
     {
-        $this->em = $em;
-        $this->ordenantzaRepo = $ordenantzaRepo;
     }
 
     /**
@@ -39,7 +36,7 @@ class AtalaController extends AbstractController
         $atala->setOrdenantza( $ordenantza );
         $atala->setUdala( $this->getUser()->getUdala() );
         
-        $form = $this->createForm('App\Form\AtalaType', $atala);
+        $form = $this->createForm(\App\Form\AtalaType::class, $atala);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -49,11 +46,7 @@ class AtalaController extends AbstractController
             return $this->redirect($request->headers->get('referer'));
         } 
 
-        return $this->render('atala/new.html.twig', array(
-            'atala' => $atala,
-            'ordenantzaid' => $ordenantzaid,
-            'form' => $form->createView(),
-        ));
+        return $this->render('atala/new.html.twig', ['atala' => $atala, 'ordenantzaid' => $ordenantzaid, 'form' => $form->createView()]);
     }
 
     
@@ -63,10 +56,7 @@ class AtalaController extends AbstractController
             
         $deleteForm = $this->createDeleteForm($atala);
 
-        return $this->render('atala/_ataladeleteform.html.twig', array(
-            'delete_form' => $deleteForm->createView(),
-            'id' => $atala->getId()
-        ));
+        return $this->render('atala/_ataladeleteform.html.twig', ['delete_form' => $deleteForm->createView(), 'id' => $atala->getId()]);
     }
     
     
@@ -105,7 +95,7 @@ class AtalaController extends AbstractController
     private function createDeleteForm(Atala $atala)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_atala_delete', array('id' => $atala->getId())))
+            ->setAction($this->generateUrl('admin_atala_delete', ['id' => $atala->getId()]))
             ->setMethod(Request::METHOD_DELETE)
             ->getForm()
         ;

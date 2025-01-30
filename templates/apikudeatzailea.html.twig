@@ -166,7 +166,7 @@ $(document).ready(function() {
         $('body').on('click', 'a.btntaula', function () {
 
             var miid = $(this).data('id');
-            var url = "/zzoo/api/zerga/" + miid + "?format=json";
+            var url = "/zergaordenantzak/api/zerga/" + miid + "?format=json";
             var nModal = $('#nireModal');
             $('#modalContent').empty();
             $.getJSON(url, function(data) {
@@ -304,7 +304,7 @@ $(document).ready(function() {
         $('body').on('click', 'a.btntaula', function () {
 
             var miid = $(this).data('id');
-            var url = "/zzoo/api/zerga/" + miid + "?format=json";
+            var url = "/zergaordenantzak/api/zerga/" + miid + "?format=json";
             var nModal = $('#nireModal');
             $('#modalContent').empty();
             $.getJSON(url, function(data) {

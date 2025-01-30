@@ -29,15 +29,12 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
 #[Route(path: '/{_locale}/admin/historikoa')]
 class HistorikoaController extends AbstractController {
 
-    private $em;
-    private $ordenantzaRepo;
-    private $historikoaRepo;
-
-    public function __construct(EntityManagerInterface $em, OrdenantzaRepository $ordenantzaRepo, HistorikoaRepository $historikoaRepo) 
+    public function __construct(
+        private readonly EntityManagerInterface $em, 
+        private readonly OrdenantzaRepository $ordenantzaRepo, 
+        private readonly HistorikoaRepository $historikoaRepo
+    )
     {
-        $this->em = $em;
-        $this->ordenantzaRepo = $ordenantzaRepo;
-        $this->historikoaRepo = $historikoaRepo;
     }
 
     /**
@@ -48,7 +45,7 @@ class HistorikoaController extends AbstractController {
     public function index($page): Response
     {
         $historikoas = $this->historikoaRepo->findBy([],['id' => 'DESC']);
-        $deleteForms = array();
+        $deleteForms = [];
         foreach ($historikoas as $entity)
         {
             $deleteForms[ $entity->getId() ] = $this->createDeleteForm($entity)->createView();
@@ -61,16 +58,12 @@ class HistorikoaController extends AbstractController {
                 ->setMaxPerPage(5)
                 ->setCurrentPage($page)
                 ->getCurrentPageResults();
-        } catch (NotValidCurrentPageException $e)
+        } catch (NotValidCurrentPageException)
         {
             throw $this->createNotFoundException("Orria ez da existitzen");
         }
 
-        return $this->render('historikoa/index.html.twig', array(
-            'historikoas' => $entities,
-            'deleteForms' => $deleteForms,
-            'pager'       => $pagerfanta,
-        ));
+        return $this->render('historikoa/index.html.twig', ['historikoas' => $entities, 'deleteForms' => $deleteForms, 'pager'       => $pagerfanta]);
     }
 
     /**
@@ -236,14 +229,14 @@ class HistorikoaController extends AbstractController {
             $pdf->setFontSubsetting(true);
             $pdf->SetFont('helvetica', '', 11, '', true);
 
-            $pdf->setHeaderData('', 0, '', '', array(0, 0, 0), array(255, 255, 255));
+            $pdf->setHeaderData('', 0, '', '', [0, 0, 0], [255, 255, 255]);
 
             $pdf->AddPage();
 
             $eguna = date("Y-m-d_His");
             $filename = $this->getFilename($user->getUdala()->getKodea(), "ZergaOrdenantzak-" . $eguna);
 
-            $azala = $this->render('ordenantza/azala.html.twig', array('eguna' => date("Y"), 'udala' => $user->getUdala()));
+            $azala = $this->render('ordenantza/azala.html.twig', ['eguna' => date("Y"), 'udala' => $user->getUdala()]);
 
             $pdf->writeHTMLCell($w = 0, $h = 0, $x = '', $y = '', $azala->getContent(), $border = 0, $ln = 1, $fill = 0, $reseth = true, $align = '', $autopadding = true);
 
@@ -251,7 +244,7 @@ class HistorikoaController extends AbstractController {
 
             foreach ($ordenantzas as $ordenantza)
             {
-                $mihtml = $this->render('ordenantza/pdf.html.twig', array('ordenantza' => $ordenantza));
+                $mihtml = $this->render('ordenantza/pdf.html.twig', ['ordenantza' => $ordenantza]);
                 $pdf->writeHTMLCell($w = 0, $h = 0, $x = '', $y = '', $mihtml->getContent(), $border = 0, $ln = 1, $fill = 0, $reseth = true, $align = '', $autopadding = true);
                 $pdf->AddPage();
             }
@@ -266,10 +259,7 @@ class HistorikoaController extends AbstractController {
             return $this->redirectToRoute('admin_historikoa_index');
         }
 
-        return $this->render('historikoa/new.html.twig', array(
-            'historikoa' => $historikoa,
-            'form'       => $form->createView(),
-        ));
+        return $this->render('historikoa/new.html.twig', ['historikoa' => $historikoa, 'form'       => $form->createView()]);
     }
 
     /**
@@ -280,10 +270,7 @@ class HistorikoaController extends AbstractController {
     {
         $deleteForm = $this->createDeleteForm($historikoa);
 
-        return $this->render('historikoa/show.html.twig', array(
-            'historikoa'  => $historikoa,
-            'delete_form' => $deleteForm->createView(),
-        ));
+        return $this->render('historikoa/show.html.twig', ['historikoa'  => $historikoa, 'delete_form' => $deleteForm->createView()]);
     }
 
     /**
@@ -293,7 +280,7 @@ class HistorikoaController extends AbstractController {
     public function edit(Request $request, Historikoa $historikoa)
     {
         $deleteForm = $this->createDeleteForm($historikoa);
-        $editForm = $this->createForm('App\Form\HistorikoaType', $historikoa);
+        $editForm = $this->createForm(\App\Form\HistorikoaType::class, $historikoa);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid())
@@ -302,14 +289,10 @@ class HistorikoaController extends AbstractController {
             $this->em->persist($historikoa);
             $this->em->flush();
 
-            return $this->redirectToRoute('admin_historikoa_edit', array('id' => $historikoa->getId()));
+            return $this->redirectToRoute('admin_historikoa_edit', ['id' => $historikoa->getId()]);
         }
 
-        return $this->render('historikoa/edit.html.twig', array(
-            'historikoa'  => $historikoa,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+        return $this->render('historikoa/edit.html.twig', ['historikoa'  => $historikoa, 'edit_form'   => $editForm->createView(), 'delete_form' => $deleteForm->createView()]);
     }
 
     /**

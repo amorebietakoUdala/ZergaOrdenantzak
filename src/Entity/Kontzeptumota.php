@@ -10,7 +10,7 @@ use App\Repository\KontzeptumotaRepository;
  */
 #[ORM\Entity(repositoryClass: KontzeptumotaRepository::class)]
 #[ORM\Table(name: 'kontzeptumota')]
-class Kontzeptumota
+class Kontzeptumota implements \Stringable
 {
     /**
      * @var integer
@@ -49,7 +49,7 @@ class Kontzeptumota
     {
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getMotaeu();
     }

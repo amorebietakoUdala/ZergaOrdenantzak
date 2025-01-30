@@ -12,7 +12,7 @@ use App\Attribute\UdalaEgiaztatu;
 #[UdalaEgiaztatu(userFieldName: "udala_id")]
 #[ORM\Entity]
 #[ORM\Table(name: 'eremumota')]
-class Eremumota
+class Eremumota implements \Stringable
 {
     /**
      * @var integer
@@ -53,7 +53,7 @@ class Eremumota
     {
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getMotaeu();
     }

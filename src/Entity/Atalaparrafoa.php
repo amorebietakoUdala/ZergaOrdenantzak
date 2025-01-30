@@ -16,7 +16,7 @@ use App\Repository\AtalaRepository;
 #[ORM\Entity(repositoryClass: AtalaparrafoaRepository::class)]
 #[ORM\Table(name: 'atalaparrafoa')]
 #[ORM\Index(name: 'atala_id_idx', columns: ['atala_id'])]
-class Atalaparrafoa
+class Atalaparrafoa implements \Stringable
 {
     /**
      * @var integer
@@ -107,7 +107,7 @@ class Atalaparrafoa
         $this->updatedAt = new \DateTime();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getTestuaeu();
     }

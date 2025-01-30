@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 #[ORM\Entity(repositoryClass: UdalaRepository::class)]
 #[ORM\Table(name: 'udala')]
-class Udala
+class Udala implements \Stringable
 {
     /**
      * @var integer
@@ -86,7 +86,7 @@ class Udala
     {
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getKodea() . " - " . $this->getIzenaeu();
     }

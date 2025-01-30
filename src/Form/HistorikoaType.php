@@ -19,56 +19,43 @@ class HistorikoaType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('onartzedata', DateType::class, array(
+            ->add('onartzedata', DateType::class, [
                 'widget' => 'single_text',
-
-                // do not render as type="date", to avoid HTML5 date pickers
-                'html5' => false,
-
-                'format' => 'yyyy-MM-dd',
-
-                // add a class that can eb selected in JavaScript
-                'attr' => ['class' => 'js-datepicker'],
-            ))
-            ->add('bogargitaratzedata', DateType::class, array(
-                'widget' => 'single_text',
-
                 // do not render as type="date", to avoid HTML5 date pickers
                 'html5' => false,
                 'format' => 'yyyy-MM-dd',
-
                 // add a class that can eb selected in JavaScript
                 'attr' => ['class' => 'js-datepicker'],
-            ))
-            ->add('bogbehinbetikodata', DateType::class, array(
+            ])
+            ->add('bogargitaratzedata', DateType::class, [
                 'widget' => 'single_text',
-
                 // do not render as type="date", to avoid HTML5 date pickers
                 'html5' => false,
                 'format' => 'yyyy-MM-dd',
-
                 // add a class that can eb selected in JavaScript
                 'attr' => ['class' => 'js-datepicker'],
-            ))
+            ])
+            ->add('bogbehinbetikodata', DateType::class, [
+                'widget' => 'single_text',
+                // do not render as type="date", to avoid HTML5 date pickers
+                'html5' => false,
+                'format' => 'yyyy-MM-dd',
+                // add a class that can eb selected in JavaScript
+                'attr' => ['class' => 'js-datepicker'],
+            ])
             ->add('bogestekaeu')
             ->add('bogestekaes')
-            ->add('indarreandata', DateType::class, array(
+            ->add('indarreandata', DateType::class, [
                 'widget' => 'single_text',
-
                 // do not render as type="date", to avoid HTML5 date pickers
                 'html5' => false,
                 'format' => 'yyyy-MM-dd',
-
                 // add a class that can eb selected in JavaScript
                 'attr' => ['class' => 'js-datepicker'],
-		'constraints' => [new NotBlank(),]
-            ))
-            ->add('aldaketakeu',CKEditorType::class, array(
-                'config_name' => 'my_config_1',
-            ))
-            ->add('aldaketakes',CKEditorType::class, array(
-                'config_name' => 'my_config_1',
-            ))
+                'constraints' => [new NotBlank(),],
+            ])
+            ->add('aldaketakeu',CKEditorType::class, ['config_name' => 'my_config_1'])
+            ->add('aldaketakes',CKEditorType::class, ['config_name' => 'my_config_1'])
             ->add('bogargitaratzedatatestua')
         ;
     }
@@ -78,8 +65,8 @@ class HistorikoaType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => Historikoa::class
-        ));
+        ]);
     }
 }

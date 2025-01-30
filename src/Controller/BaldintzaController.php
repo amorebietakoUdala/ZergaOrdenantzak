@@ -20,13 +20,11 @@ use Symfony\Component\HttpFoundation\Response;
 class BaldintzaController extends AbstractController
 {
 
-    private $baldintzaRepo;
-    private $em;
-
-    public function __construct(EntityManagerInterface $em, BaldintzaRepository $baldintzaRepo, private \Doctrine\Persistence\ManagerRegistry $managerRegistry)
+    public function __construct(
+        private readonly EntityManagerInterface $em, 
+        private readonly BaldintzaRepository $baldintzaRepo, 
+    )
     {
-        $this->em = $em;
-        $this->baldintzaRepo = $baldintzaRepo;
     }
 
     /**
@@ -39,21 +37,16 @@ class BaldintzaController extends AbstractController
 
         /** @var Baldintza $baldintza **/
         $baldintza = new Baldintza();
-        $baldintza->setUdala($this->getUser()->getUdala());
-        $form = $this->createForm(BaldintzaType::class, $baldintza,array(
-            'action' => $this->generateUrl('baldintza_new'),
-            'method' => 'POST',
-        ));
+        /** @var User $user */
+        $user = $this->getUser();
+        $baldintza->setUdala($user->getUdala());
+        $form = $this->createForm(BaldintzaType::class, $baldintza,['action' => $this->generateUrl('baldintza_new'), 'method' => 'POST']);
 
-        $deleteForms = array ();
+        $deleteForms = [];
         foreach ( $baldintzas as $baldintza ) {
             $deleteForms[ $baldintza->getId() ] = $this->createDeleteForm( $baldintza )->createView();
         }
-        return $this->render('baldintza/index.html.twig', array(
-            'baldintzas' => $baldintzas,
-            'deleteforms' => $deleteForms,
-            'form' => $form->createView(),
-        ));
+        return $this->render('baldintza/index.html.twig', ['baldintzas' => $baldintzas, 'deleteforms' => $deleteForms, 'form' => $form->createView()]);
     }
 
     /**
@@ -74,10 +67,7 @@ class BaldintzaController extends AbstractController
             return $this->redirectToRoute('baldintza_index');
         }
 
-        return $this->render('baldintza/new.html.twig', array(
-            'baldintza' => $baldintza,
-            'form' => $form->createView(),
-        ));
+        return $this->render('baldintza/new.html.twig', ['baldintza' => $baldintza, 'form' => $form->createView()]);
     }
 
 
@@ -93,16 +83,12 @@ class BaldintzaController extends AbstractController
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            $this->managerRegistry->getManager()->flush();
+            $this->em->flush();
 
             return $this->redirectToRoute('baldintza_index');
         }
 
-        return $this->render('baldintza/edit.html.twig', array(
-            'baldintza' => $baldintza,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+        return $this->render('baldintza/edit.html.twig', ['baldintza' => $baldintza, 'edit_form' => $editForm->createView(), 'delete_form' => $deleteForm->createView()]);
     }
 
     /**
@@ -133,7 +119,7 @@ class BaldintzaController extends AbstractController
     private function createDeleteForm(Baldintza $baldintza)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('baldintza_delete', array('id' => $baldintza->getId())))
+            ->setAction($this->generateUrl('baldintza_delete', ['id' => $baldintza->getId()]))
             ->setMethod(Request::METHOD_DELETE)
             ->getForm()
         ;

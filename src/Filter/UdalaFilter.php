@@ -13,7 +13,7 @@ class UdalaFilter extends SQLFilter
 
         // The Doctrine filter is called for any query on any entity
         // Check if the current entity is "user aware" (marked with an annotation)
-        $udalaEgiaztatu = $reflectionClass->getAttributes('App\Attribute\UdalaEgiaztatu');
+        $udalaEgiaztatu = $reflectionClass->getAttributes(\App\Attribute\UdalaEgiaztatu::class);
 
         if (count($udalaEgiaztatu) === 0) {
             return '';
@@ -22,7 +22,7 @@ class UdalaFilter extends SQLFilter
         try {
             // Don't worry, getParameter automatically quotes parameters
             $udalaId = $this->getParameter('udala_id');
-        } catch (\InvalidArgumentException $e) {
+        } catch (\InvalidArgumentException) {
             // No user id has been defined
             return '';
         }

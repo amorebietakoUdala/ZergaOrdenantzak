@@ -14,7 +14,7 @@ use App\Attribute\UdalaEgiaztatu;
 #[ORM\Table(name: 'eremua')]
 #[ORM\Index(name: 'eremumota_id_idx', columns: ['eremumota_id'])]
 #[ORM\Index(name: 'formula_id_idx', columns: ['formula_id'])]
-class Eremua
+class Eremua implements \Stringable
 {
     /**
      * @var integer
@@ -75,7 +75,7 @@ class Eremua
     {
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getIzena();
     }

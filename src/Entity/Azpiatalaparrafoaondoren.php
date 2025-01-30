@@ -17,7 +17,7 @@ use App\Repository\AzpiatalaparrafoaondorenRepository;
 #[UdalaEgiaztatu(userFieldName: "udala_id")]
 #[ORM\Entity(repositoryClass: AzpiatalaparrafoaondorenRepository::class)]
 #[ORM\Table(name: 'azpiatalaparrafoaondoren')]
-class Azpiatalaparrafoaondoren
+class Azpiatalaparrafoaondoren implements \Stringable
 {
     /**
      * @var integer
@@ -111,7 +111,7 @@ class Azpiatalaparrafoaondoren
         $this->updatedAt = new \DateTime();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getTestuaeu();
     }

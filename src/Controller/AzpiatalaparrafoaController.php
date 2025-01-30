@@ -19,14 +19,13 @@ use Symfony\Component\HttpFoundation\Response;
     class AzpiatalaparrafoaController extends AbstractController
     {
 
-        private $em;
-        private $azpiatalaRepo;
-
-        public function __construct(EntityManagerInterface $em, AzpiatalaRepository $azpiatalaRepo)
+        public function __construct(
+            private readonly EntityManagerInterface $em, 
+            private readonly AzpiatalaRepository $azpiatalaRepo
+        )
         {
-            $this->em = $em;
-            $this->azpiatalaRepo = $azpiatalaRepo;
         }
+        
         #[Route(path: '/up/{id}', name: 'admin_azpiatalaparrafoa_up', methods: ['GET'])]
         public function up(Request $request, Azpiatalaparrafoa $op): RedirectResponse
         {
@@ -70,11 +69,7 @@ use Symfony\Component\HttpFoundation\Response;
 
             return $this->render(
                 'azpiatalaparrafoa/new.html.twig',
-                array (
-                    'azpiatalaparrafoa' => $azpiatalaparrafoa,
-                    'azpiatalaid'       => $azpiatalaid,
-                    'form'              => $form->createView(),
-                )
+                ['azpiatalaparrafoa' => $azpiatalaparrafoa, 'azpiatalaid'       => $azpiatalaid, 'form'              => $form->createView()]
             );
         }
 
@@ -84,10 +79,7 @@ use Symfony\Component\HttpFoundation\Response;
         {
             $deleteForm = $this->createDeleteForm($azpiatalaparrafoa);
 
-            return $this->render('azpiatalaparrafoa/_azpiatalaparrafoadeleteform.html.twig', array(
-                'delete_form' => $deleteForm->createView(),
-                'id' => $azpiatalaparrafoa->getId()
-            ));
+            return $this->render('azpiatalaparrafoa/_azpiatalaparrafoadeleteform.html.twig', ['delete_form' => $deleteForm->createView(), 'id' => $azpiatalaparrafoa->getId()]);
         }
         
         /**
@@ -118,7 +110,7 @@ use Symfony\Component\HttpFoundation\Response;
         {
             return $this->createFormBuilder()
                 ->setAction(
-                    $this->generateUrl( 'admin_azpiatalaparrafoa_delete', array ('id' => $azpiatalaparrafoa->getId()) )
+                    $this->generateUrl( 'admin_azpiatalaparrafoa_delete', ['id' => $azpiatalaparrafoa->getId()] )
                 )
                 ->setMethod( Request::METHOD_DELETE )
                 ->getForm();

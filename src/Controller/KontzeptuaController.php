@@ -19,13 +19,11 @@ use Symfony\Component\HttpFoundation\Response;
     class KontzeptuaController extends AbstractController
     {
 
-        private $em;
-        private $azpiatalaRepo;
-
-        public function __construct(EntityManagerInterface $em, AzpiatalaRepository $azpiatalaRepo) 
+        public function __construct(
+            private readonly EntityManagerInterface $em, 
+            private readonly AzpiatalaRepository $azpiatalaRepo
+        )
         {
-            $this->em = $em;
-            $this->azpiatalaRepo = $azpiatalaRepo;
         }
 
         /**
@@ -52,11 +50,7 @@ use Symfony\Component\HttpFoundation\Response;
 
             return $this->render(
                 'kontzeptua/new.html.twig',
-                array (
-                    'kontzeptua'  => $kontzeptua,
-                    'azpiatalaid' => $azpiatalaid,
-                    'form'        => $form->createView(),
-                )
+                ['kontzeptua'  => $kontzeptua, 'azpiatalaid' => $azpiatalaid, 'form'        => $form->createView()]
             );
         }
 
@@ -75,12 +69,7 @@ use Symfony\Component\HttpFoundation\Response;
                 //return $this->redirectToRoute('admin_ordenantza_show', array('id' => $ordenantzaid));
                 return $this->redirect( $request->headers->get( 'referer' ) . '#kontzeptua'.$kontzeptua->getId());
             }
-            return $this->render('kontzeptua/edit.html.twig', array(
-                'kontzeptua' => $kontzeptua,
-                'ordenantzaid' => $ordenantzaid,
-                'form' => $editForm->createView(),
-                'delete_form' => $deleteForm->createView(),
-            ));
+            return $this->render('kontzeptua/edit.html.twig', ['kontzeptua' => $kontzeptua, 'ordenantzaid' => $ordenantzaid, 'form' => $editForm->createView(), 'delete_form' => $deleteForm->createView()]);
 
         }
 
@@ -92,10 +81,7 @@ use Symfony\Component\HttpFoundation\Response;
 
             $deleteForm = $this->createDeleteForm($kontzeptua);
 
-            return $this->render('kontzeptua/_kontzeptuadeleteform.html.twig', array(
-                'delete_form' => $deleteForm->createView(),
-                'id' => $kontzeptua->getId()
-            ));
+            return $this->render('kontzeptua/_kontzeptuadeleteform.html.twig', ['delete_form' => $deleteForm->createView(), 'id' => $kontzeptua->getId()]);
         }
         
         /**
@@ -125,7 +111,7 @@ use Symfony\Component\HttpFoundation\Response;
         private function createDeleteForm ( Kontzeptua $kontzeptua )
         {
             return $this->createFormBuilder()
-                ->setAction( $this->generateUrl( 'admin_kontzeptua_delete', array ('id' => $kontzeptua->getId()) ) )
+                ->setAction( $this->generateUrl( 'admin_kontzeptua_delete', ['id' => $kontzeptua->getId()] ) )
                 ->setMethod( Request::METHOD_DELETE )
                 ->getForm();
         }

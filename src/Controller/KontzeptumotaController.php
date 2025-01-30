@@ -19,13 +19,11 @@ use Symfony\Component\HttpFoundation\Response;
 class KontzeptumotaController extends AbstractController
 {
 
-    private $em;
-    private $kontzeptumotaRepo;
-
-    public function __construct(EntityManagerInterface $em, KontzeptumotaRepository $kontzeptumotaRepo)
+    public function __construct(
+        private readonly EntityManagerInterface $em, 
+        private readonly KontzeptumotaRepository $kontzeptumotaRepo
+    )
     {
-        $this->em = $em;
-        $this->kontzeptumotaRepo = $kontzeptumotaRepo;
     }
 
     /**
@@ -37,9 +35,7 @@ class KontzeptumotaController extends AbstractController
 
         $kontzeptumotas = $this->kontzeptumotaRepo->findAll();
 
-        return $this->render('kontzeptumota/index.html.twig', array(
-            'kontzeptumotas' => $kontzeptumotas,
-        ));
+        return $this->render('kontzeptumota/index.html.twig', ['kontzeptumotas' => $kontzeptumotas]);
     }
 
     /**
@@ -57,13 +53,10 @@ class KontzeptumotaController extends AbstractController
             $this->em->persist($kontzeptumotum);
             $this->em->flush();
 
-            return $this->redirectToRoute('admin_kontzeptumota_show', array('id' => $kontzeptumotum->getId()));
+            return $this->redirectToRoute('admin_kontzeptumota_show', ['id' => $kontzeptumotum->getId()]);
         }
 
-        return $this->render('kontzeptumota/new.html.twig', array(
-            'kontzeptumotum' => $kontzeptumotum,
-            'form' => $form->createView(),
-        ));
+        return $this->render('kontzeptumota/new.html.twig', ['kontzeptumotum' => $kontzeptumotum, 'form' => $form->createView()]);
     }
 
     /**
@@ -74,10 +67,7 @@ class KontzeptumotaController extends AbstractController
     {
         $deleteForm = $this->createDeleteForm($kontzeptumotum);
 
-        return $this->render('kontzeptumota/show.html.twig', array(
-            'kontzeptumotum' => $kontzeptumotum,
-            'delete_form' => $deleteForm->createView(),
-        ));
+        return $this->render('kontzeptumota/show.html.twig', ['kontzeptumotum' => $kontzeptumotum, 'delete_form' => $deleteForm->createView()]);
     }
 
     /**
@@ -94,14 +84,10 @@ class KontzeptumotaController extends AbstractController
                 $this->em->persist($kontzeptumotum);
             $this->em->flush();
 
-            return $this->redirectToRoute('admin_kontzeptumota_edit', array('id' => $kontzeptumotum->getId()));
+            return $this->redirectToRoute('admin_kontzeptumota_edit', ['id' => $kontzeptumotum->getId()]);
         }
 
-        return $this->render('kontzeptumota/edit.html.twig', array(
-            'kontzeptumotum' => $kontzeptumotum,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+        return $this->render('kontzeptumota/edit.html.twig', ['kontzeptumotum' => $kontzeptumotum, 'edit_form' => $editForm->createView(), 'delete_form' => $deleteForm->createView()]);
     }
 
     /**
@@ -131,7 +117,7 @@ class KontzeptumotaController extends AbstractController
     private function createDeleteForm(Kontzeptumota $kontzeptumotum)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_kontzeptumota_delete', array('id' => $kontzeptumotum->getId())))
+            ->setAction($this->generateUrl('admin_kontzeptumota_delete', ['id' => $kontzeptumotum->getId()]))
             ->setMethod(Request::METHOD_DELETE)
             ->getForm()
         ;

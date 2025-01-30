@@ -43,7 +43,7 @@
     <div class="text-center">
         {% if udalas is not empty %}
             {% if pager.haveToPaginate %}
-                {{ pagerfanta(pager, 'twitter_bootstrap3_translated', {'routeName': 'udala_index_paginated'}) }}
+                {{ pagerfanta(pager, 'twitter_bootstrap3', {'routeName': 'udala_index_paginated', 'prev_message': 'Anterior' | trans, 'next_message': 'Siguiente' | trans }) }}
             {% endif %}
         {% else %}
             <p>{{ 'Ez da emaitzarik topatu' | trans }}</p>

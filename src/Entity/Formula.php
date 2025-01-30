@@ -13,7 +13,7 @@ use App\Attribute\UdalaEgiaztatu;
 #[ORM\Entity]
 #[ORM\Table(name: 'formula')]
 #[ORM\Index(name: 'atala_id_idx', columns: ['atala_id'])]
-class Formula
+class Formula implements \Stringable
 {
     /**
      * @var integer
@@ -83,7 +83,7 @@ class Formula
     {
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getIzenburuaeu();
     }

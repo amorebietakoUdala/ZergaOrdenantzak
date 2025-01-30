@@ -20,13 +20,11 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 class AtalaparrafoaController extends AbstractController
 {
 
-    private $em;
-    private $atalaRepo;
-
-    public function __construct(EntityManagerInterface $em, AtalaRepository $atalaRepo)
+    public function __construct(
+        private readonly EntityManagerInterface $em, 
+        private readonly AtalaRepository $atalaRepo
+    )
     {
-        $this->em = $em;
-        $this->atalaRepo = $atalaRepo;
     }
 
     #[Route(path: '/up/{id}', name: 'admin_atalaparrafoa_up', methods: ['GET'])]
@@ -77,11 +75,7 @@ class AtalaparrafoaController extends AbstractController
 
         }
 
-        return $this->render('atalaparrafoa/new.html.twig', array(
-            'atalaparrafoa' => $atalaparrafoa,
-            'atalaid' => $atalaid,
-            'form' => $form->createView(),
-        ));
+        return $this->render('atalaparrafoa/new.html.twig', ['atalaparrafoa' => $atalaparrafoa, 'atalaid' => $atalaid, 'form' => $form->createView()]);
     }
 
     
@@ -91,10 +85,7 @@ class AtalaparrafoaController extends AbstractController
 
         $deleteForm = $this->createDeleteForm($atalaparrafoa);
 
-        return $this->render('atalaparrafoa/_atalaparrafoadeleteform.html.twig', array(
-            'delete_form' => $deleteForm->createView(),
-            'id' => $atalaparrafoa->getId()
-        ));
+        return $this->render('atalaparrafoa/_atalaparrafoadeleteform.html.twig', ['delete_form' => $deleteForm->createView(), 'id' => $atalaparrafoa->getId()]);
     }
 
     /**
@@ -124,7 +115,7 @@ class AtalaparrafoaController extends AbstractController
     private function createDeleteForm(Atalaparrafoa $atalaparrafoa)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_atalaparrafoa_delete', array('id' => $atalaparrafoa->getId())))
+            ->setAction($this->generateUrl('admin_atalaparrafoa_delete', ['id' => $atalaparrafoa->getId()]))
             ->setMethod(Request::METHOD_DELETE)
             ->getForm()
         ;

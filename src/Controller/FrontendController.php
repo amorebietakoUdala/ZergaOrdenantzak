@@ -17,24 +17,14 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
 class FrontendController extends AbstractController
 {
 
-    private $em;
-    private $ordenantzaRepo;
-    private $historikoaRepo;
-    private $tcpdfController;
-    private $rootDir;
-
     public function __construct(
-        EntityManagerInterface $em, 
-        OrdenantzaRepository $ordenantzaRepo, 
-        HistorikoaRepository $historikoaRepo, 
-        TCPDFController $tcpdfController,
-        string $rootDir )
+        private readonly EntityManagerInterface $em, 
+        private readonly OrdenantzaRepository $ordenantzaRepo, 
+        private readonly HistorikoaRepository $historikoaRepo, 
+        private readonly TCPDFController $tcpdfController, 
+        private readonly string $rootDir
+    )
     {
-        $this->em = $em;
-        $this->ordenantzaRepo = $ordenantzaRepo;
-        $this->historikoaRepo = $historikoaRepo;
-        $this->tcpdfController = $tcpdfController;
-        $this->rootDir = $rootDir;
     }
 
     #[Route(path: '/{udala}/{_locale}/', name: 'frontend_ordenantza_index', requirements: ['_locale' => 'eu|es', 'udala' => '\d+'])]
@@ -48,10 +38,7 @@ class FrontendController extends AbstractController
         $query->setParameter('udala', $udala);
         $ordenantzak = $query->getResult();
 
-        return $this->render('frontend\index.html.twig', array(
-            'ordenantzas' => $ordenantzak,
-            'udala'=>$udala,
-        ));        
+        return $this->render('frontend\index.html.twig', ['ordenantzas' => $ordenantzak, 'udala'=>$udala]);        
         
     }
 
@@ -63,9 +50,7 @@ class FrontendController extends AbstractController
     {
        $ordenantza = $this->ordenantzaRepo->find($id);
 
-        $fitxero=  $this->render('frontend/mihtml.html.twig', array(
-            'ordenantza' => $ordenantza
-        ));
+        $fitxero=  $this->render('frontend/mihtml.html.twig', ['ordenantza' => $ordenantza]);
 
         $filename = "export_".date("Y_m_d_His").".odt";
 
@@ -108,18 +93,18 @@ class FrontendController extends AbstractController
         $pdf->setFontSubsetting(true);
         $pdf->SetFont('helvetica', '', 11, '', true);
 
-        $pdf->setHeaderData('',0,'','',array(0,0,0), array(255,255,255) );
+        $pdf->setHeaderData('',0,'','',[0, 0, 0], [255, 255, 255] );
 
         $pdf->AddPage();
         /** @var User $user */
         $user = $this->getUser();
-        $azala = $this->render('frontend/azala.html.twig',array('eguna'=>date("Y"),'udala'=>$user->getUdala()));
+        $azala = $this->render('frontend/azala.html.twig',['eguna'=>date("Y"), 'udala'=>$user->getUdala()]);
         $pdf->writeHTMLCell($w = 0, $h = 0, $x = '', $y = '', $azala->getContent(), $border = 0, $ln = 1, $fill = 0, $reseth = true, $align = '', $autopadding = true);
         $pdf->AddPage();
 
         foreach ($ordenantzas as $ordenantza)
         {
-            $mihtml = $this->render('frontend/pdf.html.twig', array('ordenantza' => $ordenantza));
+            $mihtml = $this->render('frontend/pdf.html.twig', ['ordenantza' => $ordenantza]);
             $pdf->writeHTMLCell($w = 0, $h = 0, $x = '', $y = '', $mihtml->getContent(), $border = 0, $ln = 1, $fill = 0, $reseth = true, $align = '', $autopadding = true);
             $pdf->AddPage();
         }
@@ -145,15 +130,11 @@ class FrontendController extends AbstractController
                 ->setCurrentPage($page)
                 ->getCurrentPageResults()
             ;
-        } catch (\Pagerfanta\Exception\NotValidCurrentPageException $e) {
+        } catch (\Pagerfanta\Exception\NotValidCurrentPageException) {
             throw $this->createNotFoundException("Orria ez da existitzen");
         }
 
-        return $this->render('frontend/historikoa.html.twig', array(
-            'historikoas' => $entities,
-            'pager' => $pagerfanta,
-            'udala' => $udala
-        ));
+        return $this->render('frontend/historikoa.html.twig', ['historikoas' => $entities, 'pager' => $pagerfanta, 'udala' => $udala]);
     }
 
     /**
@@ -162,9 +143,6 @@ class FrontendController extends AbstractController
     #[Route(path: '/{udala}/{_locale}/{id}', name: 'frontend_ordenantza_show', requirements: ['_locale' => 'eu|es', 'udala' => '\d+'], methods: ['GET'])]
     public function show(Ordenantza $ordenantza,int $udala): Response
     {
-        return $this->render('frontend/show.html.twig', array(
-            'ordenantza' => $ordenantza,
-            'udala'=>$udala
-        ));
+        return $this->render('frontend/show.html.twig', ['ordenantza' => $ordenantza, 'udala'=>$udala]);
     }
 }

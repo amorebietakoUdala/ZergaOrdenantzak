@@ -1,7 +1,6 @@
 'Onartze data': 'Onartze data'
 'G.A.O. Argitaratze Data': 'B.O Argitaratze Data'
 Aldaketak: Aldaketak
-Fitxategia: Fitxategia
 Historikoa: Historikoa
 Kodea: Kodea
 Izenburua: Izenburua
@@ -33,7 +32,6 @@ Ezabatu: Ezabatu
 'GAO: Hasierako onarpena': 'A.O. Hasierako onarpena'
 'GAO: Behin betiko onarpena': 'A.O. Behin betiko onarpena'
 'gao.b.b': 'A.O. Behin betiko onarpena'
-'Indarreko data': 'Indarreko data'
 Gorde: Gorde
 Ezeztatu: Ezeztatu
 'Itzuli zerrendara': 'Itzuli zerrendara'
@@ -63,7 +61,6 @@ Multzokatzea: Multzokatzea
 Kopiatu: Kopiatu
 Kopiatua!: Kopiatua!
 'Erabili Ctrl + C kopiatzeko': '  Erabili Ctrl + C kopiatzeko'
-'Akats zuzenketak (testua)': '  Akats zuzenketak (testua)'
 ordena: ordena
 'Modu arruntera itzuli': 'Modu arruntera itzuli'
 'Erabiltzaile berria': 'Erabiltzaile barria'
@@ -88,3 +85,9 @@ Aldaketakes: 'Aldaketen deskribapena (erdaraz)'
 Fitxategia: 'Fitxategia'
 Createdat: 'Sortze data'
 Updatedat: 'Eguneratze data'
+A.O. Hasierako onarpena: 'A.O. Hasierako onarpena'
+A.O. Behin betiko onarpena: 'A.O. Behin betiko onarpena'
+Indarreko data: 'Indarreko data'
+G.A.O. esteka eskaraz: 'A.O.-ra eskarazko esteka'
+G.A.O. esteka erdaraz: 'A.O.-ra erdarazko esteka'
+Akats zuzenketak (testua): 'Akats zuzenketak (testua)'

@@ -190,7 +190,7 @@ $(function () {
 
 function eginAdibidea($locale, $id, $mitext) {
     $('#emaitza').empty();
-    var url = "/zzoo/api/zerga/" + $id + "?format=json";
+    var url = "/zergaordenantzak/api/zerga/" + $id + "?format=json";
     // **************************************************
     // **************************************************
     // DEBUG ONLY!!!
@@ -337,53 +337,53 @@ function ekarriHtml($locale, $apId, mitext) {
     }
 
     var miHtml =''+
-nireH3 + '\n' +
-nireDiv + '\n' +
-'&#x9;&#x3C;table class=&#x22;table table-bordered table-condensed&#x22; id=&#x22;kostuTaula' + $apId +'&#x22;&#x3E;'+'\n' +
-'&#x9;&#x9;&#x3C;thead&#x3E;'+'\n' +
-'&#x9;&#x9;&#x9;&#x3C;tr&#x3E;'+'\n' +
-'&#x9;&#x9;&#x9;&#x9;&#x3C;th&#x3E;' + nireDesk + '&#x3C;/th&#x3E;'+'\n' +
-'&#x9;&#x9;&#x9;&#x9;&#x3C;th&#x3E;' + nireKop + '&#x3C;/th&#x3E;'+'\n' +
-'&#x9;&#x9;&#x9;&#x9;&#x3C;th&#x3E;' + nireUni +'&#x3C;/th&#x3E;'+'\n' +
-'&#x9;&#x9;&#x9;&#x3C;/tr&#x3E;'+'\n' +
-'&#x9;&#x9;&#x3C;/thead&#x3E;'+'\n' +
-'&#x9;&#x9;&#x3C;tbody&#x3E;'+'\n' +
-'&#x9;&#x9;&#x9;&#x3C;tr&#x3E;'+'\n' +
-'&#x9;&#x9;&#x9;&#x3C;/tr&#x3E;'+'\n' +
-'&#x9;&#x9;&#x3C;/tbody&#x3E;'+'\n' +
-'&#x9;&#x3C;/table&#x3E;'+'\n' +
-'&#x3C;/div&#x3E;'+'\n' +
+    nireH3 + '\n' +
+    nireDiv + '\n' +
+    '&#x9;&#x3C;table class=&#x22;table table-bordered table-condensed&#x22; id=&#x22;kostuTaula' + $apId +'&#x22;&#x3E;'+'\n' +
+    '&#x9;&#x9;&#x3C;thead&#x3E;'+'\n' +
+    '&#x9;&#x9;&#x9;&#x3C;tr&#x3E;'+'\n' +
+    '&#x9;&#x9;&#x9;&#x9;&#x3C;th&#x3E;' + nireDesk + '&#x3C;/th&#x3E;'+'\n' +
+    '&#x9;&#x9;&#x9;&#x9;&#x3C;th&#x3E;' + nireKop + '&#x3C;/th&#x3E;'+'\n' +
+    '&#x9;&#x9;&#x9;&#x9;&#x3C;th&#x3E;' + nireUni +'&#x3C;/th&#x3E;'+'\n' +
+    '&#x9;&#x9;&#x9;&#x3C;/tr&#x3E;'+'\n' +
+    '&#x9;&#x9;&#x3C;/thead&#x3E;'+'\n' +
+    '&#x9;&#x9;&#x3C;tbody&#x3E;'+'\n' +
+    '&#x9;&#x9;&#x9;&#x3C;tr&#x3E;'+'\n' +
+    '&#x9;&#x9;&#x9;&#x3C;/tr&#x3E;'+'\n' +
+    '&#x9;&#x9;&#x3C;/tbody&#x3E;'+'\n' +
+    '&#x9;&#x3C;/table&#x3E;'+'\n' +
+    '&#x3C;/div&#x3E;'+'\n' +
 
-'&#x3C;script src=&#x22;https://code.jquery.com/jquery-1.12.4.min.js&#x22; integrity=&#x22;sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=&#x22; crossorigin=&#x22;anonymous&#x22;&#x3E;&#x3C;/script&#x3E;'+'\n' +
-'&#x3C;script language=&#x22;javascript&#x22;&#x3E;'+'\n' +
-'&#x9;$(document).ready(function() {'+'\n' +
-'&#x9;&#x9;$(&#x27;.cp_oculta' + $apId + '&#x27;).css(&#x27;display&#x27;,&#x27;none&#x27;);'+'\n' +
-'&#x9;&#x9;var url = &#x22;/zzoo/api/zerga/' + $apId + '?format=json&#x22;;'+'\n' +
-'&#x9;&#x9;$.getJSON(url, function(data) {'+'\n' +
-'&#x9;&#x9;$(&#x27;#nireH3' + $apId + '&#x27;).text ((data.' + nireIzen + ').replace(&#x22;&#x3C;br&#x3E;&#x22;,&#x22;&#x22;).replace(&#x22;&#x26;nbsp;&#x22;,&#x22; &#x22;));'+'\n' +
-'&#x9;&#x9;&#x9;var kontzeptuak = data.kontzeptuak;'+'\n' +
-'&#x9;&#x9;&#x9;$.each(kontzeptuak, function(i, item) {'+'\n' +
-'&#x9;&#x9;&#x9;&#x9;if (&#x22;baldintza&#x22; in item) {'+'\n' +
-'&#x9;&#x9;&#x9;&#x9;&#x9;var td1 = (item.' + nireKontzep + ' + &#x22; (&#x22; + item.baldintza.' + nireBaldin +' + &#x22;)&#x22;).replace(&#x22;&#x3C;br&#x3E;&#x22;, &#x22;&#x22;);'+'\n' +
-'&#x9;&#x9;&#x9;&#x9;} else {'+'\n' +
-'&#x9;&#x9;&#x9;&#x9;&#x9;var td1 = (item.' + nireKontzep + ').replace(&#x22;&#x3C;br&#x3E;&#x22;, &#x22;&#x22;);'+'\n' +
-'&#x9;&#x9;&#x9;&#x9;}'+'\n' +
-'&#x9;&#x9;&#x9;&#x9;var td2 = (item.kopurua_prod).replace(&#x22;&#x3C;br&#x3E;&#x22;, &#x22;&#x22;);'+'\n' +
-'&#x9;&#x9;&#x9;&#x9;var td3 = (item.unitatea_prod).replace(&#x22;&#x3C;br&#x3E;&#x22;, &#x22;&#x22;);'+'\n' +
-'&#x9;&#x9;&#x9;&#x9;var $tr = $(&#x27;&#x3C;tr&#x3E;&#x27;).append('+'\n' +
-'&#x9;&#x9;&#x9;&#x9;&#x9;$(&#x27;&#x3C;td&#x3E;&#x27;).text(td1),'+'\n' +
-'&#x9;&#x9;&#x9;&#x9;&#x9;$(&#x27;&#x3C;td&#x3E;&#x27;).text(td2),'+'\n' +
-'&#x9;&#x9;&#x9;&#x9;&#x9;$(&#x27;&#x3C;td&#x3E;&#x27;).text(td3)'+'\n' +
-'&#x9;&#x9;&#x9;&#x9;).appendTo(&#x27;#kostuTaula' + $apId + '&#x27;);'+'\n' +
-'&#x9;&#x9;&#x9;});'+'\n' +
-'&#x9;&#x9;});'+'\n' +
-'&#x9;});'+'\n' +
+    '&#x3C;script src=&#x22;https://code.jquery.com/jquery-1.12.4.min.js&#x22; integrity=&#x22;sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=&#x22; crossorigin=&#x22;anonymous&#x22;&#x3E;&#x3C;/script&#x3E;'+'\n' +
+    '&#x3C;script language=&#x22;javascript&#x22;&#x3E;'+'\n' +
+    '&#x9;$(document).ready(function() {'+'\n' +
+    '&#x9;&#x9;$(&#x27;.cp_oculta' + $apId + '&#x27;).css(&#x27;display&#x27;,&#x27;none&#x27;);'+'\n' +
+    '&#x9;&#x9;var url = &#x22;/zergaordenantzak/api/zerga/' + $apId + '?format=json&#x22;;'+'\n' +
+    '&#x9;&#x9;$.getJSON(url, function(data) {'+'\n' +
+    '&#x9;&#x9;$(&#x27;#nireH3' + $apId + '&#x27;).text ((data.' + nireIzen + ').replace(&#x22;&#x3C;br&#x3E;&#x22;,&#x22;&#x22;).replace(&#x22;&#x26;nbsp;&#x22;,&#x22; &#x22;));'+'\n' +
+    '&#x9;&#x9;&#x9;var kontzeptuak = data.kontzeptuak;'+'\n' +
+    '&#x9;&#x9;&#x9;$.each(kontzeptuak, function(i, item) {'+'\n' +
+    '&#x9;&#x9;&#x9;&#x9;if (&#x22;baldintza&#x22; in item) {'+'\n' +
+    '&#x9;&#x9;&#x9;&#x9;&#x9;var td1 = (item.' + nireKontzep + ' + &#x22; (&#x22; + item.baldintza.' + nireBaldin +' + &#x22;)&#x22;).replace(&#x22;&#x3C;br&#x3E;&#x22;, &#x22;&#x22;);'+'\n' +
+    '&#x9;&#x9;&#x9;&#x9;} else {'+'\n' +
+    '&#x9;&#x9;&#x9;&#x9;&#x9;var td1 = (item.' + nireKontzep + ').replace(&#x22;&#x3C;br&#x3E;&#x22;, &#x22;&#x22;);'+'\n' +
+    '&#x9;&#x9;&#x9;&#x9;}'+'\n' +
+    '&#x9;&#x9;&#x9;&#x9;var td2 = (item.kopurua_prod).replace(&#x22;&#x3C;br&#x3E;&#x22;, &#x22;&#x22;);'+'\n' +
+    '&#x9;&#x9;&#x9;&#x9;var td3 = (item.unitatea_prod).replace(&#x22;&#x3C;br&#x3E;&#x22;, &#x22;&#x22;);'+'\n' +
+    '&#x9;&#x9;&#x9;&#x9;var $tr = $(&#x27;&#x3C;tr&#x3E;&#x27;).append('+'\n' +
+    '&#x9;&#x9;&#x9;&#x9;&#x9;$(&#x27;&#x3C;td&#x3E;&#x27;).text(td1),'+'\n' +
+    '&#x9;&#x9;&#x9;&#x9;&#x9;$(&#x27;&#x3C;td&#x3E;&#x27;).text(td2),'+'\n' +
+    '&#x9;&#x9;&#x9;&#x9;&#x9;$(&#x27;&#x3C;td&#x3E;&#x27;).text(td3)'+'\n' +
+    '&#x9;&#x9;&#x9;&#x9;).appendTo(&#x27;#kostuTaula' + $apId + '&#x27;);'+'\n' +
+    '&#x9;&#x9;&#x9;});'+'\n' +
+    '&#x9;&#x9;});'+'\n' +
+    '&#x9;});'+'\n' +
 
-'function MostrarOcultar(capa, enlace) {'+'\n' +
-'  $(&#x27;#&#x27;+capa).toggle();'+'\n' +
-'}'+'\n' +
+    'function MostrarOcultar(capa, enlace) {'+'\n' +
+    '  $(&#x27;#&#x27;+capa).toggle();'+'\n' +
+    '}'+'\n' +
 
-'&#x3C;/script&#x3E;';
+    '&#x3C;/script&#x3E;';
     return miHtml;
 
 }

@@ -36,28 +36,15 @@ use Symfony\Component\Routing\Annotation\Route;
 class ApiController extends AbstractFOSRestController
 {
 
-    private $em = null;
-    private $ordenantzaRepo = null;
-    private $atalaRepo = null;
-    private $azpiatalaRepo = null;
-    private $kontzeptuaRepo = null;
-    private $udalaRepo = null;
-
     public function __construct(
-        EntityManagerInterface $em, 
-        OrdenantzaRepository $ordenantzaRepo, 
-        AtalaRepository $atalaRepo,
-        AzpiatalaRepository $azpiatalaRepo,
-        KontzeptuaRepository $kontzeptuaRepo,
-        UdalaRepository $udalaRepo
+        private readonly EntityManagerInterface $em, 
+        private readonly OrdenantzaRepository $ordenantzaRepo, 
+        private readonly AtalaRepository $atalaRepo, 
+        private readonly AzpiatalaRepository $azpiatalaRepo, 
+        private readonly KontzeptuaRepository $kontzeptuaRepo, 
+        private readonly UdalaRepository $udalaRepo
     )
     {
-        $this->em = $em;
-        $this->ordenantzaRepo = $ordenantzaRepo;
-        $this->atalaRepo = $atalaRepo;
-        $this->azpiatalaRepo = $azpiatalaRepo;
-        $this->kontzeptuaRepo = $kontzeptuaRepo;
-        $this->udalaRepo = $udalaRepo;
     }
 
 //    ORDENANTZAK

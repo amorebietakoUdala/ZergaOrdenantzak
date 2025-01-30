@@ -19,7 +19,7 @@ use Doctrine\Common\Collections\Collection;
 #[ORM\Entity(repositoryClass: AtalaRepository::class)]
 #[ORM\Table(name: 'atala')]
 #[ORM\Index(name: 'ordenantza_id_idx', columns: ['ordenantza_id'])]
-class Atala
+class Atala implements \Stringable
 {
     /**
      * @var integer
@@ -145,7 +145,7 @@ class Atala
         $this->updatedAt = new \DateTime();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getKodea() . " - " . $this->getIzenburuaeu();
     }

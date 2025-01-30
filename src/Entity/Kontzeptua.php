@@ -17,7 +17,7 @@ use App\Repository\KontzeptuaRepository;
 #[ORM\Index(name: 'azpiatala_id_idx', columns: ['azpiatala_id'])]
 #[ORM\Index(name: 'baldintza_id_idx', columns: ['baldintza_id'])]
 #[ORM\Index(name: 'kontzeptumota_id_idx', columns: ['kontzeptumota_id'])]
-class Kontzeptua
+class Kontzeptua implements \Stringable
 {
     /**
      * @var integer
@@ -150,7 +150,7 @@ class Kontzeptua
         $this->updatedAt = new \DateTime();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getKodea();
     }

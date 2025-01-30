@@ -75,7 +75,7 @@
 
         public function findAllOrderByKodea()
         {
-            return $this->findBy(array(), array('kodea' => 'ASC'));
+            return $this->findBy([], ['kodea' => 'ASC']);
         }
 
         public function getOrdenantzakByUdalKodea(string $kodea) {

@@ -14,15 +14,13 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 class UdalaFilterConfigurator implements EventSubscriberInterface
 {
-    protected $em;
-    protected $tokenStorage;
-    private Security $security;
 
-    public function __construct(EntityManagerInterface $em, TokenStorageInterface $tokenStorage, Security $security)
+    public function __construct(
+        protected readonly EntityManagerInterface $em, 
+        protected readonly TokenStorageInterface $tokenStorage, 
+        protected readonly Security $security
+    )
     {
-        $this->em              = $em;
-        $this->tokenStorage    = $tokenStorage;
-        $this->security = $security;
     }
 
     public function onKernelRequest(RequestEvent $event)

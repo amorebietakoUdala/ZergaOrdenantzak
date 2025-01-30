@@ -17,7 +17,7 @@ use JMS\Serializer\Annotation\Expose;
 #[ORM\Entity(repositoryClass: AzpiatalaparrafoaRepository::class)]
 #[ORM\Table(name: 'azpiatalaparrafoa')]
 #[ORM\Index(name: 'azpiatala_id_idx', columns: ['azpiatala_id'])]
-class Azpiatalaparrafoa
+class Azpiatalaparrafoa implements \Stringable
 {
     /**
      * @var integer
@@ -110,7 +110,7 @@ class Azpiatalaparrafoa
         $this->updatedAt = new \DateTime();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getTestuaeu();
     }

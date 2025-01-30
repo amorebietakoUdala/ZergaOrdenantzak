@@ -33,43 +33,20 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
     class OrdenantzaController extends AbstractController
     {
 
-        private $em;
-        private $ordenantzaRepo;
-        private $ordenantzaparrafoaRepo;
-        private $azpiatalaRepo;
-        private $atalaparrafoaRepo;
-        private $apoRepo;
-        private $azpiatalaparrafoaRepo;
-        private $kontzeptuaRepo;
-        private $tcpdfController;
-        private $rootDir;
-        private $odtPath;
-
         public function __construct(
-            EntityManagerInterface $em, 
-            OrdenantzaRepository $ordenantzaRepo, 
-            OrdenantzaparrafoaRepository $ordenantzaparrafoaRepo, 
-            AzpiatalaRepository $azpiatalaRepo,
-            AtalaparrafoaRepository $atalaparrafoaRepo,
-            AzpiatalaparrafoaondorenRepository $apoRepo,
-            AzpiatalaparrafoaRepository $azpiatalaparrafoaRepo,
-            KontzeptuaRepository $kontzeptuaRepo,
-            TCPDFController $tcpdfController,
-            string $rootDir,
-            string $odtPath
-        ) 
+            private readonly EntityManagerInterface $em, 
+            private readonly OrdenantzaRepository $ordenantzaRepo, 
+            private readonly OrdenantzaparrafoaRepository $ordenantzaparrafoaRepo, 
+            private readonly AzpiatalaRepository $azpiatalaRepo, 
+            private readonly AtalaparrafoaRepository $atalaparrafoaRepo, 
+            private readonly AzpiatalaparrafoaondorenRepository $apoRepo, 
+            private readonly AzpiatalaparrafoaRepository $azpiatalaparrafoaRepo, 
+            private readonly KontzeptuaRepository $kontzeptuaRepo, 
+            private readonly TCPDFController $tcpdfController, 
+            private readonly string $rootDir, 
+            private readonly string $odtPath
+        )
         {
-            $this->em = $em;
-            $this->ordenantzaRepo = $ordenantzaRepo;
-            $this->ordenantzaparrafoaRepo = $ordenantzaparrafoaRepo;
-            $this->azpiatalaRepo = $azpiatalaRepo;
-            $this->atalaparrafoaRepo = $atalaparrafoaRepo;
-            $this->apoRepo = $apoRepo;
-            $this->azpiatalaparrafoaRepo = $azpiatalaparrafoaRepo;
-            $this->kontzeptuaRepo = $kontzeptuaRepo;
-            $this->tcpdfController = $tcpdfController;
-            $this->rootDir = $rootDir;
-            $this->odtPath = $odtPath;
         }
 
         #[Route(path: '/eguneratu/{id}', name: 'admin_ordenantza_eguneratu', methods: ['POST'])]
@@ -99,9 +76,7 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
             $this->em->flush();
             $response = new JsonResponse();
             $response->setData(
-                array (
-                    'resul' => "OK",
-                )
+                ['resul' => "OK"]
             );
 
             return $response;
@@ -130,9 +105,7 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
             $this->em->flush();
             $response = new JsonResponse();
             $response->setData(
-                array (
-                    'resul' => "OK",
-                )
+                ['resul' => "OK"]
             );
 
             return $response;
@@ -165,9 +138,7 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
             $this->em->flush();
             $response = new JsonResponse();
             $response->setData(
-                array (
-                    'resul' => "OK",
-                )
+                ['resul' => "OK"]
             );
 
             return $response;
@@ -197,9 +168,7 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
             $this->em->flush();
             $response = new JsonResponse();
             $response->setData(
-                array (
-                    'resul' => "OK",
-                )
+                ['resul' => "OK"]
             );
 
             return $response;
@@ -233,9 +202,7 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
             $this->em->flush();
             $response = new JsonResponse();
             $response->setData(
-                array (
-                    'resul' => "OK",
-                )
+                ['resul' => "OK"]
             );
 
             return $response;
@@ -267,9 +234,7 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
             $this->em->flush();
             $response = new JsonResponse();
             $response->setData(
-                array (
-                    'resul' => "OK",
-                )
+                ['resul' => "OK"]
             );
 
             return $response;
@@ -301,9 +266,7 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
             $this->em->flush();
             $response = new JsonResponse();
             $response->setData(
-                array (
-                    'resul' => "OK",
-                )
+                ['resul' => "OK"]
             );
 
             return $response;
@@ -338,9 +301,7 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
             $this->em->flush();
             $response = new JsonResponse();
             $response->setData(
-                array (
-                    'resul' => "OK",
-                )
+                ['resul' => "OK"]
             );
 
             return $response;
@@ -378,7 +339,7 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
                     $this->em->persist( $ordenantza );
                 $this->em->flush();
 
-                return $this->redirectToRoute( 'admin_ordenantza_show', array ( 'id' => $ordenantza->getId() ) );
+                return $this->redirectToRoute( 'admin_ordenantza_show', ['id' => $ordenantza->getId()] );
             }
 
             return $this->render(
@@ -400,11 +361,11 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
         public function show ( Ordenantza $ordenantza ): Response
         {
             $deleteForm = $this->createDeleteForm( $ordenantza );
-            $deleteForms = array ();
+            $deleteForms = [];
             foreach ( $ordenantza->getParrafoak() as $p ) {
                 $deleteForms[ $p->getId() ] = $this->createFormBuilder()
                     ->setAction(
-                        $this->generateUrl( 'admin_ordenantzaparrafoa_delete', array ( 'id' => $p->getId() ) )
+                        $this->generateUrl( 'admin_ordenantzaparrafoa_delete', ['id' => $p->getId()] )
                     )
                     ->setMethod( Request::METHOD_DELETE )
                     ->getForm()->createView();
@@ -426,7 +387,7 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
         public function showpdf ( Ordenantza $ordenantza )
         {
 
-            $mihtml = $this->render( 'ordenantza/pdf.html.twig', array ( 'ordenantza' => $ordenantza ) );
+            $mihtml = $this->render( 'ordenantza/pdf.html.twig', ['ordenantza' => $ordenantza] );
 
 
             $pdf = $this->tcpdfController->create(
@@ -487,7 +448,7 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
             $pdf->setFontSubsetting( true );
             $pdf->SetFont( 'helvetica', '', 11, '', true );
 
-            $pdf->setHeaderData( '', 0, '', '', array ( 0, 0, 0 ), array ( 255, 255, 255 ) );
+            $pdf->setHeaderData( '', 0, '', '', [0, 0, 0], [255, 255, 255] );
 
             $pdf->AddPage();
 
@@ -495,7 +456,7 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
             $filename = $this->getFilename( $user->getUdala()->getKodea(), "ZergaOrdenantzak-".$eguna );
             $azala = $this->render(
                 'ordenantza/azala.html.twig',
-                array ( 'eguna' => date( "Y" ), 'udala' => $user->getUdala() )
+                ['eguna' => date( "Y" ), 'udala' => $user->getUdala()]
             );
             $pdf->writeHTMLCell(
                 $w = 0,
@@ -513,7 +474,7 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
             $pdf->AddPage();
 
             foreach ( $ordenantzas as $ordenantza ) {
-                $mihtml = $this->render( 'ordenantza/pdf.html.twig', array ( 'ordenantza' => $ordenantza ) );
+                $mihtml = $this->render( 'ordenantza/pdf.html.twig', ['ordenantza' => $ordenantza] );
                 $pdf->writeHTMLCell(
                     $w = 0,
                     $h = 0,
@@ -543,9 +504,7 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
 
             return $this->redirectToRoute(
                 'admin_historikoa_edit',
-                array (
-                    'id' => $historikoa->getId(),
-                )
+                ['id' => $historikoa->getId()]
             );
         }
 
@@ -556,12 +515,12 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
         public function edit ( Request $request, Ordenantza $ordenantza ): Response
         {
             $deleteForm = $this->createDeleteForm( $ordenantza );
-            $deleteForms = array ();
+            $deleteForms = [];
 
             foreach ( $ordenantza->getParrafoak() as $p ) {
                 $deleteForms[ $p->getId() ] = $this->createFormBuilder()
                     ->setAction(
-                        $this->generateUrl( 'admin_ordenantzaparrafoa_delete', array ( 'id' => $p->getId() ) )
+                        $this->generateUrl( 'admin_ordenantzaparrafoa_delete', ['id' => $p->getId()] )
                     )
                     ->setMethod( Request::METHOD_DELETE )
                     ->getForm()->createView();
@@ -607,7 +566,7 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
         private function createDeleteForm ( Ordenantza $ordenantza )
         {
             return $this->createFormBuilder()
-                ->setAction( $this->generateUrl( 'admin_ordenantza_delete', array ( 'id' => $ordenantza->getId() ) ) )
+                ->setAction( $this->generateUrl( 'admin_ordenantza_delete', ['id' => $ordenantza->getId()] ) )
                 ->setMethod( Request::METHOD_DELETE )
                 ->getForm();
         }

@@ -13,7 +13,7 @@ use App\Repository\HistorikoaRepository;
 #[UdalaEgiaztatu(userFieldName: "udala_id")]
 #[ORM\Entity(repositoryClass: HistorikoaRepository::class)]
 #[ORM\Table(name: 'historikoa')]
-class Historikoa
+class Historikoa implements \Stringable
 {
     /**
      * @var integer
@@ -115,7 +115,7 @@ class Historikoa
         $this->updatedAt = New \DateTime();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getOnartzedata()->format("Y-m-d");
     }

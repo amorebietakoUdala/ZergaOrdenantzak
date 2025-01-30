@@ -14,7 +14,7 @@ use App\Repository\BaldintzaRepository;
 #[UdalaEgiaztatu(userFieldName: "udala_id")]
 #[ORM\Entity(repositoryClass: BaldintzaRepository::class)]
 #[ORM\Table(name: 'baldintza')]
-class Baldintza
+class Baldintza implements \Stringable
 {
     /**
      * @var integer
@@ -53,7 +53,7 @@ class Baldintza
     {
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getBaldintzaeu();
     }

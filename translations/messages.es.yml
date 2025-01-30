@@ -1,7 +1,6 @@
 'Onartze data': 'Fecha aceptación'
 'G.A.O. Argitaratze Data': 'Fecha publicación B.O.'
 Aldaketak: Cambios
-Fitxategia: Fichero
 Historikoa: Historico
 Kontzeptua: Concepto
 Kopurua: Cantidad
@@ -30,7 +29,6 @@ Ezabatu: Eliminar
 'Aldaketak ezeztatu': 'Deshacer los cambios'
 'Udalbatzarrararen data': 'Fecha Pleno Municipal'
 'GAO: Hasierako onarpena': 'B.O.: Aprobacion Inicial'
-'Indarreko data': 'Fecha en vigor'
 Gorde: Guardar
 Ezeztatu: Cancelar
 'Itzuli zerrendara': 'Volver a la lista'
@@ -62,8 +60,6 @@ Kopiatu: Copiar
 Kopiatua!: Copiado!
 'Erabili Ctrl + C kopiatzeko': '  Utiliza Ctrl + C para copiar'
 'gao.b.b': 'B.O.: Aprobación definitiva'
-'GAO: Behin betiko onarpena': 'B.O.: Aprobación definitiva'
-'Akats zuzenketak (testua)': '  Corrección de errores (testo)'
 ordena: orden
 'Modu arruntera itzuli': 'Volver al modo normal'
 'Erabiltzaile berria': 'Nuevo usuario'
@@ -88,3 +84,9 @@ Aldaketakes: 'Descripción de cambios en castellano'
 Fitxategia: 'Fichero'
 Createdat: 'Fecha de creación'
 Updatedat: 'Fecha de actualización'
+A.O. Hasierako onarpena: 'B.O.: Aprobación Inicial'
+A.O. Behin betiko onarpena: 'B.O.: Aprobación definitiva'
+Akats zuzenketak (testua): 'Corrección de errores (texto)'
+Indarreko data: 'Fecha de entrada en vigor'
+G.A.O. esteka eskaraz: 'Enlace al B.O. en euskera'
+G.A.O. esteka erdaraz: 'Enlace al B.O. en castellano'

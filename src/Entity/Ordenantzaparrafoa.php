@@ -15,7 +15,7 @@ use App\Repository\OrdenantzaparrafoaRepository;
 #[ORM\Entity(repositoryClass: OrdenantzaparrafoaRepository::class)]
 #[ORM\Table(name: 'ordenantzaparrafoa')]
 #[ORM\Index(name: 'ordenantza_id_idx', columns: ['ordenantza_id'])]
-class Ordenantzaparrafoa
+class Ordenantzaparrafoa implements \Stringable
 {
     /**
      * @var integer
@@ -106,7 +106,7 @@ class Ordenantzaparrafoa
         $this->updatedAt = new \DateTime();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getTestuaeu();
     }

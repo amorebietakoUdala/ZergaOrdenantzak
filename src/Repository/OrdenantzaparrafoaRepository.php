@@ -65,7 +65,7 @@
                 return call_user_func_array([$this->sortableRepository, $method], $arguments);
             }
         
-            throw new \BadMethodCallException("El método $method no existe en " . __CLASS__);
+            throw new \BadMethodCallException("El método $method no existe en " . self::class);
         }
 
     }

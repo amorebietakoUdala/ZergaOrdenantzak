@@ -19,10 +19,10 @@ use Symfony\Component\HttpFoundation\Response;
 class OrdenantzaparrafoaController extends AbstractController
 {
 
-    public $em;
-    public $ordenantzaRepo;
-
-    public function __construct(EntityManagerInterface $em, OrdenantzaRepository $ordenantzaRepo)
+    public function __construct(
+        private EntityManagerInterface $em, 
+        private OrdenantzaRepository $ordenantzaRepo
+    )
     {
         $this->em = $em;
         $this->ordenantzaRepo = $ordenantzaRepo;
@@ -58,7 +58,9 @@ class OrdenantzaparrafoaController extends AbstractController
         $ordenantzaparrafoa = new Ordenantzaparrafoa();
         $ordenantza = $this->ordenantzaRepo->find( $ordenantzaid );
         $ordenantzaparrafoa->setOrdenantza( $ordenantza );
-        $ordenantzaparrafoa->setUdala( $this->getUser()->getUdala() );
+        /** @var User $user */
+        $user = $this->getUser();
+        $ordenantzaparrafoa->setUdala( $user->getUdala() );
 
         $form = $this->createForm(OrdenantzaparrafoaType::class, $ordenantzaparrafoa);
         $form->handleRequest($request);
@@ -71,11 +73,7 @@ class OrdenantzaparrafoaController extends AbstractController
             return $this->redirect( $request->headers->get( 'referer' ) . '#ordenantzaparrafoa'.$ordenantzaparrafoa->getId());
         } 
         
-        return $this->render('ordenantzaparrafoa/new.html.twig', array(
-            'ordenantzaparrafoa' => $ordenantzaparrafoa,
-            'ordenantzaid' => $ordenantzaid,
-            'form' => $form->createView(),
-        ));
+        return $this->render('ordenantzaparrafoa/new.html.twig', ['ordenantzaparrafoa' => $ordenantzaparrafoa, 'ordenantzaid' => $ordenantzaid, 'form' => $form->createView()]);
     }
 
     
@@ -84,10 +82,7 @@ class OrdenantzaparrafoaController extends AbstractController
     {
         $deleteForm = $this->createDeleteForm($ordenantzaparrafoa);
 
-        return $this->render('ordenantzaparrafoa/_ordenantzaparrafoadeleteform.html.twig', array(            
-            'delete_form' => $deleteForm->createView(),
-            'id' => $ordenantzaparrafoa->getId()
-        ));
+        return $this->render('ordenantzaparrafoa/_ordenantzaparrafoadeleteform.html.twig', ['delete_form' => $deleteForm->createView(), 'id' => $ordenantzaparrafoa->getId()]);
     }
 
     /**
@@ -118,7 +113,7 @@ class OrdenantzaparrafoaController extends AbstractController
     private function createDeleteForm(Ordenantzaparrafoa $ordenantzaparrafoa)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_ordenantzaparrafoa_delete', array('id' => $ordenantzaparrafoa->getId())))
+            ->setAction($this->generateUrl('admin_ordenantzaparrafoa_delete', ['id' => $ordenantzaparrafoa->getId()]))
             ->setMethod(Request::METHOD_DELETE)
             ->getForm()
         ;

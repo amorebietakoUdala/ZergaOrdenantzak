@@ -20,11 +20,10 @@ use Symfony\Component\HttpFoundation\Response;
 #[Route(path: '/{_locale}/admin/udala')]
 class UdalaController extends AbstractController
 {
-    private $em;
-
-    public function __construct( EntityManagerInterface $em)
+    public function __construct(
+        private readonly EntityManagerInterface $em
+    )
     {
-        $this->em = $em;
     }
 
     /**
@@ -42,7 +41,7 @@ class UdalaController extends AbstractController
             $adapter = new ArrayAdapter($udalas);
             $pagerfanta = new Pagerfanta($adapter);
 
-            $deleteForms = array();
+            $deleteForms = [];
             foreach ($udalas as $udala) {
                 $deleteForms[$udala->getId()] = $this->createDeleteForm($udala)->createView();
             }
@@ -58,19 +57,21 @@ class UdalaController extends AbstractController
                     // celui-ci s'occupe de limiter la requête en fonction de nos réglages.
                     ->getCurrentPageResults()
                 ;
-            } catch (\Pagerfanta\Exception\NotValidCurrentPageException $e) {
+            } catch (\Pagerfanta\Exception\NotValidCurrentPageException) {
                 throw $this->createNotFoundException("Orria ez da existitzen");
             }
 
-            return $this->render('udala/index.html.twig', array(
-    //            'udalas' => $udalas,
+            return $this->render('udala/index.html.twig', [
+                //            'udalas' => $udalas,
                 'udalas' => $entities,
                 'deleteforms' => $deleteForms,
                 'pager' => $pagerfanta,
-            ));
+            ]);
         }else if ($this->isGranted('ROLE_ADMIN'))
         {
-            return $this->redirectToRoute('udala_show', array('id' => $this->getUser()->getUdala()->getId()));
+            /** @var User $user */
+            $user = $this->getUser();
+            return $this->redirectToRoute('udala_show', ['id' => $user->getUdala()->getId()]);
         }else
         {
 //            return $this->redirectToRoute('backend_errorea');
@@ -94,13 +95,10 @@ class UdalaController extends AbstractController
                 $this->em->persist($udala);
                 $this->em->flush();
 
-                return $this->redirectToRoute('udala_show', array('id' => $udala->getId()));
+                return $this->redirectToRoute('udala_show', ['id' => $udala->getId()]);
             }
 
-            return $this->render('udala/new.html.twig', array(
-                'udala' => $udala,
-                'form' => $form->createView(),
-            ));
+            return $this->render('udala/new.html.twig', ['udala' => $udala, 'form' => $form->createView()]);
         }else
         {
             return $this->redirectToRoute('backend_errorea');
@@ -115,10 +113,7 @@ class UdalaController extends AbstractController
     {
         $deleteForm = $this->createDeleteForm($udala);
 
-        return $this->render('udala/show.html.twig', array(
-            'udala' => $udala,
-            'delete_form' => $deleteForm->createView(),
-        ));
+        return $this->render('udala/show.html.twig', ['udala' => $udala, 'delete_form' => $deleteForm->createView()]);
     }
 
     /**
@@ -135,14 +130,10 @@ class UdalaController extends AbstractController
                         $this->em->persist($udala);
             $this->em->flush();
 
-            return $this->redirectToRoute('udala_edit', array('id' => $udala->getId()));
+            return $this->redirectToRoute('udala_edit', ['id' => $udala->getId()]);
         }
 
-        return $this->render('udala/edit.html.twig', array(
-            'udala' => $udala,
-            'edit_form' => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+        return $this->render('udala/edit.html.twig', ['udala' => $udala, 'edit_form' => $editForm->createView(), 'delete_form' => $deleteForm->createView()]);
     }
 
     /**
@@ -172,7 +163,7 @@ class UdalaController extends AbstractController
     private function createDeleteForm(Udala $udala)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('udala_delete', array('id' => $udala->getId())))
+            ->setAction($this->generateUrl('udala_delete', ['id' => $udala->getId()]))
             ->setMethod(Request::METHOD_DELETE)
             ->getForm()
         ;

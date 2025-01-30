@@ -18,12 +18,8 @@ class OrdenantzaparrafoaType extends AbstractType
     {
         $builder
             ->add('ordena')
-            ->add('testuaeu',CKEditorType::class, array(
-                'config_name' => 'my_config_1',
-            ))
-            ->add('testuaes', CKEditorType::class, array(
-                'config_name' => 'my_config_1',
-            ))
+            ->add('testuaeu',CKEditorType::class, ['config_name' => 'my_config_1'])
+            ->add('testuaes', CKEditorType::class, ['config_name' => 'my_config_1'])
             ->add('ordenantza')
             ->add('udala')
         ;
@@ -34,8 +30,8 @@ class OrdenantzaparrafoaType extends AbstractType
      */
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => Ordenantzaparrafoa::class
-        ));
+        ]);
     }
 }

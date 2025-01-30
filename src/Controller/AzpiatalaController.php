@@ -19,13 +19,11 @@ use Symfony\Component\HttpFoundation\Response;
 class AzpiatalaController extends AbstractController
 {
 
-    private $em;
-    private $atalaRepo;
-
-    public function __construct(EntityManagerInterface $em, AtalaRepository $atalaRepo)
+    public function __construct(
+        private readonly EntityManagerInterface $em, 
+        private readonly AtalaRepository $atalaRepo
+    )
     {
-        $this->em = $em;
-        $this->atalaRepo = $atalaRepo;
     }
 
     /**
@@ -50,11 +48,7 @@ class AzpiatalaController extends AbstractController
             return $this->redirect($request->headers->get('referer'));
         }
 
-        return $this->render('azpiatala/new.html.twig', array(
-            'azpiatala' => $azpiatala,
-            'atalaid' => $atalaid,
-            'form' => $form->createView(),
-        ));
+        return $this->render('azpiatala/new.html.twig', ['azpiatala' => $azpiatala, 'atalaid' => $atalaid, 'form' => $form->createView()]);
     }
 
     
@@ -64,10 +58,7 @@ class AzpiatalaController extends AbstractController
 
         $deleteForm = $this->createDeleteForm($azpiatala);
 
-        return $this->render('azpiatala/_azpiataladeleteform.html.twig', array(
-            'delete_form' => $deleteForm->createView(),
-            'id' => $azpiatala->getId()
-        ));
+        return $this->render('azpiatala/_azpiataladeleteform.html.twig', ['delete_form' => $deleteForm->createView(), 'id' => $azpiatala->getId()]);
     }
 
     /**
@@ -97,7 +88,7 @@ class AzpiatalaController extends AbstractController
     private function createDeleteForm(Azpiatala $azpiatala)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_azpiatala_delete', array('id' => $azpiatala->getId())))
+            ->setAction($this->generateUrl('admin_azpiatala_delete', ['id' => $azpiatala->getId()]))
             ->setMethod(Request::METHOD_DELETE)
             ->getForm()
         ;

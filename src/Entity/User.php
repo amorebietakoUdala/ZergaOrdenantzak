@@ -7,9 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Attribute\UdalaEgiaztatu;
 use App\Repository\UserRepository;
 
-/**
- * @UdalaEgiaztatu(userFieldName="udala_id")
- */
+#[UdalaEgiaztatu(userFieldName: "udala_id")]
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ORM\Table(name: 'user')]
 class User extends BaseUser

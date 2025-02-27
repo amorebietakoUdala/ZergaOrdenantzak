@@ -30,7 +30,6 @@ Encore
     .addEntry('frontend-index', './assets/js/frontend/index.js')
     .addEntry('default-list', './assets/js/frontend/list.js')
     .addEntry('frontend-show', './assets/js/frontend/show.js')
-    .addEntry('udala-index', './assets/js/udala/index.js')
 
     // enables the Symfony UX Stimulus bridge (used in assets/bootstrap.js)
     .enableStimulusBridge('./assets/controllers.json')

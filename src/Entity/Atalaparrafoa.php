@@ -6,7 +6,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 use App\Attribute\UdalaEgiaztatu;
 use App\Repository\AtalaparrafoaRepository;
-use App\Repository\AtalaRepository;
 
 /**
  * Atalaparrafoa

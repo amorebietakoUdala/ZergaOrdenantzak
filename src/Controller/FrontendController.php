@@ -11,6 +11,7 @@ use App\Repository\OrdenantzaRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Pagerfanta\Pagerfanta;
 use Pagerfanta\Adapter\ArrayAdapter;
+use Pagerfanta\Exception\NotValidCurrentPageException;
 use Symfony\Component\HttpFoundation\Response;
 use Qipsius\TCPDFBundle\Controller\TCPDFController;
 
@@ -22,7 +23,7 @@ class FrontendController extends AbstractController
         private readonly OrdenantzaRepository $ordenantzaRepo, 
         private readonly HistorikoaRepository $historikoaRepo, 
         private readonly TCPDFController $tcpdfController, 
-        private readonly string $rootDir
+        private readonly string $rootDir,
     )
     {
     }
@@ -30,16 +31,8 @@ class FrontendController extends AbstractController
     #[Route(path: '/{udala}/{_locale}/', name: 'frontend_ordenantza_index', requirements: ['_locale' => 'eu|es', 'udala' => '\d+'])]
     public function index(int $udala): Response
     {
-        $query = $this->em->createQuery('
-          SELECT o FROM App:Ordenantza o LEFT JOIN App:Udala u  WITH o.udala=u.id
-            WHERE u.kodea = :udala
-            ORDER BY o.kodea ASC
-        ');
-        $query->setParameter('udala', $udala);
-        $ordenantzak = $query->getResult();
-
+        $ordenantzak = $this->ordenantzaRepo->findOrdenantzakByUdalKodeaOrdered($udala);
         return $this->render('frontend\index.html.twig', ['ordenantzas' => $ordenantzak, 'udala'=>$udala]);        
-        
     }
 
     /**
@@ -120,7 +113,6 @@ class FrontendController extends AbstractController
     #[Route(path: '/{udala}/{_locale}/hist/page{page}', name: 'frontend_historikoa_paginated', methods: ['GET'])]
     public function historikoa($page,int $udala): Response
     {
-        //$historikoas =  $this->em->createQuery("SELECT h FROM App:Historikoa h order by h.id DESC")->getResult();
         $historikoas = $this->historikoaRepo->findBy([],['id' => 'DESC']);
         $adapter = new ArrayAdapter($historikoas);
         $pagerfanta = new Pagerfanta($adapter);
@@ -130,7 +122,7 @@ class FrontendController extends AbstractController
                 ->setCurrentPage($page)
                 ->getCurrentPageResults()
             ;
-        } catch (\Pagerfanta\Exception\NotValidCurrentPageException) {
+        } catch (NotValidCurrentPageException) {
             throw $this->createNotFoundException("Orria ez da existitzen");
         }
 

@@ -92,13 +92,13 @@ class Ordenantza implements \Stringable
     private $udala;
 
     /**
-     * @var Ordenantza
+     * @var ArrayCollection
      */
     #[ORM\OneToMany(targetEntity: Ordenantzaparrafoa::class, mappedBy: 'ordenantza', cascade: ['remove'])]
     #[ORM\OrderBy(['ordena' => 'ASC'])]
     protected $parrafoak;
     /**
-     * @var Atala
+     * @var ArrayCollection
      */
     #[Expose()]
     #[ORM\OrderBy(['kodea' => 'ASC'])]

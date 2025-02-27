@@ -62,7 +62,9 @@ class AtalaparrafoaController extends AbstractController
         $atalaparrafoa = new Atalaparrafoa();
 
         $atalaparrafoa->setAtala( $atala );
-        $atalaparrafoa->setUdala($this->getUser()->getUdala());
+        /** @var User $user */
+        $user = $this->getUser();
+        $atalaparrafoa->setUdala($user->getUdala());
 
         $form = $this->createForm(AtalaparrafoaType::class, $atalaparrafoa);
         $form->handleRequest($request);

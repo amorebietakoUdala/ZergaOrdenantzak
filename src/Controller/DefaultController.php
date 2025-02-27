@@ -15,13 +15,21 @@ use Symfony\Component\HttpFoundation\Response;
 class DefaultController extends AbstractController
 {
     public function __construct(
-        private readonly string $zzoo_aplikazioaren_API_url
+        private readonly string $zzoo_aplikazioaren_API_url,
+        private readonly string $defaultUdalKodea,
     )
     {
     }
 
+    #[Route(path: '/', name: 'app_home')]
+    public function home() {
+        return $this->redirectToRoute('frontend_ordenantza_index', [
+            'udala' => $this->defaultUdalKodea,
+        ]);
+    }
+
     #[Route(path: '/ordenantzak/{udala}/{_locale}/', name: 'ordenantzakList', requirements: ['_locale' => 'eu|es'])]
-    public function ordenantzakList($udala): \Symfony\Component\HttpFoundation\Response
+    public function ordenantzakList($udala): Response
     {
         return $this->render('default\list.html.twig', ['udala' => $udala, 'apiUrl' => $this->zzoo_aplikazioaren_API_url]);
     }
@@ -30,8 +38,10 @@ class DefaultController extends AbstractController
     #[Route(path: '/kudeatu', name: 'api_kudeatzailea', methods: ['GET'])]
     public function apikudeatzailea(): Response
     {
+        /** @var User $user */
+        $user = $this->getUser();
         return $this->render('apikudeatzailea.html.twig', [
-            'udala' => $this->getUser()->getUdala()
+            'udala' => $user->getUdala()
         ]);
     }
 
@@ -178,12 +188,5 @@ class DefaultController extends AbstractController
         $str = str_ireplace($html, $xml, $str);
         return $str;
     }
-
-    public function errorea()
-    {
-        return $this->render('errorea.html.twig');
-    }
-
-
 
 }

@@ -14,6 +14,7 @@ parameters:
     locale: 'eu'
     azterketa_azpiatala: 62
     odt_path: '%env(ODT_PATH)%'
+    defaultUdalKodea: '%env(DEFAULT_UDAL_KODEA)%'
 
 services:
     # default configuration for services in *this* file
@@ -27,6 +28,7 @@ services:
             $rootDir: '%kernel.project_dir%'
             $zzoo_aplikazioaren_API_url: '%zzoo_aplikazioaren_API_url%'
             $odtPath: '%odt_path%'
+            $defaultUdalKodea: '%env(DEFAULT_UDAL_KODEA)%'
 
     Symfony\Component\Ldap\Ldap:
         arguments: ['@Symfony\Component\Ldap\Adapter\ExtLdap\Adapter']
@@ -63,7 +65,3 @@ services:
 
     Qipsius\TCPDFBundle\Controller\TCPDFController: '@qipsius.tcpdf'
 
-    # easycorp.easylog.handler:
-    #         class: EasyCorp\EasyLog\EasyLogHandler
-    #         arguments:
-    #             - '%kernel.logs_dir%/%kernel.environment%.log'

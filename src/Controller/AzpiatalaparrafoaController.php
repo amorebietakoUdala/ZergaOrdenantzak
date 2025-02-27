@@ -55,7 +55,9 @@ use Symfony\Component\HttpFoundation\Response;
             $azpiatala = $this->azpiatalaRepo->find( $azpiatalaid );
             $azpiatalaparrafoa = new Azpiatalaparrafoa();
             $azpiatalaparrafoa->setAzpiatala( $azpiatala );
-            $azpiatalaparrafoa->setUdala( $this->getUser()->getUdala() );
+            /** @var User $user */
+            $user = $this->getUser();
+            $azpiatalaparrafoa->setUdala( $user->getUdala() );
 
             $form = $this->createForm( AzpiatalaparrafoaType::class, $azpiatalaparrafoa );
             $form->handleRequest( $request );

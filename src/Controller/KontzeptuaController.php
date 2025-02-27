@@ -35,7 +35,9 @@ use Symfony\Component\HttpFoundation\Response;
             $azpiatala = $this->azpiatalaRepo->find( $azpiatalaid );
             $kontzeptua = new Kontzeptua();
             $kontzeptua->setAzpiatala( $azpiatala );
-            $kontzeptua->setUdala( $this->getUser()->getUdala() );
+            /** @var User $user */
+            $user = $this->getUser();
+            $kontzeptua->setUdala( $user->getUdala() );
 
             $form = $this->createForm( KontzeptuaType::class, $kontzeptua );
             $form->handleRequest( $request );
@@ -64,9 +66,7 @@ use Symfony\Component\HttpFoundation\Response;
             if ($editForm->isSubmitted() && $editForm->isValid()) {
                     $this->em->persist($kontzeptua);
                 $this->em->flush();
-//                return $this->redirectToRoute('araudia_edit', array('id' => $kontzeptua->getId()));
 
-                //return $this->redirectToRoute('admin_ordenantza_show', array('id' => $ordenantzaid));
                 return $this->redirect( $request->headers->get( 'referer' ) . '#kontzeptua'.$kontzeptua->getId());
             }
             return $this->render('kontzeptua/edit.html.twig', ['kontzeptua' => $kontzeptua, 'ordenantzaid' => $ordenantzaid, 'form' => $editForm->createView(), 'delete_form' => $deleteForm->createView()]);

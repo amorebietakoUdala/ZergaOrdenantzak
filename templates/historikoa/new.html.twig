@@ -9,7 +9,6 @@
 	}
 	}
 ) }}
-
     <div class="row">
         <div class="form-group  field-text col-sm-3">
             {{ form_label(form.onartzedata, 'Udalbatzarrararen data' | trans, { 'label_attr': {'class': 'control-label'} }) }}
@@ -72,11 +71,7 @@
             <a href="{{ path('admin_historikoa_index') }}">Itzuli zerrendara</a>
         </li>
     </ul>
-
-
     {{ form_end(form) }}
-
-
 {% endblock %}
 
 {% block stylesheets %}

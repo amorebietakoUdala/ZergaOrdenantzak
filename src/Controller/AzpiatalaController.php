@@ -36,7 +36,9 @@ class AzpiatalaController extends AbstractController
         $atala = $this->atalaRepo->find( $atalaid );
         $azpiatala = new Azpiatala();
         $azpiatala->setAtala( $atala );
-        $azpiatala->setUdala( $this->getUser()->getUdala() );
+        /** @var User $user */
+        $user = $this->getUser();
+        $azpiatala->setUdala( $user->getUdala() );
         
         $form = $this->createForm(AzpiatalaType::class, $azpiatala);
         $form->handleRequest($request);

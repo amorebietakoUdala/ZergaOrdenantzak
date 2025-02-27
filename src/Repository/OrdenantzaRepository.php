@@ -1,13 +1,15 @@
 <?php
 
-    namespace App\Repository;
+namespace App\Repository;
 
-    use App\Entity\Ordenantza;
-    use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-    use Doctrine\ORM\OptimisticLockException;
-    use Doctrine\ORM\ORMException;
-    use Doctrine\ORM\Query;
-    use Doctrine\Persistence\ManagerRegistry;
+use App\Entity\Ordenantza;
+use App\Entity\Udala;
+use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
+use Doctrine\ORM\Query\Expr\Join;
+use Doctrine\Persistence\ManagerRegistry;
     
     /**
      * @extends ServiceEntityRepository<Ordenantza>
@@ -48,31 +50,6 @@
             }
         }
         
-        public function getOrdenantzabat ( $id )
-        {
-            $em = $this->getEntityManager();
-
-            $dql = "
-            SELECT o,p,a,ap,az,azp,k,m,b
-                FROM App:Ordenantza o
-                    LEFT JOIN o.parrafoak p
-                    LEFT JOIN o.atalak a
-                    LEFT JOIN a.parrafoak ap
-                    LEFT JOIN a.azpiatalak az
-                    LEFT JOIN az.parrafoak azp
-                    LEFT JOIN az.kontzeptuak k
-                    LEFT JOIN k.kontzeptumota m
-                    LEFT JOIN k.baldintza b
-                WHERE o.id = :id
-            ";
-
-            $consulta = $em->createQuery( $dql );
-            $consulta->setParameter( 'id', $id );
-
-            return $consulta->getResult( Query::HYDRATE_ARRAY );
-
-        }
-
         public function findAllOrderByKodea()
         {
             return $this->findBy([], ['kodea' => 'ASC']);
@@ -86,6 +63,20 @@
                 ->andWhere('((o.ezabatu IS NULL) or (o.ezabatu <> 1))');
             $ordenantzak = $qb->getQuery()->getResult();
             return $ordenantzak;
+        }
+        
+        public function findOrdenantzakByUdalKodeaOrdered($udalKodea, $order = 'ASC') {
+            $qb = $this->createQueryBuilder('o');
+            $qb = $this->andWhereUdalKodeaQB($qb, $udalKodea);
+            $qb->orderBy('o.kodea', $order);
+            return $qb->getQuery()->getResult();
+        }
+
+        private function andWhereUdalKodeaQB ( QueryBuilder $qb, $udalKodea): QueryBuilder {
+            $qb->leftJoin(Udala::class,'u', Join::WITH, 'o.udala=u.id')
+            ->andWhere('u.kodea = :udalaKodea')
+            ->setParameter('udalaKodea', $udalKodea);
+            return $qb;
         }
 
     }

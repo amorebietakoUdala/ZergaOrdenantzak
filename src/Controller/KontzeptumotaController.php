@@ -46,7 +46,9 @@ class KontzeptumotaController extends AbstractController
     {
         $kontzeptumotum = new Kontzeptumota();
         $form = $this->createForm(KontzeptumotaType::class, $kontzeptumotum);
-        $form->getData()->setUdala($this->getUser()->getUdala());
+        /** @var User $user */
+        $user = $this->getUser();
+        $form->getData()->setUdala($user->getUdala());
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {

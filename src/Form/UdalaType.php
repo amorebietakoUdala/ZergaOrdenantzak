@@ -23,8 +23,6 @@ class UdalaType extends AbstractType
             ->add('ifk')
             ->add('izendapenaeu')
             ->add('izendapenaes')
-//            ->add('lopdeu')
-//            ->add('lopdes')
         ;
     }
     

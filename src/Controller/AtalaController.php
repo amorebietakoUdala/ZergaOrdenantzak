@@ -34,7 +34,9 @@ class AtalaController extends AbstractController
         $atala = new Atala();
         $ordenantza = $this->ordenantzaRepo->find( $ordenantzaid );
         $atala->setOrdenantza( $ordenantza );
-        $atala->setUdala( $this->getUser()->getUdala() );
+        /** @var User $user */
+        $user = $this->getUser();
+        $atala->setUdala( $user->getUdala() );
         
         $form = $this->createForm(\App\Form\AtalaType::class, $atala);
         $form->handleRequest($request);

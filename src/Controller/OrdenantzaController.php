@@ -550,7 +550,6 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
             } else {
 
                 $string = (string)$form->getErrors( true, false );
-                //dump( $form->getErrors( true, false ) );
             }
 
             return $this->redirectToRoute( 'admin_ordenantza_index' );

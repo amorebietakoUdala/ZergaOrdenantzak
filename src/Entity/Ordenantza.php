@@ -3,87 +3,78 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use App\Annotation\UdalaEgiaztatu;
+use App\Attribute\UdalaEgiaztatu;
+use App\Repository\OrdenantzaRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use JMS\Serializer\Annotation\ExclusionPolicy;
 use JMS\Serializer\Annotation\Expose;
 
 /**
  * Ordenantza
- *
- * @ORM\Table(name="ordenantza")
- * @ORM\Entity(repositoryClass="App\Repository\OrdenantzaRepository")
- * @ExclusionPolicy("all")
- * @UdalaEgiaztatu(userFieldName="udala_id")
+ * 
  */
-class Ordenantza
+#[ExclusionPolicy("all")]
+#[ORM\Entity(repositoryClass: OrdenantzaRepository::class)]
+#[ORM\Table(name: 'ordenantza')]
+#[UdalaEgiaztatu(userFieldName: "udala_id")]
+class Ordenantza implements \Stringable
 {
     /**
      * @var integer
-     * @Expose
-     *
-     * @ORM\Column(name="id", type="bigint", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[Expose()]
+    #[ORM\Column(name: 'id', type: 'bigint', nullable: false)]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     private $id;
     /**
      * @var string
-     *
-     * @ORM\Column(name="kodea", type="string", length=9, nullable=true)
      */
+    #[ORM\Column(name: 'kodea', type: 'string', length: 9, nullable: true)]
     private $kodea;
     /**
      * @var string
-     * @Expose
-     *
-     * @ORM\Column(name="kodea_prod", type="string", length=9, nullable=true)
      */
+    #[Expose()]
+    #[ORM\Column(name: 'kodea_prod', type: 'string', length: 9, nullable: true)]
     private $kodea_prod;
     /**
      * @var string
-     *
-     * @ORM\Column(name="izenburuaeu", type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: 'izenburuaeu', type: 'string', length: 255, nullable: true)]
     private $izenburuaeu;
     /**
      * @var string
-     * @Expose
-     *
-     * @ORM\Column(name="izenburuaeu_prod", type="string", length=255, nullable=true)
      */
+    #[Expose()]
+    #[ORM\Column(name: 'izenburuaeu_prod', type: 'string', length: 255, nullable: true)]
     private $izenburuaeu_prod;
     /**
      * @var string
-     *
-     * @ORM\Column(name="izenburuaes", type="string", length=255, nullable=true)
      */
+    #[ORM\Column(name: 'izenburuaes', type: 'string', length: 255, nullable: true)]
     private $izenburuaes;
    /**
      * @var string
-     * @Expose
-     *
-     * @ORM\Column(name="izenburuaes_prod", type="string", length=255, nullable=true)
      */
+    #[Expose()]
+    #[ORM\Column(name: 'izenburuaes_prod', type: 'string', length: 255, nullable: true)]
     private $izenburuaes_prod;
     /**
      * @var bool
-     *
-     * @ORM\Column(name="ezabatu", type="boolean", nullable=true)
      */
+    #[ORM\Column(name: 'ezabatu', type: 'boolean', nullable: true)]
     private $ezabatu;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
+    #[ORM\Column(name: 'created_at', type: 'datetime', nullable: false)]
     private $createdAt;
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
      */
+    #[ORM\Column(name: 'updated_at', type: 'datetime', nullable: false)]
     private $updatedAt;
 
 
@@ -94,25 +85,24 @@ class Ordenantza
      * ************************************************************************************************************************************************************************
      * ************************************************************************************************************************************************************************
      */
-
     /**
      * @var Udala
-     * @ORM\ManyToOne(targetEntity="Udala")
      */
+    #[ORM\ManyToOne(targetEntity: Udala::class)]
     private $udala;
 
     /**
-     * @var Ordenantza
-     * @ORM\OneToMany(targetEntity="Ordenantzaparrafoa", mappedBy="ordenantza", cascade={"remove"})
-     * @ORM\OrderBy({"ordena" = "ASC"})
+     * @var ArrayCollection
      */
+    #[ORM\OneToMany(targetEntity: Ordenantzaparrafoa::class, mappedBy: 'ordenantza', cascade: ['remove'])]
+    #[ORM\OrderBy(['ordena' => 'ASC'])]
     protected $parrafoak;
     /**
-     * @var Atala
-     * @Expose
-     * @ORM\OrderBy({"kodea" = "ASC"})
-     * @ORM\OneToMany(targetEntity="Atala", mappedBy="ordenantza", cascade={"remove"})
+     * @var ArrayCollection
      */
+    #[Expose()]
+    #[ORM\OrderBy(['kodea' => 'ASC'])]
+    #[ORM\OneToMany(targetEntity: Atala::class, mappedBy: 'ordenantza', cascade: ['remove'])]
     protected $atalak;
 
     public function __construct()
@@ -123,36 +113,10 @@ class Ordenantza
         $this->updatedAt = new \DateTime();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getKodea();
     }
-
-
-    /**
-     * ************************************************************************************************************************************************************************
-     * ************************************************************************************************************************************************************************
-     * ***** ERLAZIOAK
-     * ************************************************************************************************************************************************************************
-     * ************************************************************************************************************************************************************************
-     */
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
     /**
      * Get kodea

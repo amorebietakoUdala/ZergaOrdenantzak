@@ -10,115 +10,104 @@ use App\Repository\KontzeptuaRepository;
 /**
  * Kontzeptua
  *
- * @ORM\Table(name="kontzeptua", indexes={@ORM\Index(name="azpiatala_id_idx", columns={"azpiatala_id"}), @ORM\Index(name="baldintza_id_idx", columns={"baldintza_id"}), @ORM\Index(name="kontzeptumota_id_idx", columns={"kontzeptumota_id"})})
- * @ORM\Entity(repositoryClass=KontzeptuaRepository::class)
- * @ExclusionPolicy("all")
  */
-class Kontzeptua
+#[ExclusionPolicy("all")]
+#[ORM\Entity(repositoryClass: KontzeptuaRepository::class)]
+#[ORM\Table(name: 'kontzeptua')]
+#[ORM\Index(name: 'azpiatala_id_idx', columns: ['azpiatala_id'])]
+#[ORM\Index(name: 'baldintza_id_idx', columns: ['baldintza_id'])]
+#[ORM\Index(name: 'kontzeptumota_id_idx', columns: ['kontzeptumota_id'])]
+class Kontzeptua implements \Stringable
 {
     /**
      * @var integer
-     *
-     * @ORM\Column(name="id", type="bigint", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(name: 'id', type: 'bigint', nullable: false)]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     private $id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="kodea", type="string", length=9, nullable=true)
      */
+    #[ORM\Column(name: 'kodea', type: 'string', length: 9, nullable: true)]
     private $kodea;
 
     /**
      * @var string
-     * @Expose
-     *
-     * @ORM\Column(name="kodea_prod", type="string", length=9, nullable=true)
      */
+    #[Expose()]
+    #[ORM\Column(name: 'kodea_prod', type: 'string', length: 9, nullable: true)]
     private $kodea_prod;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="kontzeptuaeu", type="text", length=65535, nullable=true)
      */
+    #[ORM\Column(name: 'kontzeptuaeu', type: 'text', length: 65535, nullable: true)]
     private $kontzeptuaeu;
 
     /**
      * @var string
-     * @Expose
-     *
-     * @ORM\Column(name="kontzeptuaeu_prod", type="text", length=65535, nullable=true)
      */
+    #[Expose()]
+    #[ORM\Column(name: 'kontzeptuaeu_prod', type: 'text', length: 65535, nullable: true)]
     private $kontzeptuaeu_prod;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="kontzeptuaes", type="text", length=65535, nullable=true)
      */
+    #[ORM\Column(name: 'kontzeptuaes', type: 'text', length: 65535, nullable: true)]
     private $kontzeptuaes;
 
     /**
      * @var string
-     * @Expose
-     *
-     * @ORM\Column(name="kontzeptuaes_prod", type="text", length=65535, nullable=true)
      */
+    #[Expose()]
+    #[ORM\Column(name: 'kontzeptuaes_prod', type: 'text', length: 65535, nullable: true)]
     private $kontzeptuaes_prod;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="kopurua", type="string", length=50, nullable=true)
      */
+    #[ORM\Column(name: 'kopurua', type: 'string', length: 50, nullable: true)]
     private $kopurua;
 
     /**
      * @var string
-     * @Expose
-     *
-     * @ORM\Column(name="kopurua_prod", type="string", length=50, nullable=true)
      */
+    #[Expose()]
+    #[ORM\Column(name: 'kopurua_prod', type: 'string', length: 50, nullable: true)]
     private $kopurua_prod;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="unitatea", type="string", length=50, nullable=true)
      */
+    #[ORM\Column(name: 'unitatea', type: 'string', length: 50, nullable: true)]
     private $unitatea;
     
     /**
      * @var string
-     * @Expose
-     *
-     * @ORM\Column(name="unitatea_prod", type="string", length=50, nullable=true)
      */
+    #[Expose()]
+    #[ORM\Column(name: 'unitatea_prod', type: 'string', length: 50, nullable: true)]
     private $unitatea_prod;
 
     /**
      * @var bool
-     *
-     * @ORM\Column(name="ezabatu", type="boolean", nullable=true)
      */
+    #[ORM\Column(name: 'ezabatu', type: 'boolean', nullable: true)]
     private $ezabatu;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
+    #[ORM\Column(name: 'created_at', type: 'datetime', nullable: false)]
     private $createdAt;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
      */
+    #[ORM\Column(name: 'updated_at', type: 'datetime', nullable: false)]
     private $updatedAt;
 
     /**
@@ -128,41 +117,31 @@ class Kontzeptua
      * ************************************************************************************************************************************************************************
      * ************************************************************************************************************************************************************************
      */
-
     /**
-     * @var \Azpiatala
-     *
-     * @ORM\ManyToOne(targetEntity="Azpiatala",inversedBy="kontzeptuak")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="azpiatala_id", referencedColumnName="id")
-     * })
+     * @var Azpiatala
      */
+    #[ORM\ManyToOne(targetEntity: Azpiatala::class, inversedBy: 'kontzeptuak')]
+    #[ORM\JoinColumn(name: 'azpiatala_id', referencedColumnName: 'id')]
     private $azpiatala;
 
     /**
-     * @var \Baldintza
-     *
-     * @ORM\ManyToOne(targetEntity="Baldintza", fetch="EAGER")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="baldintza_id", referencedColumnName="id")
-     * })
+     * @var Baldintza
      */
+    #[ORM\ManyToOne(targetEntity: Baldintza::class, fetch: 'EAGER')]
+    #[ORM\JoinColumn(name: 'baldintza_id', referencedColumnName: 'id')]
     private $baldintza;
 
     /**
-     * @var \Kontzeptumota
-     *
-     * @ORM\ManyToOne(targetEntity="Kontzeptumota")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="kontzeptumota_id", referencedColumnName="id")
-     * })
+     * @var Kontzeptumota
      */
+    #[ORM\ManyToOne(targetEntity: Kontzeptumota::class)]
+    #[ORM\JoinColumn(name: 'kontzeptumota_id', referencedColumnName: 'id')]
     private $kontzeptumota;
 
     /**
      * @var Udala
-     * @ORM\ManyToOne(targetEntity="Udala")
      */
+    #[ORM\ManyToOne(targetEntity: Udala::class)]
     private $udala;
 
     public function __construct()
@@ -171,7 +150,7 @@ class Kontzeptua
         $this->updatedAt = new \DateTime();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getKodea();
     }

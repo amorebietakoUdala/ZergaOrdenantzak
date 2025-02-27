@@ -13,35 +13,32 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Atala controller.
- *
- * @Route("/admin/atala")
  */
+#[Route(path: '/admin/atala')]
 class AtalaController extends AbstractController
 {
 
-    private $em;
-
-    private $ordenantzaRepo;
-    
-    public function __construct(EntityManagerInterface $em, OrdenantzaRepository $ordenantzaRepo)
+    public function __construct(
+        private readonly EntityManagerInterface $em, 
+        private readonly OrdenantzaRepository $ordenantzaRepo
+    )
     {
-        $this->em = $em;
-        $this->ordenantzaRepo = $ordenantzaRepo;
     }
 
     /**
      * Creates a new Atala entity.
-     *
-     * @Route("/new/{ordenantzaid}", name="admin_atala_new", methods={"GET", "POST"})
      */
+    #[Route(path: '/new/{ordenantzaid}', name: 'admin_atala_new', methods: ['GET', 'POST'])]
     public function new(Request $request, $ordenantzaid)
     {
         $atala = new Atala();
         $ordenantza = $this->ordenantzaRepo->find( $ordenantzaid );
         $atala->setOrdenantza( $ordenantza );
-        $atala->setUdala( $this->getUser()->getUdala() );
+        /** @var User $user */
+        $user = $this->getUser();
+        $atala->setUdala( $user->getUdala() );
         
-        $form = $this->createForm('App\Form\AtalaType', $atala);
+        $form = $this->createForm(\App\Form\AtalaType::class, $atala);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -51,34 +48,24 @@ class AtalaController extends AbstractController
             return $this->redirect($request->headers->get('referer'));
         } 
 
-        return $this->render('atala/new.html.twig', array(
-            'atala' => $atala,
-            'ordenantzaid' => $ordenantzaid,
-            'form' => $form->createView(),
-        ));
+        return $this->render('atala/new.html.twig', ['atala' => $atala, 'ordenantzaid' => $ordenantzaid, 'form' => $form->createView()]);
     }
 
-    /**
-     *
-     * @Route("/ezabatu/{id}", options={"expose"=true}, name="admin_atala_ezabatu", methods={"GET"})
-     */
+    
+    #[Route(path: '/ezabatu/{id}', options: ['expose' => true], name: 'admin_atala_ezabatu', methods: ['GET'])]
     public function ezabatu(Atala $atala): Response
     {
             
         $deleteForm = $this->createDeleteForm($atala);
 
-        return $this->render('atala/_ataladeleteform.html.twig', array(
-            'delete_form' => $deleteForm->createView(),
-            'id' => $atala->getId()
-        ));
+        return $this->render('atala/_ataladeleteform.html.twig', ['delete_form' => $deleteForm->createView(), 'id' => $atala->getId()]);
     }
     
     
     /**
      * Deletes a Atala entity.
-     *
-     * @Route("/{id}", name="admin_atala_delete", methods={"DELETE"})
      */
+    #[Route(path: '/{id}', name: 'admin_atala_delete', methods: ['DELETE'])]
     public function delete(Request $request, Atala $atala): RedirectResponse
     {
         $form = $this->createDeleteForm($atala);
@@ -110,7 +97,7 @@ class AtalaController extends AbstractController
     private function createDeleteForm(Atala $atala)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_atala_delete', array('id' => $atala->getId())))
+            ->setAction($this->generateUrl('admin_atala_delete', ['id' => $atala->getId()]))
             ->setMethod(Request::METHOD_DELETE)
             ->getForm()
         ;

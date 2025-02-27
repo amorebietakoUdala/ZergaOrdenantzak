@@ -14,24 +14,21 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Ordenantzaparrafoa controller.
- *
- * @Route("/admin/ordenantzaparrafoa")
  */
+#[Route(path: '/admin/ordenantzaparrafoa')]
 class OrdenantzaparrafoaController extends AbstractController
 {
 
-    public $em;
-    public $ordenantzaRepo;
-
-    public function __construct(EntityManagerInterface $em, OrdenantzaRepository $ordenantzaRepo)
+    public function __construct(
+        private EntityManagerInterface $em, 
+        private OrdenantzaRepository $ordenantzaRepo
+    )
     {
         $this->em = $em;
         $this->ordenantzaRepo = $ordenantzaRepo;
     }
 
-    /**
-     * @Route("/up/{id}", name="admin_ordenantzaparrafoa_up", methods={"GET"})
-     */
+    #[Route(path: '/up/{id}', name: 'admin_ordenantzaparrafoa_up', methods: ['GET'])]
     public function up(Request $request, Ordenantzaparrafoa $op): RedirectResponse
     {
         $op->setOrdena($op->getOrdena() - 1);
@@ -41,9 +38,7 @@ class OrdenantzaparrafoaController extends AbstractController
         return $this->redirect($request->headers->get('referer'));
     }
 
-    /**
-     * @Route("/down/{id}", name="admin_ordenantzaparrafoa_down", methods={"GET"})
-     */
+    #[Route(path: '/down/{id}', name: 'admin_ordenantzaparrafoa_down', methods: ['GET'])]
     public function down(Request $request, Ordenantzaparrafoa $op): RedirectResponse
     {
 
@@ -56,15 +51,16 @@ class OrdenantzaparrafoaController extends AbstractController
     
     /**
      * Creates a new Ordenantzaparrafoa entity.
-     *
-     * @Route("/new/{ordenantzaid}", name="admin_ordenantzaparrafoa_new", methods={"GET", "POST"})
      */
+    #[Route(path: '/new/{ordenantzaid}', name: 'admin_ordenantzaparrafoa_new', methods: ['GET', 'POST'])]
     public function new(Request $request, $ordenantzaid)
     {
         $ordenantzaparrafoa = new Ordenantzaparrafoa();
         $ordenantza = $this->ordenantzaRepo->find( $ordenantzaid );
         $ordenantzaparrafoa->setOrdenantza( $ordenantza );
-        $ordenantzaparrafoa->setUdala( $this->getUser()->getUdala() );
+        /** @var User $user */
+        $user = $this->getUser();
+        $ordenantzaparrafoa->setUdala( $user->getUdala() );
 
         $form = $this->createForm(OrdenantzaparrafoaType::class, $ordenantzaparrafoa);
         $form->handleRequest($request);
@@ -77,32 +73,22 @@ class OrdenantzaparrafoaController extends AbstractController
             return $this->redirect( $request->headers->get( 'referer' ) . '#ordenantzaparrafoa'.$ordenantzaparrafoa->getId());
         } 
         
-        return $this->render('ordenantzaparrafoa/new.html.twig', array(
-            'ordenantzaparrafoa' => $ordenantzaparrafoa,
-            'ordenantzaid' => $ordenantzaid,
-            'form' => $form->createView(),
-        ));
+        return $this->render('ordenantzaparrafoa/new.html.twig', ['ordenantzaparrafoa' => $ordenantzaparrafoa, 'ordenantzaid' => $ordenantzaid, 'form' => $form->createView()]);
     }
 
-    /**
-     *
-     * @Route("/ezabatu/{id}", name="admin_ordenantzaparrafoa_ezabatu", methods={"GET"})
-     */
+    
+    #[Route(path: '/ezabatu/{id}', name: 'admin_ordenantzaparrafoa_ezabatu', methods: ['GET'])]
     public function ezabatu(Ordenantzaparrafoa $ordenantzaparrafoa): Response
     {
         $deleteForm = $this->createDeleteForm($ordenantzaparrafoa);
 
-        return $this->render('ordenantzaparrafoa/_ordenantzaparrafoadeleteform.html.twig', array(            
-            'delete_form' => $deleteForm->createView(),
-            'id' => $ordenantzaparrafoa->getId()
-        ));
+        return $this->render('ordenantzaparrafoa/_ordenantzaparrafoadeleteform.html.twig', ['delete_form' => $deleteForm->createView(), 'id' => $ordenantzaparrafoa->getId()]);
     }
 
     /**
      * Deletes a Ordenantzaparrafoa entity.
-     *
-     * @Route("/{id}", name="admin_ordenantzaparrafoa_delete", methods={"DELETE"})
      */
+    #[Route(path: '/{id}', name: 'admin_ordenantzaparrafoa_delete', methods: ['DELETE'])]
     public function delete(Request $request, Ordenantzaparrafoa $ordenantzaparrafoa): RedirectResponse
     {
         $form = $this->createDeleteForm($ordenantzaparrafoa);
@@ -127,7 +113,7 @@ class OrdenantzaparrafoaController extends AbstractController
     private function createDeleteForm(Ordenantzaparrafoa $ordenantzaparrafoa)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_ordenantzaparrafoa_delete', array('id' => $ordenantzaparrafoa->getId())))
+            ->setAction($this->generateUrl('admin_ordenantzaparrafoa_delete', ['id' => $ordenantzaparrafoa->getId()]))
             ->setMethod(Request::METHOD_DELETE)
             ->getForm()
         ;

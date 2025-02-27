@@ -96,7 +96,7 @@
                         <span class="editable2" data-name="testuaeu" data-pk="{{ p.id }}"
                             data-url="{{ path('admin_ordenantza_parrafoak_eguneratu', {'id': p.id}) }}" data-type="wysihtml5"
                             tabindex="-1" style="display: block;">{{ p.testuaeu | raw }}</span>
-                        {{ render(controller('App\\Controller\\OrdenantzaparrafoaController:ezabatuAction', {'id': p.id})) }}
+                        {{ render(controller('App\\Controller\\OrdenantzaparrafoaController::ezabatu', {'id': p.id})) }}
                     </div>
                 </div>
                 <div class="col-xs-6">
@@ -314,11 +314,11 @@
     Insert formularioak
     #}
     <div id="divAtalBerria" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        {{ render(controller('App\\Controller\\AtalaController:newAction', {'ordenantzaid': ordenantza.id })) }}
+        {{ render(controller('App\\Controller\\AtalaController::new', {'ordenantzaid': ordenantza.id })) }}
     </div>
 
     <div id="divOrdenantzaparrafoBerria" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-        {{ render(controller('App\\Controller\\OrdenantzaparrafoaController:newAction', {'ordenantzaid': ordenantza.id })) }}
+        {{ render(controller('App\\Controller\\OrdenantzaparrafoaController::new', {'ordenantzaid': ordenantza.id })) }}
     </div>
 
     <div id="divAzpiAtalBerria" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

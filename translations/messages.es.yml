@@ -1,14 +1,18 @@
 'Onartze data': 'Fecha aceptación'
 'G.A.O. Argitaratze Data': 'Fecha publicación B.O.'
 Aldaketak: Cambios
-Fitxategia: Fichero
 Historikoa: Historico
 Kontzeptua: Concepto
 Kopurua: Cantidad
 Unitatea: Unidad
-'Indarrean jarri': 'Poner en vigor'
+'': ''
+Udala: Udala
+Testua: Testua
+Texto: Texto
+Ordena: Ordena
+'Ordenantza ikusi': 'Ordenantza ikusi'
+'Indarrean jarri': 'Indarrean jarri'
 'Historikoa kontsultatu': 'Consulta del Historico'
-'Ordenantza ikusi': 'Ver ordenanza'
 Itxi: Cerrar
 'Onartze Data': 'Fecha aceptación'
 'B.O.G. argitaratze data': 'Fecha publicación en el B.O.'
@@ -17,15 +21,14 @@ Itxi: Cerrar
 'B.O.G. esteka erdaraz': 'Enlace al B.O. en castellano'
 'Aldaketak euskaraz': 'Cambios en euskera'
 'Aldaketak erdaraz': 'Cambios en castellano'
-'Kodea:': 'Código:'
-'Izenburua:': 'Título (Euskera):'
-'Título:': 'Título (Castellano):'
+'Kodea': 'Código'
+'Izenburua': 'Título (Euskera)'
+'Título': 'Título (Castellano)'
 'Odt-a eskuratu': 'Obtener Odt'
 Ezabatu: Eliminar
 'Aldaketak ezeztatu': 'Deshacer los cambios'
 'Udalbatzarrararen data': 'Fecha Pleno Municipal'
 'GAO: Hasierako onarpena': 'B.O.: Aprobacion Inicial'
-'Indarreko data': 'Fecha en vigor'
 Gorde: Guardar
 Ezeztatu: Cancelar
 'Itzuli zerrendara': 'Volver a la lista'
@@ -57,11 +60,34 @@ Kopiatu: Copiar
 Kopiatua!: Copiado!
 'Erabili Ctrl + C kopiatzeko': '  Utiliza Ctrl + C para copiar'
 'gao.b.b': 'B.O.: Aprobación definitiva'
-'GAO: Behin betiko onarpena': 'B.O.: Aprobación definitiva'
-'Akats zuzenketak (testua)': '  Corrección de errores (testo)'
 ordena: orden
 'Modu arruntera itzuli': 'Volver al modo normal'
 'Erabiltzaile berria': 'Nuevo usuario'
 'Calendario Fiscal': 'Calendario Fiscal'
 'La información ofrecida a continuación carece de validez jurídica y se ofrece sólo a efectos informativos': 'La información ofrecida a continuación carece de validez jurídica y se ofrece sólo a efectos informativos'
 'Volver a la web del ayuntamiento': 'Volver a la web del ayuntamiento'
+'Kodea:': 'Código:'
+'Izenburua:': 'Título (Euskera):'
+'Título:': 'Título (Castellano):'
+'Anterior': 'Anterior'
+'Siguiente': 'Siguiente'
+'Ez da emaitzarik topatu': 'No se han encontrado resultados'
+'Kargatzen...': 'Cargando...'
+Id: 'Id'
+Onartzedata: 'Fecha de aprobación'
+Bogargitaratzedata: 'Fecha de publicación en el B.O.B.'
+Bogestekaeu: 'Enlace a la publicación en euskera'
+Bogestekaes: 'Enlace a la publicación en castellano'
+Indarreandata: 'Fecha de entrada en vigor'
+Aldaketakeu: 'Descripción de cambios en euskera'
+Aldaketakes: 'Descripción de cambios en castellano'
+Fitxategia: 'Fichero'
+Createdat: 'Fecha de creación'
+Updatedat: 'Fecha de actualización'
+A.O. Hasierako onarpena: 'B.O.: Aprobación Inicial'
+A.O. Behin betiko onarpena: 'B.O.: Aprobación definitiva'
+Akats zuzenketak (testua): 'Corrección de errores (texto)'
+Indarreko data: 'Fecha de entrada en vigor'
+G.A.O. esteka eskaraz: 'Enlace al B.O. en euskera'
+G.A.O. esteka erdaraz: 'Enlace al B.O. en castellano'
+"messages.ziurzaude": "ELIMINAR. ¿Estas seguro/a?"

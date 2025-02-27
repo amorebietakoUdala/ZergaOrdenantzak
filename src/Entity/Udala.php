@@ -2,87 +2,76 @@
 
 namespace App\Entity;
 
+use App\Repository\UdalaRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * Udala
- *
- * @ORM\Table(name="udala")
- * @ORM\Entity(repositoryClass="App\Repository\UdalaRepository")
  */
-class Udala
+#[ORM\Entity(repositoryClass: UdalaRepository::class)]
+#[ORM\Table(name: 'udala')]
+class Udala implements \Stringable
 {
     /**
      * @var integer
-     *
-     * @ORM\Column(name="id", type="integer")
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="AUTO")
      */
-
+    #[ORM\Column(name: 'id', type: 'integer')]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'AUTO')]
     private $id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="izenaeu", type="string", length=255)
      */
+    #[ORM\Column(name: 'izenaeu', type: 'string', length: 255)]
     private $izenaeu;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="izenaes", type="string", length=255)
      */
+    #[ORM\Column(name: 'izenaes', type: 'string', length: 255)]
     private $izenaes;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="kodea", type="string", length=255)
      */
+    #[ORM\Column(name: 'kodea', type: 'string', length: 255)]
     private $kodea;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="logoa", type="string", length=255)
      */
+    #[ORM\Column(name: 'logoa', type: 'string', length: 255)]
     private $logoa;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="ifk", type="string", length=255)
      */
+    #[ORM\Column(name: 'ifk', type: 'string', length: 255)]
     private $ifk;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="izendapenaeu", type="string", length=255)
      */
+    #[ORM\Column(name: 'izendapenaeu', type: 'string', length: 255)]
     private $izendapenaeu;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="izendapenaes", type="string", length=255)
      */
+    #[ORM\Column(name: 'izendapenaes', type: 'string', length: 255)]
     private $izendapenaes;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="lopdeu", type="text", length=65535, nullable=true)
      */
+    #[ORM\Column(name: 'lopdeu', type: 'text', length: 65535, nullable: true)]
     private $lopdeu;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="lopdes", type="text", length=65535, nullable=true)
      */
+    #[ORM\Column(name: 'lopdes', type: 'text', length: 65535, nullable: true)]
     private $lopdes;
 
     /**
@@ -97,7 +86,7 @@ class Udala
     {
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getKodea() . " - " . $this->getIzenaeu();
     }

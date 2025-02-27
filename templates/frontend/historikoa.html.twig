@@ -44,7 +44,7 @@
     <div class="text-center">
         {% if historikoas is not empty %}
             {% if pager.haveToPaginate %}
-                {{ pagerfanta(pager, 'twitter_bootstrap3_translated', {'routeName': 'frontend_historikoa_paginated', 'routeParams' : { 'udala': udala }} ) }}
+                {{ pagerfanta(pager, 'twitter_bootstrap3', {'routeName': 'frontend_historikoa_paginated', 'routeParams' : { 'udala': udala }, 'prev_message': 'Anterior' | trans, 'next_message': 'Siguiente' | trans }) }}
             {% endif %}
         {% else %}
             <p>Ez da emaitzarik topatu</p>

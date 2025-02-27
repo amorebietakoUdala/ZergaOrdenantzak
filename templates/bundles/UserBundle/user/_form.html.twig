@@ -46,19 +46,6 @@
 		</div>
 	</div>
 </div>
-{# Bakarrik goiko menuan uzten ditugu botoiak #}
-{# 
-<div class="row justify-content-center mt-2 mb-2">
-{% if not readonly %}
-	<div class="col-lg-auto">
-		<button class="btn btn-primary" type="submit">{{ "btn.user.save" | trans }}</button>
-	</div>
-{% endif %}
-	<div class="col-lg-auto">
-		<a href="{{ returnUrl is defined and not returnUrl is empty ? returnUrl : path('admin_user_list') }}" class="btn btn-secondary">{{ "btn.user.cancel" | trans }}</a>
-	</div>
-</div> #}
-
 <!-- Token CSRF -->
 {{ form_widget(form._token) }}
 <div class="hidden">

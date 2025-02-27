@@ -1,10 +1,7 @@
 @import '~bootstrap';
 
-/* @import 'ie10-viewport-bug-workaround.css'; */
 @import 'backend.css';
-/* @import 'bootstrap-editable.css'; */
-/* @import '3/bootstrap-wysihtml5-0.0.3.css'; */
-/* @import 'calendar/bootstrap-datepicker3.min.css'; */
+
 @import '~font-awesome/css/font-awesome.css';
 
 .editable-container.editable-inline,
@@ -28,13 +25,6 @@
     font-size: 13px;
 }
 
-/* <link href="{{ asset('css/bootstrap.css') }}" rel="stylesheet" media="screen">
-<link href="{{ asset('bundles/app/css/backend.css') }}" rel="stylesheet" media="screen">
-{#<link href="{{ asset('bundles/app/css/bootstrap-wysihtml5-0.0.2.css') }}"  rel="stylesheet" href="">#}
-
-<link href="{{ asset('bundles/app/css/bootstrap-editable.css') }}" rel="stylesheet" href="">
-<link href="{{ asset('bundles/app/css/3/bootstrap-wysihtml5-0.0.3.css') }}" rel="stylesheet" href="">
-<link href="{{ asset('bundles/app/css/calendar/bootstrap-datepicker3.min.css') }}" rel="stylesheet" href="">
-<!-- HTML5 Shim and Respond.js add IE8 support of HTML5 elements and media queries -->
-{% include 'BraincraftedBootstrapBundle::ie8-support.html.twig' %}
-*/
+div:where(.swal2-container) div:where(.swal2-popup) {
+	font-size: 1.5rem !important;
+}

@@ -13,11 +13,10 @@ use Symfony\Component\HttpKernel\Event\RequestEvent;
 
 class LocaleListener implements EventSubscriberInterface
 {
-    private $defaultLocale;
-
-    public function __construct($defaultLocale = 'eu')
+    public function __construct(
+        private $defaultLocale = 'eu'
+    )
     {
-        $this->defaultLocale = $defaultLocale;
     }
 
     public function onKernelRequest(RequestEvent $event)
@@ -36,11 +35,11 @@ class LocaleListener implements EventSubscriberInterface
         }
     }
 
-    public static function getSubscribedEvents()
+    public static function getSubscribedEvents(): array
     {
-        return array(
+        return [
             // must be registered after the default Locale listener
-            KernelEvents::REQUEST => array(array('onKernelRequest', 15)),
-        );
+            KernelEvents::REQUEST => [['onKernelRequest', 15]],
+        ];
     }
 }

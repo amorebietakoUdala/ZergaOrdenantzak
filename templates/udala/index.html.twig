@@ -30,7 +30,13 @@
                         <li><a href="{{ path('udala_show', { 'id': udala.id }) }}" class="fa fa-search"></a></li>
                         {% if is_granted('ROLE_ADMIN') %}
                             <li>{{ form_start(deleteforms[udala.id],{'attr': {'id': udala.id}}) }}
-                                <a href="#" onclick="ezabatu({{ udala.id }});" ><i class="fa fa-trash text-danger"></i></a>
+                                <a href="#" {{ stimulus_controller('confirmation', {
+                                        id: udala.id,
+                                        mezua: 'messages.ziurzaude'| trans }) 
+                                    }} 
+                                    data-action="confirmation#onClick">
+                                    <i class="fa fa-trash text-danger"></i>
+                                </a>                            
                                 {{ form_end(deleteforms[udala.id]) }}</li>
                         {% endif %}
 
@@ -43,14 +49,10 @@
     <div class="text-center">
         {% if udalas is not empty %}
             {% if pager.haveToPaginate %}
-                {{ pagerfanta(pager, 'twitter_bootstrap3_translated', {'routeName': 'udala_index_paginated'}) }}
+                {{ pagerfanta(pager, 'twitter_bootstrap3', {'routeName': 'udala_index_paginated', 'prev_message': 'Anterior' | trans, 'next_message': 'Siguiente' | trans }) }}
             {% endif %}
         {% else %}
-            <p>Ez da emaitzarik topatu</p>
+            <p>{{ 'Ez da emaitzarik topatu' | trans }}</p>
         {% endif %}
     </div>
-{% endblock %}
-{% block javascripts %}
-    {{ parent() }}
-    {{ encore_entry_script_tags('udala-index') }}
 {% endblock %}

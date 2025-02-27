@@ -3,38 +3,35 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use App\Annotation\UdalaEgiaztatu;
+use App\Attribute\UdalaEgiaztatu;
 
 /**
  * Eremumota
  *
- * @ORM\Table(name="eremumota")
- * @ORM\Entity
- * @UdalaEgiaztatu(userFieldName="udala_id")
- */
-class Eremumota
+  */
+#[UdalaEgiaztatu(userFieldName: "udala_id")]
+#[ORM\Entity]
+#[ORM\Table(name: 'eremumota')]
+class Eremumota implements \Stringable
 {
     /**
      * @var integer
-     *
-     * @ORM\Column(name="id", type="bigint", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(name: 'id', type: 'bigint', nullable: false)]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     private $id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="motaeu", type="text", length=65535, nullable=true)
      */
+    #[ORM\Column(name: 'motaeu', type: 'text', length: 65535, nullable: true)]
     private $motaeu;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="motaes", type="text", length=65535, nullable=true)
      */
+    #[ORM\Column(name: 'motaes', type: 'text', length: 65535, nullable: true)]
     private $motaes;
 
 
@@ -46,18 +43,17 @@ class Eremumota
      * ************************************************************************************************************************************************************************
      * ************************************************************************************************************************************************************************
      */
-
     /**
      * @var Udala
-     * @ORM\ManyToOne(targetEntity="Udala")
      */
+    #[ORM\ManyToOne(targetEntity: Udala::class)]
     private $udala;
     
     public function __construct()
     {
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getMotaeu();
     }

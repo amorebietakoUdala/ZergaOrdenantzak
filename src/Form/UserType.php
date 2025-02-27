@@ -15,15 +15,13 @@ use AMREU\UserBundle\Form\UserType as BaseUserType;
 
 class UserType extends BaseUserType
 {
-    private $class;
     protected $allowedRoles;
 
     /**
      * @param string $class The User class name
      */
-    public function __construct($class, $allowedRoles)
+    public function __construct(private $class, $allowedRoles)
     {
-        $this->class = $class;
         if (empty($allowedRoles)) {
             $allowedRoles = ['ROLE_USER', 'ROLE_ADMIN'];
         }

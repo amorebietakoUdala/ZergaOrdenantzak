@@ -25,32 +25,27 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
 
 /**
  * Historikoa controller.
- *
- * @Route("/{_locale}/admin/historikoa")
  */
+#[Route(path: '/{_locale}/admin/historikoa')]
 class HistorikoaController extends AbstractController {
 
-    private $em;
-    private $ordenantzaRepo;
-    private $historikoaRepo;
-
-    public function __construct(EntityManagerInterface $em, OrdenantzaRepository $ordenantzaRepo, HistorikoaRepository $historikoaRepo) 
+    public function __construct(
+        private readonly EntityManagerInterface $em, 
+        private readonly OrdenantzaRepository $ordenantzaRepo, 
+        private readonly HistorikoaRepository $historikoaRepo
+    )
     {
-        $this->em = $em;
-        $this->ordenantzaRepo = $ordenantzaRepo;
-        $this->historikoaRepo = $historikoaRepo;
     }
 
     /**
      * Lists all Historikoa entities.
-     *
-     * @Route("/", defaults={"page"=1}, name="admin_historikoa_index", methods={"GET"})
-     * @Route("/page{page}", name="admin_historikoa_paginated", methods={"GET"})
      */
+    #[Route(path: '/', defaults: ['page' => 1], name: 'admin_historikoa_index', methods: ['GET'])]
+    #[Route(path: '/page{page}', name: 'admin_historikoa_paginated', methods: ['GET'])]
     public function index($page): Response
     {
         $historikoas = $this->historikoaRepo->findBy([],['id' => 'DESC']);
-        $deleteForms = array();
+        $deleteForms = [];
         foreach ($historikoas as $entity)
         {
             $deleteForms[ $entity->getId() ] = $this->createDeleteForm($entity)->createView();
@@ -63,25 +58,21 @@ class HistorikoaController extends AbstractController {
                 ->setMaxPerPage(5)
                 ->setCurrentPage($page)
                 ->getCurrentPageResults();
-        } catch (NotValidCurrentPageException $e)
+        } catch (NotValidCurrentPageException)
         {
             throw $this->createNotFoundException("Orria ez da existitzen");
         }
 
-        return $this->render('historikoa/index.html.twig', array(
-            'historikoas' => $entities,
-            'deleteForms' => $deleteForms,
-            'pager'       => $pagerfanta,
-        ));
+        return $this->render('historikoa/index.html.twig', ['historikoas' => $entities, 'deleteForms' => $deleteForms, 'pager'       => $pagerfanta]);
     }
 
     /**
      * Creates a new Historikoa entity.
      *
-     * @Route("/new", name="admin_historikoa_new", methods={"GET", "POST"})
      * @param Request $request
      * @return RedirectResponse|Response
      */
+    #[Route(path: '/new', name: 'admin_historikoa_new', methods: ['GET', 'POST'])]
     public function new(Request $request, TCPDFController $tcpdfController)
     {
 
@@ -238,14 +229,14 @@ class HistorikoaController extends AbstractController {
             $pdf->setFontSubsetting(true);
             $pdf->SetFont('helvetica', '', 11, '', true);
 
-            $pdf->setHeaderData('', 0, '', '', array(0, 0, 0), array(255, 255, 255));
+            $pdf->setHeaderData('', 0, '', '', [0, 0, 0], [255, 255, 255]);
 
             $pdf->AddPage();
 
             $eguna = date("Y-m-d_His");
             $filename = $this->getFilename($user->getUdala()->getKodea(), "ZergaOrdenantzak-" . $eguna);
 
-            $azala = $this->render('ordenantza/azala.html.twig', array('eguna' => date("Y"), 'udala' => $user->getUdala()));
+            $azala = $this->render('ordenantza/azala.html.twig', ['eguna' => date("Y"), 'udala' => $user->getUdala()]);
 
             $pdf->writeHTMLCell($w = 0, $h = 0, $x = '', $y = '', $azala->getContent(), $border = 0, $ln = 1, $fill = 0, $reseth = true, $align = '', $autopadding = true);
 
@@ -253,7 +244,7 @@ class HistorikoaController extends AbstractController {
 
             foreach ($ordenantzas as $ordenantza)
             {
-                $mihtml = $this->render('ordenantza/pdf.html.twig', array('ordenantza' => $ordenantza));
+                $mihtml = $this->render('ordenantza/pdf.html.twig', ['ordenantza' => $ordenantza]);
                 $pdf->writeHTMLCell($w = 0, $h = 0, $x = '', $y = '', $mihtml->getContent(), $border = 0, $ln = 1, $fill = 0, $reseth = true, $align = '', $autopadding = true);
                 $pdf->AddPage();
             }
@@ -268,36 +259,28 @@ class HistorikoaController extends AbstractController {
             return $this->redirectToRoute('admin_historikoa_index');
         }
 
-        return $this->render('historikoa/new.html.twig', array(
-            'historikoa' => $historikoa,
-            'form'       => $form->createView(),
-        ));
+        return $this->render('historikoa/new.html.twig', ['historikoa' => $historikoa, 'form'       => $form->createView()]);
     }
 
     /**
      * Finds and displays a Historikoa entity.
-     *
-     * @Route("/{id}", name="admin_historikoa_show", methods={"GET"})
      */
+    #[Route(path: '/{id}', name: 'admin_historikoa_show', methods: ['GET'])]
     public function show(Historikoa $historikoa): Response
     {
         $deleteForm = $this->createDeleteForm($historikoa);
 
-        return $this->render('historikoa/show.html.twig', array(
-            'historikoa'  => $historikoa,
-            'delete_form' => $deleteForm->createView(),
-        ));
+        return $this->render('historikoa/show.html.twig', ['historikoa'  => $historikoa, 'delete_form' => $deleteForm->createView()]);
     }
 
     /**
      * Displays a form to edit an existing Historikoa entity.
-     *
-     * @Route("/{id}/edit", name="admin_historikoa_edit", methods={"GET", "POST"})
      */
+    #[Route(path: '/{id}/edit', name: 'admin_historikoa_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Historikoa $historikoa)
     {
         $deleteForm = $this->createDeleteForm($historikoa);
-        $editForm = $this->createForm('App\Form\HistorikoaType', $historikoa);
+        $editForm = $this->createForm(\App\Form\HistorikoaType::class, $historikoa);
         $editForm->handleRequest($request);
 
         if ($editForm->isSubmitted() && $editForm->isValid())
@@ -306,29 +289,22 @@ class HistorikoaController extends AbstractController {
             $this->em->persist($historikoa);
             $this->em->flush();
 
-            return $this->redirectToRoute('admin_historikoa_edit', array('id' => $historikoa->getId()));
+            return $this->redirectToRoute('admin_historikoa_edit', ['id' => $historikoa->getId()]);
         }
 
-        return $this->render('historikoa/edit.html.twig', array(
-            'historikoa'  => $historikoa,
-            'edit_form'   => $editForm->createView(),
-            'delete_form' => $deleteForm->createView(),
-        ));
+        return $this->render('historikoa/edit.html.twig', ['historikoa'  => $historikoa, 'edit_form'   => $editForm->createView(), 'delete_form' => $deleteForm->createView()]);
     }
 
     /**
      * Deletes a Historikoa entity.
-     *
-     * @Route("/{id}", name="admin_historikoa_delete", methods={"DELETE"})
      */
+    #[Route(path: '/{id}', name: 'admin_historikoa_delete', methods: ['POST','DELETE'])]
     public function delete(Request $request, Historikoa $historikoa): RedirectResponse
     {
         $form = $this->createDeleteForm($historikoa);
         $form->handleRequest($request);
-
         if ($form->isSubmitted() && $form->isValid())
         {
-            
             $this->em->remove($historikoa);
             $this->em->flush();
         }
@@ -346,7 +322,7 @@ class HistorikoaController extends AbstractController {
     private function createDeleteForm(Historikoa $historikoa)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_historikoa_delete', array('id' => $historikoa->getId())))
+            ->setAction($this->generateUrl('admin_historikoa_delete', ['id' => $historikoa->getId()]))
             ->setMethod(Request::METHOD_DELETE)
             ->getForm();
     }

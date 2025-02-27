@@ -6,47 +6,47 @@
     <table>
         <tbody>
             <tr>
-                <th>Id</th>
+                <th>{{ 'Id' | trans }}</th>
                 <td>{{ historikoa.id }}</td>
             </tr>
             <tr>
-                <th>Onartzedata</th>
+                <th>{{ 'Onartzedata' | trans }}</th>
                 <td>{% if historikoa.onartzedata %}{{ historikoa.onartzedata|date('Y-m-d') }}{% endif %}</td>
             </tr>
             <tr>
-                <th>Bogargitaratzedata</th>
+                <th>{{ 'Bogargitaratzedata' | trans }}</th>
                 <td>{% if historikoa.bogargitaratzedata %}{{ historikoa.bogargitaratzedata|date('Y-m-d') }}{% endif %}</td>
             </tr>
             <tr>
-                <th>Bogestekaeu</th>
+                <th>{{ 'Bogestekaeu' | trans }}</th>
                 <td>{{ historikoa.bogestekaeu }}</td>
             </tr>
             <tr>
-                <th>Bogestekaes</th>
+                <th>{{ 'Bogestekaes' | trans }}</th>
                 <td>{{ historikoa.bogestekaes }}</td>
             </tr>
             <tr>
-                <th>Indarreandata</th>
+                <th>{{ 'Indarreandata' | trans }}</th>
                 <td>{% if historikoa.indarreandata %}{{ historikoa.indarreandata|date('Y-m-d') }}{% endif %}</td>
             </tr>
             <tr>
-                <th>Aldaketakeu</th>
+                <th>{{ 'Aldaketakeu' | trans }}</th>
                 <td>{{ historikoa.aldaketakeu }}</td>
             </tr>
             <tr>
-                <th>Aldaketakes</th>
+                <th>{{ 'Aldaketakes' | trans }}</th>
                 <td>{{ historikoa.aldaketakes }}</td>
             </tr>
             <tr>
-                <th>Fitxategia</th>
+                <th>{{ 'Fitxategia' | trans }}</th>
                 <td>{{ historikoa.fitxategia }}</td>
             </tr>
             <tr>
-                <th>Createdat</th>
+                <th>{{ 'Createdat' | trans }}</th>
                 <td>{% if historikoa.createdAt %}{{ historikoa.createdAt|date('Y-m-d H:i:s') }}{% endif %}</td>
             </tr>
             <tr>
-                <th>Updatedat</th>
+                <th>{{ 'Updatedat' | trans }}</th>
                 <td>{% if historikoa.updatedAt %}{{ historikoa.updatedAt|date('Y-m-d H:i:s') }}{% endif %}</td>
             </tr>
         </tbody>

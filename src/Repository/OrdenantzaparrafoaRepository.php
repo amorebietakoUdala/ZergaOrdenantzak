@@ -57,7 +57,7 @@
         }
 
         // if there is the method is not defined in this class and exists in sortable repository class, redirects the call to it, else throws exception
-        public function __call($method, $arguments)
+        public function __call($method, $arguments): mixed
         {
             if (method_exists($this,$method)) {
                 return call_user_func_array([$this, $method], $arguments);
@@ -65,7 +65,7 @@
                 return call_user_func_array([$this->sortableRepository, $method], $arguments);
             }
         
-            throw new \BadMethodCallException("El método $method no existe en " . __CLASS__);
+            throw new \BadMethodCallException("El método $method no existe en " . self::class);
         }
 
     }

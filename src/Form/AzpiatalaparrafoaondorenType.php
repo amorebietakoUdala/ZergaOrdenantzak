@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+use App\Entity\Azpiatalaparrafoaondoren;
 use FOS\CKEditorBundle\Form\Type\CKEditorType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -12,16 +13,12 @@ class AzpiatalaparrafoaondorenType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('ordena')
-            ->add('testuaeu',CKEditorType::class, array(
-                'config_name' => 'my_config_1',
-            ))
-            ->add('testuaes',CKEditorType::class, array(
-                'config_name' => 'my_config_1',
-            ))
+            ->add('testuaeu',CKEditorType::class, ['config_name' => 'my_config_1'])
+            ->add('testuaes',CKEditorType::class, ['config_name' => 'my_config_1'])
             ->add('azpiatala')
             ->add('udala')        ;
     }
@@ -29,17 +26,17 @@ class AzpiatalaparrafoaondorenType extends AbstractType
     /**
      * {@inheritdoc}
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'App\Entity\Azpiatalaparrafoaondoren'
-        ));
+        $resolver->setDefaults([
+            'data_class' => Azpiatalaparrafoaondoren::class
+        ]);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function getBlockPrefix()
+    public function getBlockPrefix(): string
     {
         return 'appbundle_azpiatalaparrafoaondoren';
     }

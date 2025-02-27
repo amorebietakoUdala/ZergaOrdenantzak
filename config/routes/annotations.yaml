@@ -1,11 +1,7 @@
 controllers:
     resource: ../../src/Controller/
-    type: annotation
+    type: attribute
 
 kernel:
     resource: ../../src/Kernel.php
-    type: annotation
-
-backend_errorea:
-    path:     admin/errorea
-    defaults: { _controller: App::Default::errorea  }
+    type: attribute

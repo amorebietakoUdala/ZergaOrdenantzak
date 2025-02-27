@@ -14,33 +14,31 @@ use Symfony\Component\HttpFoundation\Response;
 
 /**
  * Azpiatala controller.
- *
- * @Route("/admin/azpiatala")
  */
+#[Route(path: '/admin/azpiatala')]
 class AzpiatalaController extends AbstractController
 {
 
-    private $em;
-    private $atalaRepo;
-
-    public function __construct(EntityManagerInterface $em, AtalaRepository $atalaRepo)
+    public function __construct(
+        private readonly EntityManagerInterface $em, 
+        private readonly AtalaRepository $atalaRepo
+    )
     {
-        $this->em = $em;
-        $this->atalaRepo = $atalaRepo;
     }
 
     /**
      * Creates a new Azpiatala entity.
-     *
-     * @Route("/new/{atalaid}", options={"expose"=true}, name="admin_azpiatala_new", methods={"GET", "POST"})
      */
+    #[Route(path: '/new/{atalaid}', options: ['expose' => true], name: 'admin_azpiatala_new', methods: ['GET', 'POST'])]
     public function new(Request $request, $atalaid)
     {
 
         $atala = $this->atalaRepo->find( $atalaid );
         $azpiatala = new Azpiatala();
         $azpiatala->setAtala( $atala );
-        $azpiatala->setUdala( $this->getUser()->getUdala() );
+        /** @var User $user */
+        $user = $this->getUser();
+        $azpiatala->setUdala( $user->getUdala() );
         
         $form = $this->createForm(AzpiatalaType::class, $azpiatala);
         $form->handleRequest($request);
@@ -52,33 +50,23 @@ class AzpiatalaController extends AbstractController
             return $this->redirect($request->headers->get('referer'));
         }
 
-        return $this->render('azpiatala/new.html.twig', array(
-            'azpiatala' => $azpiatala,
-            'atalaid' => $atalaid,
-            'form' => $form->createView(),
-        ));
+        return $this->render('azpiatala/new.html.twig', ['azpiatala' => $azpiatala, 'atalaid' => $atalaid, 'form' => $form->createView()]);
     }
 
-    /**
-     *
-     * @Route("/ezabatu/{id}", options={"expose"=true}, name="admin_azpiatala_ezabatu", methods={"GET"})
-     */
+    
+    #[Route(path: '/ezabatu/{id}', options: ['expose' => true], name: 'admin_azpiatala_ezabatu', methods: ['GET'])]
     public function ezabatu(Azpiatala $azpiatala): Response
     {
 
         $deleteForm = $this->createDeleteForm($azpiatala);
 
-        return $this->render('azpiatala/_azpiataladeleteform.html.twig', array(
-            'delete_form' => $deleteForm->createView(),
-            'id' => $azpiatala->getId()
-        ));
+        return $this->render('azpiatala/_azpiataladeleteform.html.twig', ['delete_form' => $deleteForm->createView(), 'id' => $azpiatala->getId()]);
     }
 
     /**
      * Deletes a Azpiatala entity.
-     *
-     * @Route("/{id}", name="admin_azpiatala_delete", methods={"DELETE"})
      */
+    #[Route(path: '/{id}', name: 'admin_azpiatala_delete', methods: ['DELETE'])]
     public function delete(Request $request, Azpiatala $azpiatala): RedirectResponse
     {
         $form = $this->createDeleteForm($azpiatala);
@@ -102,7 +90,7 @@ class AzpiatalaController extends AbstractController
     private function createDeleteForm(Azpiatala $azpiatala)
     {
         return $this->createFormBuilder()
-            ->setAction($this->generateUrl('admin_azpiatala_delete', array('id' => $azpiatala->getId())))
+            ->setAction($this->generateUrl('admin_azpiatala_delete', ['id' => $azpiatala->getId()]))
             ->setMethod(Request::METHOD_DELETE)
             ->getForm()
         ;

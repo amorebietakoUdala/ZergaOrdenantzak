@@ -3,39 +3,37 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use App\Annotation\UdalaEgiaztatu;
+use App\Attribute\UdalaEgiaztatu;
 use App\Repository\BaldintzaRepository;
 
 /**
  * Baldintza
  *
- * @ORM\Table(name="baldintza")
- * @ORM\Entity(repositoryClass=BaldintzaRepository::class)
  * @UdalaEgiaztatu(userFieldName="udala_id")
  */
-class Baldintza
+#[UdalaEgiaztatu(userFieldName: "udala_id")]
+#[ORM\Entity(repositoryClass: BaldintzaRepository::class)]
+#[ORM\Table(name: 'baldintza')]
+class Baldintza implements \Stringable
 {
     /**
      * @var integer
-     *
-     * @ORM\Column(name="id", type="bigint", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(name: 'id', type: 'bigint', nullable: false)]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     private $id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="baldintzaeu", type="text", length=65535, nullable=true)
      */
+    #[ORM\Column(name: 'baldintzaeu', type: 'text', length: 65535, nullable: true)]
     private $baldintzaeu;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="baldintzaes", type="text", length=65535, nullable=true)
      */
+    #[ORM\Column(name: 'baldintzaes', type: 'text', length: 65535, nullable: true)]
     private $baldintzaes;
 
     /**
@@ -45,18 +43,17 @@ class Baldintza
      * ************************************************************************************************************************************************************************
      * ************************************************************************************************************************************************************************
      */
-    
     /**
      * @var Udala $udala
-     * @ORM\ManyToOne(targetEntity="Udala")
      */
+    #[ORM\ManyToOne(targetEntity: Udala::class)]
     private $udala;
     
     public function __construct()
     {
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getBaldintzaeu();
     }

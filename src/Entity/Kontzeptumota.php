@@ -7,33 +7,29 @@ use App\Repository\KontzeptumotaRepository;
 
 /**
  * Kontzeptumota
- *
- * @ORM\Table(name="kontzeptumota")
- * @ORM\Entity(repositoryClass=KontzeptumotaRepository::class)
  */
-class Kontzeptumota
+#[ORM\Entity(repositoryClass: KontzeptumotaRepository::class)]
+#[ORM\Table(name: 'kontzeptumota')]
+class Kontzeptumota implements \Stringable
 {
     /**
      * @var integer
-     *
-     * @ORM\Column(name="id", type="bigint", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(name: 'id', type: 'bigint', nullable: false)]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     private $id;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="motaeu", type="text", length=65535, nullable=true)
      */
+    #[ORM\Column(name: 'motaeu', type: 'text', length: 65535, nullable: true)]
     private $motaeu;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="motaes", type="text", length=65535, nullable=true)
      */
+    #[ORM\Column(name: 'motaes', type: 'text', length: 65535, nullable: true)]
     private $motaes;
 
     /**
@@ -43,18 +39,17 @@ class Kontzeptumota
      * ************************************************************************************************************************************************************************
      * ************************************************************************************************************************************************************************
      */
-
     /**
      * @var Udala
-     * @ORM\ManyToOne(targetEntity="Udala")
      */
+    #[ORM\ManyToOne(targetEntity: Udala::class)]
     private $udala;
 
     public function __construct()
     {
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getMotaeu();
     }

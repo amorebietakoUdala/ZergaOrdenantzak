@@ -1,5 +1,3 @@
-import '../../css/frontend/index.css';
-
 import $ from 'jquery';
 
 $(document).ajaxStart(function(){

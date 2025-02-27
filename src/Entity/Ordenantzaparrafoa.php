@@ -4,88 +4,80 @@ namespace App\Entity;
 
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
-use App\Annotation\UdalaEgiaztatu;
+use App\Attribute\UdalaEgiaztatu;
 use App\Repository\OrdenantzaparrafoaRepository;
 
 /**
  * Ordenantzaparrafoa
  *
- * @ORM\Table(name="ordenantzaparrafoa", indexes={@ORM\Index(name="ordenantza_id_idx", columns={"ordenantza_id"})})
- * @ORM\Entity(repositoryClass="App\Repository\OrdenantzaparrafoaRepository")
- * @UdalaEgiaztatu(userFieldName="udala_id")
  */
-class Ordenantzaparrafoa
+#[UdalaEgiaztatu(userFieldName: "udala_id")]
+#[ORM\Entity(repositoryClass: OrdenantzaparrafoaRepository::class)]
+#[ORM\Table(name: 'ordenantzaparrafoa')]
+#[ORM\Index(name: 'ordenantza_id_idx', columns: ['ordenantza_id'])]
+class Ordenantzaparrafoa implements \Stringable
 {
     /**
      * @var integer
-     *
-     * @ORM\Column(name="id", type="bigint", nullable=false)
-     * @ORM\Id
-     * @ORM\GeneratedValue(strategy="IDENTITY")
      */
+    #[ORM\Column(name: 'id', type: 'bigint', nullable: false)]
+    #[ORM\Id]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
     private $id;
 
     /**
      * @var integer
      * @Gedmo\SortablePosition
-     * @ORM\Column(name="ordena", type="integer", nullable=true)
      */
+    #[ORM\Column(name: 'ordena', type: 'integer', nullable: true)]
     private $ordena;
 
     /**
      * @var integer
-     *
-     * @ORM\Column(name="ordena_prod", type="bigint", nullable=true)
      */
+    #[ORM\Column(name: 'ordena_prod', type: 'bigint', nullable: true)]
     private $ordena_prod;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="testuaeu", type="text", length=65535, nullable=true)
      */
+    #[ORM\Column(name: 'testuaeu', type: 'text', length: 65535, nullable: true)]
     private $testuaeu;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="testuaeu_prod", type="text", length=65535, nullable=true)
      */
+    #[ORM\Column(name: 'testuaeu_prod', type: 'text', length: 65535, nullable: true)]
     private $testuaeu_prod;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="testuaes", type="text", length=65535, nullable=true)
      */
+    #[ORM\Column(name: 'testuaes', type: 'text', length: 65535, nullable: true)]
     private $testuaes;
 
     /**
      * @var string
-     *
-     * @ORM\Column(name="testuaes_prod", type="text", length=65535, nullable=true)
      */
+    #[ORM\Column(name: 'testuaes_prod', type: 'text', length: 65535, nullable: true)]
     private $testuaes_prod;
 
     /**
      * @var bool
-     *
-     * @ORM\Column(name="ezabatu", type="boolean", nullable=true)
      */
+    #[ORM\Column(name: 'ezabatu', type: 'boolean', nullable: true)]
     private $ezabatu;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="created_at", type="datetime", nullable=false)
      */
+    #[ORM\Column(name: 'created_at', type: 'datetime', nullable: false)]
     private $createdAt;
 
     /**
      * @var \DateTime
-     *
-     * @ORM\Column(name="updated_at", type="datetime", nullable=false)
      */
+    #[ORM\Column(name: 'updated_at', type: 'datetime', nullable: false)]
     private $updatedAt;
 
     /**
@@ -95,21 +87,17 @@ class Ordenantzaparrafoa
      * ************************************************************************************************************************************************************************
      * ************************************************************************************************************************************************************************
      */
-
     /**
      * @var \Ordenantza
-     *
-     * @ORM\ManyToOne(targetEntity="Ordenantza", inversedBy="parrafoak")
-     * @ORM\JoinColumns({
-     *   @ORM\JoinColumn(name="ordenantza_id", referencedColumnName="id")
-     * })
      */
+    #[ORM\ManyToOne(targetEntity: Ordenantza::class, inversedBy: 'parrafoak')]
+    #[ORM\JoinColumn(name: 'ordenantza_id', referencedColumnName: 'id')]
     private $ordenantza;
 
     /**
      * @var Udala
-     * @ORM\ManyToOne(targetEntity="Udala")
      */
+    #[ORM\ManyToOne(targetEntity: Udala::class)]
     private $udala;
     
     public function __construct()
@@ -118,7 +106,7 @@ class Ordenantzaparrafoa
         $this->updatedAt = new \DateTime();
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getTestuaeu();
     }

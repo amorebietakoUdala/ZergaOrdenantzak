@@ -14,16 +14,12 @@ class AzpiatalaparrafoaType extends AbstractType
      * @param FormBuilderInterface $builder
      * @param array $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('ordena')
-            ->add('testuaeu',CKEditorType::class, array(
-                'config_name' => 'my_config_1',
-            ))
-            ->add('testuaes',CKEditorType::class, array(
-                'config_name' => 'my_config_1',
-            ))
+            ->add('testuaeu',CKEditorType::class, ['config_name' => 'my_config_1'])
+            ->add('testuaes',CKEditorType::class, ['config_name' => 'my_config_1'])
             ->add('azpiatala')
             ->add('udala')
         ;
@@ -32,10 +28,8 @@ class AzpiatalaparrafoaType extends AbstractType
     /**
      * @param OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(array(
-            'data_class' => Azpiatalaparrafoa::class
-        ));
+        $resolver->setDefaults(['data_class' => Azpiatalaparrafoa::class]);
     }
 }

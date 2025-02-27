@@ -13,7 +13,7 @@ class UdalaType extends AbstractType
      * @param FormBuilderInterface $builder
      * @param array $options
      */
-    public function buildForm(FormBuilderInterface $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
             ->add('izenaeu')
@@ -23,18 +23,16 @@ class UdalaType extends AbstractType
             ->add('ifk')
             ->add('izendapenaeu')
             ->add('izendapenaes')
-//            ->add('lopdeu')
-//            ->add('lopdes')
         ;
     }
     
     /**
      * @param OptionsResolver $resolver
      */
-    public function configureOptions(OptionsResolver $resolver)
+    public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults(array(
+        $resolver->setDefaults([
             'data_class' => Udala::class
-        ));
+        ]);
     }
 }

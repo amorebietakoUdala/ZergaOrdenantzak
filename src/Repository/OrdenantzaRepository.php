@@ -60,7 +60,8 @@ use Doctrine\Persistence\ManagerRegistry;
                 ->innerJoin('App:Udala','u')
                 ->andWhere('u.kodea = :udalkodea')
                 ->setParameter('udalkodea',$kodea)
-                ->andWhere('((o.ezabatu IS NULL) or (o.ezabatu <> 1))');
+                ->andWhere('((o.ezabatu IS NULL) or (o.ezabatu <> 1))')
+                ->orderBy('o.kodea', 'ASC');
             $ordenantzak = $qb->getQuery()->getResult();
             return $ordenantzak;
         }

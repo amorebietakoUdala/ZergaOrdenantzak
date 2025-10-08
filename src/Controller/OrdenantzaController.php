@@ -11,6 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Ordenantza;
 use App\Form\OrdenantzaType;
 use App\Repository\AtalaparrafoaRepository;
+use App\Repository\AtalaRepository;
 use App\Repository\AzpiatalaparrafoaondorenRepository;
 use App\Repository\AzpiatalaparrafoaRepository;
 use App\Repository\AzpiatalaRepository;
@@ -43,6 +44,7 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
             private readonly AzpiatalaparrafoaRepository $azpiatalaparrafoaRepo, 
             private readonly KontzeptuaRepository $kontzeptuaRepo, 
             private readonly TCPDFController $tcpdfController, 
+            private readonly AtalaRepository $atalaRepo,
             private readonly string $rootDir, 
             private readonly string $odtPath
         )
@@ -114,7 +116,7 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
         #[Route(path: '/eguneratuatala/{id}', name: 'admin_ordenantza_atala_eguneratu', methods: ['POST'])]
         public function eguneratuatala ( Request $request, $id ): JsonResponse
         {
-            $atala = $this->azpiatalaRepo->find( $id );
+            $atala = $this->atalaRepo->find( $id );
             $name = $request->request->get( 'name' );
             $value = $request->request->get( 'value' );
 

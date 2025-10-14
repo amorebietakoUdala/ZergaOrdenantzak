@@ -538,6 +538,34 @@ use Qipsius\TCPDFBundle\Controller\TCPDFController;
         }
 
         /**
+         * Publishes a Ordenantza entity.
+         */
+        #[Route(path: '/{id}/publish', name: 'admin_ordenantza_publish', methods: ['GET', 'POST'])]
+        public function publish ( Request $request, Ordenantza $ordenantza ): Response
+        {
+            $ordenantza->setPublikoa( true );
+            $this->em->persist( $ordenantza );
+            $this->em->flush();
+            
+            $referer = $request->headers->get('referer');
+            return new RedirectResponse($referer);
+        }
+
+        /**
+         * UnPublishes a Ordenantza entity.
+         */
+        #[Route(path: '/{id}/unpublish', name: 'admin_ordenantza_unpublish', methods: ['GET', 'POST'])]
+        public function unpublish ( Request $request, Ordenantza $ordenantza ): Response
+        {
+            $ordenantza->setPublikoa( false );
+            $this->em->persist( $ordenantza );
+            $this->em->flush();
+
+            $referer = $request->headers->get('referer');
+            return new RedirectResponse($referer);
+        }
+
+        /**
          * Deletes a Ordenantza entity.
          */
         #[Route(path: '/{id}', name: 'admin_ordenantza_delete', methods: ['DELETE'])]

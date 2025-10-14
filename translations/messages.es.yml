@@ -91,3 +91,5 @@ Indarreko data: 'Fecha de entrada en vigor'
 G.A.O. esteka eskaraz: 'Enlace al B.O. en euskera'
 G.A.O. esteka erdaraz: 'Enlace al B.O. en castellano'
 "messages.ziurzaude": "ELIMINAR. ¿Estas seguro/a?"
+"messages.eskutatu": "Ocultar al público"
+"messages.publikatu": "Publicar"

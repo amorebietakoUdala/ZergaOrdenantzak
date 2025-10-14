@@ -105,12 +105,17 @@ class Ordenantza implements \Stringable
     #[ORM\OneToMany(targetEntity: Atala::class, mappedBy: 'ordenantza', cascade: ['remove'])]
     protected $atalak;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $publikoa = null;
+
     public function __construct()
     {
         $this->parrafoak = new ArrayCollection();
         $this->atalak = new ArrayCollection();
         $this->createdAt = new \DateTime();
         $this->updatedAt = new \DateTime();
+        $this->ezabatu = false;
+        $this->publikoa = false;
     }
 
     public function __toString(): string
@@ -432,6 +437,18 @@ class Ordenantza implements \Stringable
     public function setEzabatu($ezabatu)
     {
         $this->ezabatu = $ezabatu;
+
+        return $this;
+    }
+
+    public function isPublikoa(): ?bool
+    {
+        return $this->publikoa;
+    }
+
+    public function setPublikoa(?bool $publikoa): static
+    {
+        $this->publikoa = $publikoa;
 
         return $this;
     }

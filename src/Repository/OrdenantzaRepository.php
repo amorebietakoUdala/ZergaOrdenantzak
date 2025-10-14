@@ -61,6 +61,7 @@ use Doctrine\Persistence\ManagerRegistry;
                 ->andWhere('u.kodea = :udalkodea')
                 ->setParameter('udalkodea',$kodea)
                 ->andWhere('((o.ezabatu IS NULL) or (o.ezabatu <> 1))')
+                ->andWhere('o.publikoa = 1')
                 ->orderBy('o.kodea', 'ASC');
             $ordenantzak = $qb->getQuery()->getResult();
             return $ordenantzak;

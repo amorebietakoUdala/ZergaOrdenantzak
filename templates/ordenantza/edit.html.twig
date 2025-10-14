@@ -51,6 +51,11 @@
         <li class="active" ><a class="active" href="{{ path('admin_ordenantza_show', {'id': ordenantza.id}) }}">Edizio modua desaktibatu</a></li>
         <li><a href="{{ path('admin_ordenantza_show_pdf', {'id': ordenantza.id}) }}"> PDF <span class="sr-only">(current)</span></a></li>
         <li><a href="{{ path('admin_ordenantza_export_pdf', {'id': ordenantza.id}) }}"> {{ "Indarrean jarri" }} <span class="sr-only">(current)</span></a></li>
+        {% if ordenantza.publikoa == true %}
+            <li><a href="{{ path('admin_ordenantza_unpublish', {'id': ordenantza.id}) }}">{{ 'messages.eskutatu' | trans }}</a></li>
+        {% else %}
+            <li><a href="{{ path('admin_ordenantza_publish', {'id': ordenantza.id}) }}">{{ 'messages.publikatu' | trans }}</a></li>
+        {% endif %}
         <li>&nbspp;</li>
     </ul>
 {% endblock %}

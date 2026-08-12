@@ -38,6 +38,7 @@
 ###> symfony/webpack-encore-bundle ###
 /node_modules/
 /public/build/
+/public/doc/
 npm-debug.log
 yarn-error.log
 ###< symfony/webpack-encore-bundle ###
@@ -50,4 +51,4 @@ phpstan.neon
 /*.bak
 /*.log
 /*.dev
-/*.prod
+/*.prod.yarn/install-state.gz
